@@ -58,7 +58,7 @@ const options: ApexOptions = {
 }
 
 const series = [
-  { name: 'subs', data: [12, 56, 123, 890, 34, 78, 109] }
+  { name: 'subs', data: [120, 56, 123, 290, 84, 138, 109] }
 ]
 
 export default function Dashboard() {
@@ -69,7 +69,7 @@ export default function Dashboard() {
       <Flex w="100%" my="6" maxWidth={1480} mx="auto" px="6">
         <Sidebar />
 
-        <SimpleGrid flex="1" gap="4" minChildWidth="320px" align="flex-start">
+        <SimpleGrid flex="1" gap="4" minChildWidth="380px" align="flex-start">
           <Box
             p="8"
             pb="4"
