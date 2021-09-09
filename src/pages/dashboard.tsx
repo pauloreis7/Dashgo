@@ -66,12 +66,12 @@ export default function Dashboard() {
     <Flex direction="column" h="100vh">
       <Header />
 
-      <Flex w="100%" my="6" maxWidth={1480} mx="auto" px="6">
+      <Flex w="100%" my="6" maxWidth={1480} mx="auto" px={["4", "6"]}>
         <Sidebar />
 
         <SimpleGrid flex="1" gap="4" minChildWidth="380px" align="flex-start">
           <Box
-            p="8"
+            p={["4", "6"]}
             pb="4"
             bg="gray.800"
             borderRadius={8}
@@ -82,7 +82,7 @@ export default function Dashboard() {
           </Box>
 
           <Box
-            p="8"
+            p={["4", "6"]}
             pb="4"
             bg="gray.800"
             borderRadius={8}
