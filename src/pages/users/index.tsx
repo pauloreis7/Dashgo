@@ -19,16 +19,30 @@ import Link from 'next/link'
 import { RiAddLine, RiPencilLine } from 'react-icons/ri'
 import { useQuery } from 'react-query'
 
+import { api } from '../../services/api'
+
 import { Header } from '../../components/Header'
 import { Sidebar } from '../../components/Sidebar'
 import { Pagination } from '../../components/Pagination'
 
 export default function UserList() {
-  const { data, isLoading, error } = useQuery('users', async () => {
-    const response = await fetch('http://localhost:3000/api/users')
-    const data = await response.json()
+  const { data, isLoading, isFetching, error } = useQuery('users', async () => {
+    const { data } = await api.get('users')
 
-    return data
+    const users = data.users.map(user => {
+      return {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        createdAt: new Date(user.createdAt).toLocaleDateString('pt-BR', {
+          day: '2-digit',
+          month: 'long',
+          year: 'numeric'
+        }),
+      }
+    })
+
+    return users
   })
 
   const isMediumVersion = useBreakpointValue({
@@ -45,7 +59,11 @@ export default function UserList() {
 
         <Box flex="1" borderRadius={8} bg="gray.800" p="8" overflowX="auto">
           <Flex mb="8" justify="space-between" align="center">
-            <Heading size="lg" fontWeight="normal">Usuários</Heading>
+            <Heading size="lg" fontWeight="normal">
+              Usuários
+
+              { !isLoading && isFetching && <Spinner size="sm" color="gray.500" ml="4" /> }
+            </Heading>
 
             <Link href="/users/create" passHref>
               <Button
@@ -84,30 +102,34 @@ export default function UserList() {
                 </Thead>
 
                 <Tbody>
-                  <Tr>
-                    <Td px={["4", "4", "6"]}>
-                      <Checkbox colorScheme="pink" />
-                    </Td>
-                    <Td>
-                      <Box>
-                        <Text fontWeight="bold">Paulo Reis</Text>
-                        <Text fontSize="sm" color="gray.300">PauloReis2057@gmail.com</Text>
-                      </Box>
-                    </Td>
-                    { isMediumVersion && <Td>05 de Junho, 2021</Td> }
-                    <Td>
-                      <Button
-                        as="a"
-                        size="sm"
-                        fontSize="sm"
-                        colorScheme="purple"
-                        leftIcon={<Icon as={RiPencilLine} fontSize="18" />}
-                        cursor="pointer"
-                      >
-                        Editar
-                      </Button>
-                    </Td>
-                  </Tr>
+                  {data.map(user => {
+                    return (
+                      <Tr key={user.id}>
+                        <Td px={["4", "4", "6"]}>
+                          <Checkbox colorScheme="pink" />
+                        </Td>
+                        <Td>
+                          <Box>
+                            <Text fontWeight="bold">{user.name}</Text>
+                            <Text fontSize="sm" color="gray.300">{user.email}</Text>
+                          </Box>
+                        </Td>
+                        { isMediumVersion && <Td>{user.createdAt}</Td> }
+                        <Td>
+                          <Button
+                            as="a"
+                            size="sm"
+                            fontSize="sm"
+                            colorScheme="purple"
+                            leftIcon={<Icon as={RiPencilLine} fontSize="18" />}
+                            cursor="pointer"
+                          >
+                            Editar
+                          </Button>
+                        </Td>
+                      </Tr>
+                    )
+                  })}
                 </Tbody>
               </Table>
               
