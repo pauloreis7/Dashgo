@@ -1,75 +1,13 @@
 import { Router } from 'express'
-import { NextFunction, Request, Response } from 'express';
-import jwt from 'jsonwebtoken'
-import decode from 'jwt-decode'
-import { generateJwtAndRefreshToken } from './auth';
-import { auth } from './config';
 
-import { checkRefreshTokenIsValid, users, invalidateRefreshToken } from './database';
-import { CreateSessionDTO, DecodedToken } from './types';
+import { checkAuthMiddleware } from './middlewares/checkAuthMiddleware'
+import { addUserInformationToRequest } from './middlewares/addUserInformationToRequest'
+import { generateJwtAndRefreshToken } from '../auth';
+
+import { checkRefreshTokenIsValid, users, invalidateRefreshToken } from '../database';
+import { CreateSessionDTO } from '../types';
 
 const app = Router()
-
-function checkAuthMiddleware(request: Request, response: Response, next: NextFunction) {
-  const { authorization } = request.headers;
-
-  if (!authorization) {
-    return response
-      .status(401)
-      .json({ error: true, code: 'token.invalid', message: 'Token not present.' })
-  }
-
-  const [, token] = authorization?.split(' ');
-
-  if (!token) {
-    return response 
-      .status(401)
-      .json({ error: true, code: 'token.invalid', message: 'Token not present.' })
-  }
-
-  try {
-    const decoded = jwt.verify(token as string, auth.secret) as DecodedToken;
-
-    request.user = decoded.sub;
-
-    return next();
-  } catch (err) {
-
-    return response 
-      .status(401)
-      .json({  error: true, code: 'token.expired', message: 'Token invalid.' })
-  }
-}
-
-function addUserInformationToRequest(request: Request, response: Response, next: NextFunction) {
-  const { authorization } = request.headers;
-
-  if (!authorization) {
-    return response
-      .status(401)
-      .json({ error: true, code: 'token.invalid', message: 'Token not present.' })
-  }
-
-  const [, token] = authorization?.split(' ');
-
-  if (!token) {
-    return response 
-      .status(401)
-      .json({ error: true, code: 'token.invalid', message: 'Token not present.' })
-  }
-
-  try {
-    const decoded = decode(token as string) as DecodedToken;
-
-    request.user = decoded.sub;
-
-    return next();
-  } catch (err) {
-    return response 
-      .status(401)
-      .json({ error: true, code: 'token.invalid', message: 'Invalid token format.' })
-  }
-}
 
 app.post('/sessions', (request, response) => {
   const { email, password } = request.body as CreateSessionDTO;
