@@ -1,23 +1,25 @@
 import { Request, Response } from 'express';
 
-import { users } from '../database';
+import { ShowProfileService } from '../services/ShowProfileService'
 
 export class UsersController {
-  public show(request: Request, response: Response) {
-    const email = request.user;
+  public async show(request: Request, response: Response): Promise<Response> {
+    try {
+      const email = request.user;
 
-    const user = users.get(email);
+      const showProfile = new ShowProfileService()
 
-    if (!user) {
+      const user = await showProfile.execute({ email })
+
+      return response.json({
+        email,
+        permissions: user.permissions,
+        roles: user.roles,
+      })
+    } catch (err) {
       return response
         .status(400)
         .json({ error: true, message: 'User not found.' });
     }
-
-    return response.json({
-      email,
-      permissions: user.permissions,
-      roles: user.roles,
-    })
   }
 }

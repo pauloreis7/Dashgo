@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken'
-import { auth } from '../../config';
+import { auth } from '../../config/auth';
 
 import { DecodedToken } from '../../types';
 

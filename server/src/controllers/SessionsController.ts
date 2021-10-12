@@ -5,7 +5,7 @@ import { checkRefreshTokenIsValid, users, invalidateRefreshToken } from '../data
 import { CreateSessionDTO } from '../types';
 
 export class SessionsController {
-  public create(request: Request, response: Response) {
+  public create(request: Request, response: Response): Response {
     const { email, password } = request.body as CreateSessionDTO;
 
     const user = users.get(email);
@@ -32,7 +32,7 @@ export class SessionsController {
     });
   }
 
-  public refresh(request: Request, response: Response) {
+  public refresh(request: Request, response: Response): Response {
     const email = request.user;
     const { refreshToken } = request.body;
   
