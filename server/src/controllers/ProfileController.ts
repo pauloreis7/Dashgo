@@ -12,6 +12,7 @@ export class UsersController {
       const user = await showProfile.execute({ email })
 
       return response.json(user)
+      
     } catch (err) {
       return response
         .status(400)
