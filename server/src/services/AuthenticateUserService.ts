@@ -1,6 +1,7 @@
 import { generateJwtAndRefreshToken } from '../auth';
 import { users } from '../database';
 import { AppError } from '../errors/AppError'
+import { BCryptHashProvider } from '../providers/HashProvider/BCryptHashProvider'
 
 import User from '../models/User'
 
@@ -23,7 +24,11 @@ export class AuthenticateUserService {
       throw new AppError('E-mail or password incorrect.', 401)
     }
 
-    if (password !== user.password) {
+    const hashProvider = new BCryptHashProvider()
+
+    const passwordMatched = await hashProvider.compareHash(password, user.password)
+
+    if (!passwordMatched) {
       throw new AppError('E-mail or password incorrect.', 401)
     }
 

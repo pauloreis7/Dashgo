@@ -1,16 +1,21 @@
-import { RefreshTokensStore, UsersStore } from "./types"
 import { v4 as uuid } from 'uuid'
+
+import { BCryptHashProvider } from './providers/HashProvider/BCryptHashProvider'
+import { RefreshTokensStore, UsersStore } from "./types"
 
 export const users: UsersStore = new Map()
 
 export const tokens: RefreshTokensStore = new Map()
 
-export function seedUserStore() {
+export async function seedUserStore() {
+  const hashProvider = new BCryptHashProvider()
+  const hashedPassword = await hashProvider.generateHash('123456')
+
   users.set('pauloreis@gmail.com', {
     id: '1234567123456',
     name: 'Paulo Reis',
     email: 'pauloreis@gmail.com',
-    password: '123456',
+    password: hashedPassword,
     created_at: new Date(),
     updated_at: new Date()
   })
@@ -19,7 +24,7 @@ export function seedUserStore() {
     id: '569876543',
     name: 'Estagiario 123',
     email: 'estagiario@gmail.com',
-    password: '123456',
+    password: hashedPassword,
     created_at: new Date(),
     updated_at: new Date()
   })

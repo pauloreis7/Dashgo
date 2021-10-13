@@ -23,6 +23,7 @@ export class SessionsController {
         token,
         refreshToken
       });
+      
     } catch (err) {
       const error = Object(err)
 
