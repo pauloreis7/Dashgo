@@ -14,9 +14,11 @@ export class UsersController {
       return response.json(user)
       
     } catch (err) {
+      const error = Object(err)
+
       return response
-        .status(400)
-        .json({ error: true, message: 'User not found.' });
+        .status(error.statusCode)
+        .json({ error: true, ...error });
     }
   }
 }

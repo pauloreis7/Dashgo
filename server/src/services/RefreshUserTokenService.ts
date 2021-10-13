@@ -1,6 +1,7 @@
 import { generateJwtAndRefreshToken } from '../auth';
 import { checkRefreshTokenIsValid, users, invalidateRefreshToken } from '../database';
 
+import { AppError } from '../errors/AppError'
 
 interface IRequest {
   email: string;
@@ -17,17 +18,17 @@ export class RefreshUserTokenService {
     const user = users.get(email);
   
     if (!user) {
-      throw new Error('User not found.')
+      throw new AppError('User not found.', 401)
     }
   
     if (!refreshToken) {
-      throw new Error('Refresh token is required')
+      throw new AppError('Refresh token is required', 401)
     }
   
     const isValidRefreshToken = checkRefreshTokenIsValid(email, refreshToken)
   
     if (!isValidRefreshToken) {
-      throw new Error('Refresh token is invalid')
+      throw new AppError('Refresh token is invalid', 401)
     }
   
     invalidateRefreshToken(email, refreshToken)

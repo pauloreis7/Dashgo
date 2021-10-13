@@ -1,4 +1,5 @@
 import { users } from '../database';
+import { AppError } from '../errors/AppError'
 
 import User from '../models/User'
 
@@ -11,7 +12,7 @@ export class ShowProfileService {
     const user = users.get(email);
 
     if(!user) {
-      throw new Error()
+      throw new AppError('User not found.')
     }
 
     return user

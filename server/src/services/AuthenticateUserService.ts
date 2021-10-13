@@ -1,5 +1,6 @@
 import { generateJwtAndRefreshToken } from '../auth';
 import { users } from '../database';
+import { AppError } from '../errors/AppError'
 
 import User from '../models/User'
 
@@ -18,8 +19,12 @@ export class AuthenticateUserService {
   public async execute({ email, password }: IRequest): Promise<IResponse> {
     const user = users.get(email);
 
-    if (!user || password !== user.password) {
-      throw new Error()
+    if (!user) {
+      throw new AppError('E-mail or password incorrect.', 401)
+    }
+
+    if (password !== user.password) {
+      throw new AppError('E-mail or password incorrect.', 401)
     }
 
     const { token, refreshToken } = generateJwtAndRefreshToken(email)

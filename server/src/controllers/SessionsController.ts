@@ -24,12 +24,11 @@ export class SessionsController {
         refreshToken
       });
     } catch (err) {
+      const error = Object(err)
+
       return response
-        .status(401)
-        .json({ 
-          error: true, 
-          message: 'E-mail or password incorrect.'
-        });
+        .status(error.statusCode)
+        .json({ error: true, ...error });
     }
   }
 
@@ -42,7 +41,7 @@ export class SessionsController {
 
       const { token, newRefreshToken } = await refreshUserToken.execute({ 
         email, 
-        refreshToken 
+        refreshToken
       })
     
       return response.json({
@@ -51,7 +50,11 @@ export class SessionsController {
       });
       
     } catch (err) {
-      return response.json({ error: true, message: err });
+      const error = Object(err)
+
+      return response
+        .status(error.statusCode)
+        .json({ error: true, ...error });
     }
   }
 }
