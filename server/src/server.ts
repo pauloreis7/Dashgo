@@ -3,7 +3,9 @@ import express from 'express';
 import cors from 'cors';
 
 import routes from './routes'
-import { seedUserStore } from './database';
+import { seedUserStore } from './fakeDatabase';
+
+import './database'
 
 const app = express();
 

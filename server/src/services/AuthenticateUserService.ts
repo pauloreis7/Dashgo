@@ -1,7 +1,9 @@
+import { getCustomRepository } from 'typeorm'
+
 import { generateJwtAndRefreshToken } from '../auth';
-import { users } from '../database';
 import { AppError } from '../errors/AppError'
 import { BCryptHashProvider } from '../providers/HashProvider/BCryptHashProvider'
+import { UsersRepository } from '../repositories/UsersRepository/TypeormUsersRepository'
 
 import User from '../models/User'
 
@@ -18,7 +20,9 @@ interface IResponse {
 
 export class AuthenticateUserService {
   public async execute({ email, password }: IRequest): Promise<IResponse> {
-    const user = users.get(email);
+    const usersRepository = getCustomRepository(UsersRepository)
+    
+    const user = await usersRepository.findByEmail(email)
 
     if (!user) {
       throw new AppError('E-mail or password incorrect.', 401)

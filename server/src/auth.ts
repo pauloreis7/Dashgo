@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 
 import { auth } from './config/auth';
-import { createRefreshToken } from './database';
+import { createRefreshToken } from './fakeDatabase';
 
 export function generateJwtAndRefreshToken(email: string, payload: object = {}) {
   const token = jwt.sign(payload, auth.secret, {

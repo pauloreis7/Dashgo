@@ -1,5 +1,8 @@
+import { getCustomRepository } from 'typeorm'
+
 import { generateJwtAndRefreshToken } from '../auth';
-import { checkRefreshTokenIsValid, users, invalidateRefreshToken } from '../database';
+import { checkRefreshTokenIsValid, invalidateRefreshToken } from '../fakeDatabase';
+import { UsersRepository } from '../repositories/UsersRepository/TypeormUsersRepository'
 
 import { AppError } from '../errors/AppError'
 
@@ -15,8 +18,10 @@ interface IResponse {
 
 export class RefreshUserTokenService {
   public async execute({ email, refreshToken }: IRequest): Promise<IResponse> {
-    const user = users.get(email);
-  
+    const usersRepository = getCustomRepository(UsersRepository)
+
+    const user = await usersRepository.findByEmail(email)
+
     if (!user) {
       throw new AppError('User not found.', 401)
     }
@@ -26,7 +31,7 @@ export class RefreshUserTokenService {
     }
   
     const isValidRefreshToken = checkRefreshTokenIsValid(email, refreshToken)
-  
+
     if (!isValidRefreshToken) {
       throw new AppError('Refresh token is invalid', 401)
     }
