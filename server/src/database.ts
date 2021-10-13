@@ -7,15 +7,21 @@ export const tokens: RefreshTokensStore = new Map()
 
 export function seedUserStore() {
   users.set('pauloreis@gmail.com', {
+    id: '1234567123456',
+    name: 'Paulo Reis',
+    email: 'pauloreis@gmail.com',
     password: '123456',
-    permissions: ['users.list', 'users.create', 'metrics.list'],
-    roles: ['administrator']
+    created_at: new Date(),
+    updated_at: new Date()
   })
 
   users.set('estagiario@gmail.com', {
+    id: '569876543',
+    name: 'Estagiario 123',
+    email: 'estagiario@gmail.com',
     password: '123456',
-    permissions: ['users.list', 'metrics.list'],
-    roles: ['editor']
+    created_at: new Date(),
+    updated_at: new Date()
   })
 }
 

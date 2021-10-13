@@ -11,11 +11,7 @@ export class UsersController {
 
       const user = await showProfile.execute({ email })
 
-      return response.json({
-        email,
-        permissions: user.permissions,
-        roles: user.roles,
-      })
+      return response.json(user)
     } catch (err) {
       return response
         .status(400)

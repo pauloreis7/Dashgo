@@ -4,13 +4,27 @@ import { generateJwtAndRefreshToken } from '../auth';
 import { checkRefreshTokenIsValid, users, invalidateRefreshToken } from '../database';
 import { CreateSessionDTO } from '../types';
 
+import { AuthenticateUserService } from '../services/AuthenticateUserService'
+
+
 export class SessionsController {
-  public create(request: Request, response: Response): Response {
-    const { email, password } = request.body as CreateSessionDTO;
+  public async create(request: Request, response: Response): Promise<Response> {
+    try {
+      const { email, password } = request.body as CreateSessionDTO;
 
-    const user = users.get(email);
+      const authenticateUser = new AuthenticateUserService()
 
-    if (!user || password !== user.password) {
+      const { token, refreshToken, user } = await authenticateUser.execute({ 
+        email,
+        password 
+      })
+
+      return response.json({
+        user,
+        token,
+        refreshToken
+      });
+    } catch (err) {
       return response
         .status(401)
         .json({ 
@@ -18,18 +32,6 @@ export class SessionsController {
           message: 'E-mail or password incorrect.'
         });
     }
-
-    const { token, refreshToken } = generateJwtAndRefreshToken(email, {
-      permissions: user.permissions,
-      roles: user.roles,
-    })
-
-    return response.json({
-      token,
-      refreshToken,
-      permissions: user.permissions,
-      roles: user.roles,
-    });
   }
 
   public refresh(request: Request, response: Response): Response {
@@ -63,16 +65,11 @@ export class SessionsController {
   
     invalidateRefreshToken(email, refreshToken)
   
-    const { token, refreshToken: newRefreshToken } = generateJwtAndRefreshToken(email, {
-      permissions: user.permissions,
-      roles: user.roles,
-    })
+    const { token, refreshToken: newRefreshToken } = generateJwtAndRefreshToken(email)
   
     return response.json({
       token,
       refreshToken: newRefreshToken,
-      permissions: user.permissions,
-      roles: user.roles,
     });
   }
 }
