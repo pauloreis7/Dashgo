@@ -4,8 +4,12 @@ import { createRefreshToken } from '../fakeDatabase';
 import { checkRefreshTokenIsValid, invalidateRefreshToken } from '../fakeDatabase';
 import { UsersRepository } from '../repositories/UsersRepository/TypeormUsersRepository'
 import { JwtTokenProvider } from '../providers/TokenProvider/JwtTokenProvider';
-
+import { 
+  RefreshTokensRepository
+} from '../repositories/RefreshTokenRepository/TypeormRefreshJwtTokenRepository'
 import { AppError } from '../errors/AppError'
+
+import RefreshToken from '../models/RefreshToken'
 
 interface IRequest {
   email: string;
@@ -14,7 +18,7 @@ interface IRequest {
 
 interface IResponse {
   token: string;
-  newRefreshToken: string
+  newRefreshToken: RefreshToken
 }
 
 export class RefreshUserTokenService {
@@ -30,19 +34,21 @@ export class RefreshUserTokenService {
     if (!refreshToken) {
       throw new AppError('Refresh token is required', 401)
     }
-  
-    const isValidRefreshToken = checkRefreshTokenIsValid(email, refreshToken)
+
+    const refreshTokensRepository = getCustomRepository(RefreshTokensRepository)
+
+    const isValidRefreshToken = await refreshTokensRepository.findById(refreshToken)
 
     if (!isValidRefreshToken) {
       throw new AppError('Refresh token is invalid', 401)
     }
-  
-    invalidateRefreshToken(email, refreshToken)
+
+    await refreshTokensRepository.deleteRefreshToken(user.id)
   
     const tokenProvider = new JwtTokenProvider()
     const token = tokenProvider.generateToken(user.id)
   
-    const newRefreshToken = createRefreshToken(email)
+    const newRefreshToken = await refreshTokensRepository.generateRefreshToken(user.id)
 
     return { token, newRefreshToken }
   }
