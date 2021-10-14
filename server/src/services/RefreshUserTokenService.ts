@@ -1,11 +1,9 @@
 import { getCustomRepository } from 'typeorm'
-import { sign } from 'jsonwebtoken'
-
-import { auth } from '../config/auth';
 
 import { createRefreshToken } from '../fakeDatabase';
 import { checkRefreshTokenIsValid, invalidateRefreshToken } from '../fakeDatabase';
 import { UsersRepository } from '../repositories/UsersRepository/TypeormUsersRepository'
+import { JwtTokenProvider } from '../providers/TokenProvider/JwtTokenProvider';
 
 import { AppError } from '../errors/AppError'
 
@@ -41,10 +39,8 @@ export class RefreshUserTokenService {
   
     invalidateRefreshToken(email, refreshToken)
   
-    const token = sign({}, auth.secret, {
-      subject: email,
-      expiresIn: "1d", // 1 day
-    });
+    const tokenProvider = new JwtTokenProvider()
+    const token = tokenProvider.generateToken(user.id)
   
     const newRefreshToken = createRefreshToken(email)
 
