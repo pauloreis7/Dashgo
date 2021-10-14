@@ -1,6 +1,9 @@
 import { getCustomRepository } from 'typeorm'
+import { sign } from 'jsonwebtoken'
 
-import { generateJwtAndRefreshToken } from '../auth';
+import { auth } from '../config/auth';
+
+import { createRefreshToken } from '../fakeDatabase';
 import { AppError } from '../errors/AppError'
 import { BCryptHashProvider } from '../providers/HashProvider/BCryptHashProvider'
 import { UsersRepository } from '../repositories/UsersRepository/TypeormUsersRepository'
@@ -36,8 +39,13 @@ export class AuthenticateUserService {
       throw new AppError('E-mail or password incorrect.', 401)
     }
 
-    const { token, refreshToken } = generateJwtAndRefreshToken(email)
-    
+    const token = sign({}, auth.secret, {
+      subject: email,
+      expiresIn: "1d", // 1 day
+    });
+  
+    const refreshToken = createRefreshToken(email)
+
     return { token, refreshToken, user }
   }
 }
