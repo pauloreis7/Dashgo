@@ -1,10 +1,12 @@
 import { Request, Response } from 'express'
 
-import { CreateSessionDTO } from '../types';
-
 import { AuthenticateUserService } from '../services/AuthenticateUserService'
 import { RefreshUserTokenService } from '../services/RefreshUserTokenService'
 
+type CreateSessionDTO = {
+  email: string;
+  password: string;
+}
 
 export class SessionsController {
   public async create(request: Request, response: Response): Promise<Response> {

@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import decode from 'jwt-decode'
 
-import { DecodedToken } from '../../types';
+import { IDecodedToken } from './IDecodedToken';
 
 export function addUserInformationToRequest(
     request: Request, 
@@ -25,7 +25,7 @@ export function addUserInformationToRequest(
   }
 
   try {
-    const decoded = decode(token as string) as DecodedToken;
+    const decoded = decode(token as string) as IDecodedToken;
 
     request.user = decoded.sub;
 

@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { verify } from 'jsonwebtoken'
 import { auth } from '../../config/auth';
 
-import { DecodedToken } from '../../types';
+import { IDecodedToken } from './IDecodedToken';
 
 export function checkAuthMiddleware(
     request: Request, 
@@ -26,7 +26,7 @@ export function checkAuthMiddleware(
   }
 
   try {
-    const decoded = verify(token as string, auth.secret) as DecodedToken;
+    const decoded = verify(token as string, auth.secret) as IDecodedToken;
 
     request.user = decoded.sub;
 

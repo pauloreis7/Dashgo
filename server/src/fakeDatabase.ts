@@ -1,7 +1,11 @@
 import { v4 as uuid } from 'uuid'
 
 import { BCryptHashProvider } from './providers/HashProvider/BCryptHashProvider'
-import { RefreshTokensStore, UsersStore } from "./types"
+
+import User from './models/User'
+
+type UsersStore = Map<string, User>
+type RefreshTokensStore = Map<string, string[]>
 
 export const users: UsersStore = new Map()
 
