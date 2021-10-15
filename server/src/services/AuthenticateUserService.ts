@@ -45,7 +45,7 @@ export class AuthenticateUserService {
   
     const refreshTokensRepository = getCustomRepository(RefreshTokensRepository)
 
-    await refreshTokensRepository.deleteRefreshToken(user.id)
+    await refreshTokensRepository.deleteRefreshTokenByUserId(user.id)
 
     const refreshToken = await refreshTokensRepository.generateRefreshToken(user.id)
 

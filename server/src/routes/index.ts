@@ -17,8 +17,10 @@ app.post('/sessions', sessionsController.create);
 
 app.post(
   '/refresh', 
-  addUserInformationToRequest, 
+  addUserInformationToRequest,
   sessionsController.refresh
 );
+
+app.delete('/logout', sessionsController.logout)
 
 export default app

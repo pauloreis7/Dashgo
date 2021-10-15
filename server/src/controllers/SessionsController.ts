@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 
 import { AuthenticateUserService } from '../services/AuthenticateUserService'
 import { RefreshUserTokenService } from '../services/RefreshUserTokenService'
+import { LogoutUserService } from '../services/LogoutUserService'
 
 type CreateSessionDTO = {
   email: string;
@@ -49,6 +50,25 @@ export class SessionsController {
         token,
         refreshToken: newRefreshToken,
       });
+      
+    } catch (err) {
+      const error = Object(err)
+
+      return response
+        .status(error.statusCode)
+        .json({ error: true, ...error });
+    }
+  }
+
+  public async logout(request: Request, response: Response): Promise<Response> {
+    try {
+      const { refresh_token } = request.body
+
+      const logoutUserService = new LogoutUserService()
+
+      await logoutUserService.execute({ refresh_token })
+
+      return response.json({ logout: true });
       
     } catch (err) {
       const error = Object(err)

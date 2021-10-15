@@ -22,7 +22,11 @@ export class RefreshTokensRepository extends Repository<RefreshToken> {
     return refreshToken
   }
 
-  public async deleteRefreshToken(userId: string): Promise<DeleteResult> {
+  public async deleteRefreshTokenByUserId(userId: string): Promise<DeleteResult> {
     return await this.delete(userId)
+  }
+
+  public async deleteRefreshTokenById(RefreshTokenId: string): Promise<DeleteResult> {
+    return await this.delete(RefreshTokenId)
   }
 }
