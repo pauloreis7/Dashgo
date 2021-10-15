@@ -6,14 +6,14 @@ import { UsersRepository } from '../repositories/UsersRepository/TypeormUsersRep
 import User from '../models/User'
 
 interface IRequest {
-  email: string
+  userId: string
 }
 
 export class ShowProfileService {
-  public async execute({ email }: IRequest): Promise<User> {
+  public async execute({ userId }: IRequest): Promise<User> {
     const usersRepository = getCustomRepository(UsersRepository)
 
-    const user = await usersRepository.findByEmail(email)
+    const user = await usersRepository.findById(userId)
 
     if(!user) {
       throw new AppError('User not found.')

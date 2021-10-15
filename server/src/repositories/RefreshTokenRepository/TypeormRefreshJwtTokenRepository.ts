@@ -13,7 +13,7 @@ export class RefreshTokensRepository extends Repository<RefreshToken> {
   }
 
   public async generateRefreshToken(userId: string): Promise<RefreshToken> {
-    const expires_in = dayjs().add(15, 'minute').unix()
+    const expires_in = dayjs().add(15, 'day').unix()
 
     const refreshToken = this.create({ expires_in, user_id: userId })
 

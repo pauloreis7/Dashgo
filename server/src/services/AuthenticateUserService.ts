@@ -35,7 +35,7 @@ export class AuthenticateUserService {
     const hashProvider = new BCryptHashProvider()
 
     const passwordMatched = await hashProvider.compareHash(password, user.password)
-
+    
     if (!passwordMatched) {
       throw new AppError('E-mail or password incorrect.', 401)
     }
@@ -44,6 +44,8 @@ export class AuthenticateUserService {
     const token = tokenProvider.generateToken(user.id)
   
     const refreshTokensRepository = getCustomRepository(RefreshTokensRepository)
+
+    await refreshTokensRepository.deleteRefreshToken(user.id)
 
     const refreshToken = await refreshTokensRepository.generateRefreshToken(user.id)
 

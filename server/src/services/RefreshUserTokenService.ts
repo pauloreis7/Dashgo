@@ -1,8 +1,6 @@
 import { getCustomRepository } from 'typeorm'
+import dayjs from 'dayjs'
 
-import { createRefreshToken } from '../fakeDatabase';
-import { checkRefreshTokenIsValid, invalidateRefreshToken } from '../fakeDatabase';
-import { UsersRepository } from '../repositories/UsersRepository/TypeormUsersRepository'
 import { JwtTokenProvider } from '../providers/TokenProvider/JwtTokenProvider';
 import { 
   RefreshTokensRepository
@@ -12,8 +10,7 @@ import { AppError } from '../errors/AppError'
 import RefreshToken from '../models/RefreshToken'
 
 interface IRequest {
-  email: string;
-  refreshToken: string | undefined;
+  refresh_token: string;
 }
 
 interface IResponse {
@@ -22,34 +19,29 @@ interface IResponse {
 }
 
 export class RefreshUserTokenService {
-  public async execute({ email, refreshToken }: IRequest): Promise<IResponse> {
-    const usersRepository = getCustomRepository(UsersRepository)
-
-    const user = await usersRepository.findByEmail(email)
-
-    if (!user) {
-      throw new AppError('User not found.', 401)
-    }
-  
-    if (!refreshToken) {
-      throw new AppError('Refresh token is required', 401)
-    }
-
+  public async execute({ refresh_token }: IRequest): Promise<IResponse> {
     const refreshTokensRepository = getCustomRepository(RefreshTokensRepository)
 
-    const isValidRefreshToken = await refreshTokensRepository.findById(refreshToken)
-
-    if (!isValidRefreshToken) {
+    const refreshToken = await refreshTokensRepository.findById(refresh_token)
+    
+    if (!refreshToken) {
       throw new AppError('Refresh token is invalid', 401)
     }
 
-    await refreshTokensRepository.deleteRefreshToken(user.id)
-  
     const tokenProvider = new JwtTokenProvider()
-    const token = tokenProvider.generateToken(user.id)
-  
-    const newRefreshToken = await refreshTokensRepository.generateRefreshToken(user.id)
+    const token = tokenProvider.generateToken(refreshToken.user_id)
+    
+    const isRefreshTokenExpired = dayjs().isAfter(dayjs.unix(refreshToken.expires_in))
 
-    return { token, newRefreshToken }
+    if(isRefreshTokenExpired) {
+      await refreshTokensRepository.deleteRefreshToken(refreshToken.user_id)
+
+      const newRefreshToken = await refreshTokensRepository
+      .generateRefreshToken(refreshToken.user_id)
+
+      return { token, newRefreshToken }
+    }
+    
+    return { token, newRefreshToken: refreshToken }
   }
 }

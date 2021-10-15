@@ -21,7 +21,7 @@ export class UsersRepository extends Repository<User>  {
 
   public async createUser(userData: ICreateUserDTO): Promise<User> {
     const user = this.create(userData)
-
+    
     await this.save(user)
 
     return user

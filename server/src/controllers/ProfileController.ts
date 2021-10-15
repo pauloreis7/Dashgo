@@ -5,11 +5,11 @@ import { ShowProfileService } from '../services/ShowProfileService'
 export class UsersController {
   public async show(request: Request, response: Response): Promise<Response> {
     try {
-      const email = request.user;
+      const userId = request.user;
 
       const showProfile = new ShowProfileService()
 
-      const user = await showProfile.execute({ email })
+      const user = await showProfile.execute({ userId })
 
       return response.json(user)
       
