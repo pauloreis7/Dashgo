@@ -20,5 +20,25 @@ usersRouter.post(
   }),
   usersController.create
 );
+usersRouter.put(
+  '/update',
+  celebrate({
+    [Segments.BODY]: {
+      name: Joi.string().required(),
+      email: Joi.string().email().required(),
+      old_password: Joi.string(),
+      password: Joi.when('old_password', {
+        is: Joi.exist(),
+        then: Joi.string().required()
+      }),
+      password_confirmation: Joi.when('password', {
+        is: Joi.exist(),
+        then: Joi.string().required().valid(Joi.ref('password'))
+      }),
+    }
+  }),
+  checkAuthMiddleware,
+  usersController.update
+);
 
 export default usersRouter

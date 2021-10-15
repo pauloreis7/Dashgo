@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 
 import { CreateUserService } from '../services/CreateUserService'
 import { ShowProfileService } from '../services/ShowProfileService'
+import { UpdateUserService } from '../services/UpdateUserService'
 
 export class UsersController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -33,6 +34,32 @@ export class UsersController {
 
       return response.json(user)
       
+    } catch (err) {
+      const error = Object(err)
+
+      return response
+        .status(error.statusCode)
+        .json({ error: true, ...error });
+    }
+  }
+
+  public async update(request: Request, response: Response): Promise<Response> {
+    try {
+      const userId = request.user;
+      const { name, email, password, old_password } = request.body
+
+      const updateUser = new UpdateUserService()
+
+      const user = await updateUser.execute({
+        userId,
+        name,
+        email,
+        password,
+        old_password
+      })
+
+      return response.json(user)
+
     } catch (err) {
       const error = Object(err)
 
