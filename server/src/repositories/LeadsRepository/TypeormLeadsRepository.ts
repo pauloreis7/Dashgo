@@ -15,6 +15,12 @@ export class LeadsRepository extends Repository<Lead> {
     return leads
   }
 
+  public async findById(id: string): Promise<Lead | undefined> {
+    const lead = await this.findOne(id)
+
+    return lead
+  }
+
   public async findByEmail(email: string): Promise<Lead | undefined> {
     const lead = await this.findOne({
       where: { email }

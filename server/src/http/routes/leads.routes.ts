@@ -24,4 +24,18 @@ leadsRouter.post(
   leadsController.create
 )
 
+leadsRouter.put(
+  '/update',
+  celebrate({
+    [Segments.BODY]: {
+      name: Joi.string().required(),
+      email: Joi.string().email().required(),
+    },
+    [Segments.QUERY]: {
+      leadId: Joi.string().uuid().required(),
+    }
+  }),
+  leadsController.update
+)
+
 export default leadsRouter

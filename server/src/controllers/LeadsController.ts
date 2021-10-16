@@ -2,6 +2,11 @@ import { Request, Response } from "express";
 import { CreateLeadService } from "../services/CreateLeadService";
 
 import { ListLeadsService } from "../services/ListLeadsService";
+import { UpdateLeadService } from "../services/UpdateLeadService";
+
+type UpdateLeadQueryDTO = {
+  leadId: string;
+}
 
 export class LeadsController {
   public async index(request: Request, response: Response): Promise<Response> {
@@ -45,5 +50,29 @@ export class LeadsController {
         .status(error.statusCode)
         .json({ error: true, ...error });
     }
+  }
+
+  public async update(request: Request, response: Response): Promise<Response> {
+    try {
+      const { leadId } = request.query as UpdateLeadQueryDTO
+      const { name, email } = request.body
+
+      const updateLead = new UpdateLeadService()
+
+      const lead = await updateLead.execute({
+        leadId,
+        name,
+        email
+      })
+
+      return response.json(lead)
+
+    } catch (err) {
+      const error = Object(err)
+
+      return response
+        .status(error.statusCode)
+        .json({ error: true, ...error });
+    }  
   }
 }
