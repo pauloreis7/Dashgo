@@ -38,4 +38,14 @@ leadsRouter.put(
   leadsController.update
 )
 
+leadsRouter.delete(
+  '/delete',
+  celebrate({
+    [Segments.QUERY]: {
+      leadId: Joi.string().uuid().required(),
+    }
+  }),
+  leadsController.delete
+)
+
 export default leadsRouter

@@ -3,8 +3,9 @@ import { CreateLeadService } from "../services/CreateLeadService";
 
 import { ListLeadsService } from "../services/ListLeadsService";
 import { UpdateLeadService } from "../services/UpdateLeadService";
+import { DeleteLeadService } from "../services/DeleteLeadService";
 
-type UpdateLeadQueryDTO = {
+type LeadQueryDTO = {
   leadId: string;
 }
 
@@ -54,7 +55,7 @@ export class LeadsController {
 
   public async update(request: Request, response: Response): Promise<Response> {
     try {
-      const { leadId } = request.query as UpdateLeadQueryDTO
+      const { leadId } = request.query as LeadQueryDTO
       const { name, email } = request.body
 
       const updateLead = new UpdateLeadService()
@@ -66,6 +67,25 @@ export class LeadsController {
       })
 
       return response.json(lead)
+
+    } catch (err) {
+      const error = Object(err)
+
+      return response
+        .status(error.statusCode)
+        .json({ error: true, ...error });
+    }  
+  }
+
+  public async delete(request: Request, response: Response): Promise<Response> {
+    try {
+      const { leadId } = request.query as LeadQueryDTO
+
+      const deleteLead = new DeleteLeadService()
+
+      await deleteLead.execute({ leadId })
+
+      return response.json({ delete: true });
 
     } catch (err) {
       const error = Object(err)
