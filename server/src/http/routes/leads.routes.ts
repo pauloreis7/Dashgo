@@ -11,6 +11,7 @@ const leadsController = new LeadsController()
 
 leadsRouter.use(checkAuthMiddleware)
 
+leadsRouter.get('/', leadsController.index)
 
 leadsRouter.post(
   '/create',
