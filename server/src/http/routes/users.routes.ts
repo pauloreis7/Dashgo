@@ -9,6 +9,7 @@ const usersRouter = Router()
 const usersController = new UsersController()
 
 usersRouter.get('/me', checkAuthMiddleware, usersController.show);
+
 usersRouter.post(
   '/signup',
   celebrate({
@@ -20,6 +21,7 @@ usersRouter.post(
   }),
   usersController.create
 );
+
 usersRouter.put(
   '/update',
   celebrate({

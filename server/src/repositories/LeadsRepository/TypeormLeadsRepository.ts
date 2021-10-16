@@ -15,6 +15,14 @@ export class LeadsRepository extends Repository<Lead> {
     return leads
   }
 
+  public async findByEmail(email: string): Promise<Lead | undefined> {
+    const lead = await this.findOne({
+      where: { email }
+    })
+
+    return lead
+  }
+
   public async createLead({ name, email, user_id }: ICreateLeadDTO): Promise<Lead> {
     const lead = this.create({ name, email, user_id })
 
