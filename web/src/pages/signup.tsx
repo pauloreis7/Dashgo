@@ -47,7 +47,7 @@ export default function SignUp() {
   const { errors, isSubmitting } = formState
 
   const handleSignUp: SubmitHandler<SignUpFormData> = async (data) => {
-    try {
+    try {      
       await api.post('/users/signup', data)
 
       toast({
@@ -58,12 +58,15 @@ export default function SignUp() {
         isClosable: true,
         position: "top-right",
       })
-
+      
       router.push('/')
     } catch (err) {
+      const errorMessage = err.response?.data.message 
+      ?? `Erro interno de servidor, tente novamente mais tarde! (${err.message})`
+
       toast({
         title: "Erro ao criar conta.",
-        description: err.message,
+        description: errorMessage,
         status: "error",
         duration: 9000,
         isClosable: true,

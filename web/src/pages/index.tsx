@@ -5,6 +5,7 @@ import {
   Stack,
   Heading,
   Divider,
+  useToast,
   Link as ChakraLink
 } from '@chakra-ui/react'
 import { GetStaticProps } from 'next'
@@ -12,6 +13,8 @@ import Link from 'next/link'
 import * as yup from 'yup'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { destroyCookie, parseCookies, setCookie } from 'nookies'
+import { useAuth } from '../contexts/AuthContext'
 
 import { Input } from '../components/Form/Input'
 
@@ -26,15 +29,40 @@ const signInFormSchema = yup.object().shape({
 })
 
 export default function Home() {
+  const { signIn } = useAuth()
+
+  const toast = useToast()
+
   const { register, handleSubmit, formState } = useForm({
     resolver: yupResolver(signInFormSchema)
   })
 
   const { errors, isSubmitting } = formState
 
-  const handleSignIn: SubmitHandler<SignInFormData> = async (values) => {
-    await new Promise(resolve => setTimeout(resolve, 2000))
-    
+  const handleSignIn: SubmitHandler<SignInFormData> = async (data) => {
+    try {
+      const { email, password } = data
+
+      await signIn({ email, password })
+      
+      toast({
+        title: "Login realizado.",
+        description: "Login feito com sucesso.",
+        status: "success",
+        duration: 6000,
+        isClosable: true,
+        position: "top-right",
+      })
+    } catch (err) {
+      toast({
+        title: "Erro ao fazer login.",
+        description: err.message,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+        position: "top-right",
+      })
+    }
   }
 
   return (
