@@ -16,7 +16,7 @@ import * as yup from 'yup'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
-import { api } from '../services/api'
+import { api } from '../services/apiClient'
 
 import { Input } from '../components/Form/Input'
 

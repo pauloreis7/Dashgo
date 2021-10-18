@@ -4,7 +4,7 @@ import * as yup from 'yup'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useMutation } from 'react-query'
-import { api } from '../../services/api'
+import { api } from '../../services/apiClient'
 import { queryClient } from '../../services/queryClient'
 import { useRouter } from 'next/router'
 

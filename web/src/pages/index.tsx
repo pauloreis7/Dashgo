@@ -13,7 +13,7 @@ import Link from 'next/link'
 import * as yup from 'yup'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { destroyCookie, parseCookies, setCookie } from 'nookies'
+
 import { useAuth } from '../contexts/AuthContext'
 
 import { Input } from '../components/Form/Input'

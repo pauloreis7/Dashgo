@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query'
 
-import { api } from '../../services/api'
+import { api } from '../../services/apiClient'
 
 type User = {
   id: string;
