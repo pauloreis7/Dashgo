@@ -25,7 +25,7 @@ export class RefreshUserTokenService {
     const refreshToken = await refreshTokensRepository.findById(refresh_token)
     
     if (!refreshToken) {
-      throw new AppError('Refresh token is invalid', 401)
+      throw new AppError('Refresh token está inválido', 401)
     }
 
     const tokenProvider = new JwtTokenProvider()

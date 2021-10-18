@@ -19,7 +19,7 @@ export class CreateUserService {
     const checkUserExists = await usersRepository.findByEmail(email)
 
     if(checkUserExists) {
-      throw new AppError('Email address already used.')
+      throw new AppError('Esse e-mail já está em uso.')
     }
 
     const hashProvider = new BCryptHashProvider()

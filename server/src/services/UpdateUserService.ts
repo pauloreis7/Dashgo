@@ -27,20 +27,20 @@ export class UpdateUserService {
     const user = await usersRepository.findById(userId)
 
     if(!user) {
-      throw new AppError('User not found.')
+      throw new AppError('Usuário não encontrado.')
     }
 
     const userWithUpdatedEmail = await usersRepository.findByEmail(email)
 
     if(userWithUpdatedEmail && userWithUpdatedEmail.id !== user.id) {
-      throw new AppError('E-mail already in use.')
+      throw new AppError('Esse e-mail já está em uso.')
     }
 
     user.name = name
     user.email = email
 
     if(password && !old_password) {
-      throw new AppError('You need to inform the old password to set a new password.')
+      throw new AppError('Você precisa informar sua senha antiga para definir uma nova senha.')
     }
 
     if(password && old_password) {
@@ -49,7 +49,7 @@ export class UpdateUserService {
       const checkOldPassword = await hashProvider.compareHash(old_password, user.password)
 
       if(!checkOldPassword) {
-        throw new AppError('Old password does not match.')
+        throw new AppError('Senha antiga não está correta.')
       }
 
       user.password = await hashProvider.generateHash(password)

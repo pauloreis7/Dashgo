@@ -18,7 +18,7 @@ export class CreateLeadService {
     const checkLeadExists = await leadsRepository.findByEmail(email)
     
     if(checkLeadExists) {
-      throw new AppError('Email address already used.')
+      throw new AppError('Esse e-mail já está em uso.')
     }
 
     const lead = await leadsRepository.createLead({

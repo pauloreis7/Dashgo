@@ -18,13 +18,13 @@ export class UpdateLeadService {
     const lead = await leadsRepository.findById(leadId)
 
     if(!lead) {
-      throw new AppError('Lead not found.')
+      throw new AppError('Lead não encontrado.')
     }
 
     const leadWithUpdatedEmail = await leadsRepository.findByEmail(email)
 
     if(leadWithUpdatedEmail && leadWithUpdatedEmail.id !== lead.id) {
-      throw new AppError('E-mail already in use.')
+      throw new AppError('Esse e-mail já está em uso.')
     }
 
     lead.name = name

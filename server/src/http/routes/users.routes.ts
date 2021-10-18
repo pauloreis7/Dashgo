@@ -16,7 +16,11 @@ usersRouter.post(
     [Segments.BODY]: {
       name: Joi.string().required(),
       email: Joi.string().email().required(),
-      password: Joi.string().required()
+      password: Joi.string().required(),
+      password_confirmation: Joi.when('password', {
+        is: Joi.exist(),
+        then: Joi.string().required().valid(Joi.ref('password'))
+      }),
     },
   }),
   usersController.create

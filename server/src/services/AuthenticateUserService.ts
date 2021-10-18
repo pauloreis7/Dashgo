@@ -29,7 +29,7 @@ export class AuthenticateUserService {
     const user = await usersRepository.findByEmail(email)
 
     if (!user) {
-      throw new AppError('E-mail or password incorrect.', 401)
+      throw new AppError('E-mail ou senha incorreto.', 401)
     }
 
     const hashProvider = new BCryptHashProvider()
@@ -37,7 +37,7 @@ export class AuthenticateUserService {
     const passwordMatched = await hashProvider.compareHash(password, user.password)
     
     if (!passwordMatched) {
-      throw new AppError('E-mail or password incorrect.', 401)
+      throw new AppError('E-mail ou senha incorreto.', 401)
     }
 
     const tokenProvider = new JwtTokenProvider()
