@@ -1,9 +1,14 @@
 import { 
   Flex,
+  Text,
   Button,
   Stack,
-  Heading
+  Heading,
+  Divider,
+  Link as ChakraLink
 } from '@chakra-ui/react'
+import { GetStaticProps } from 'next'
+import Link from 'next/link'
 import * as yup from 'yup'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -38,6 +43,7 @@ export default function Home() {
       h="100vh"
       align="center"
       justify="center"
+      p="10"
     >
       <Flex
         as="form"
@@ -51,6 +57,8 @@ export default function Home() {
       >
         <Stack spacing="4">
           <Heading as="h1" size="lg" textAlign="center">Faça Login</Heading>
+
+          <Divider my={["4", "6"]} borderColor="gray.700" />
 
           <Input 
             name="email" 
@@ -71,12 +79,27 @@ export default function Home() {
 
         <Button
           type="submit"
-          mt="6"
+          my="6"
           colorScheme="pink"
           size="lg"
           isLoading={isSubmitting}
         >Entrar</Button>
+
+        <Text align="center" fontSize="lg">Ainda não tem uma conta? 
+          <Link href="/signup" passHref>
+            <ChakraLink ml="2" color="pink.500" fontWeight="bold">
+              Crie agora
+            </ChakraLink>
+          </Link>
+        </Text>
       </Flex>
     </Flex>
   )
+}
+
+export const getStaticProps: GetStaticProps = async () => {
+  return {
+    props: {},
+    revalidate: 60 * 60 * 24, // 24 hours
+  }
 }
