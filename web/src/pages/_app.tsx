@@ -3,8 +3,7 @@ import { ChakraProvider } from '@chakra-ui/react'
 import { QueryClientProvider } from 'react-query'
 
 import { theme } from '../styles/theme'
-import { SidebarDrawerProvider } from '../contexts/SidebarDrawerContext'
-import { AuthProvider } from '../contexts/AuthContext'
+import { AppProvider } from '../contexts'
 import { makeServer } from '../services/miragejs'
 import { queryClient } from '../services/queryClient'
 
@@ -16,11 +15,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <ChakraProvider resetCSS theme={theme}>
-        <AuthProvider>
-          <SidebarDrawerProvider>
-            <Component {...pageProps} />
-          </SidebarDrawerProvider>
-        </AuthProvider>
+        <AppProvider>
+          <Component {...pageProps} />
+        </AppProvider>
       </ChakraProvider>
     </QueryClientProvider>
   )
