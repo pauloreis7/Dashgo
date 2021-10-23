@@ -64,11 +64,16 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     if(token) {
       api.get('/users/me').then(response => {
+
         const { id, name, email, created_at, updated_at } = response.data
+
+        api.defaults.headers['Authorization'] = `Bearer ${token}}`
 
         setUser({ id, name, email, created_at, updated_at })
       })
-      .catch(() => {
+      .catch((err) => {
+        setUser(null)
+
         signOut()
       })
     }
@@ -82,13 +87,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
       })
   
       const { user, token, refreshToken } = response.data
-      console.log(response.data)
+
       setCookie(undefined, '@dashgo.token', token, {
         maxAge: 60 * 60 * 24 * 30, // 30 days
         path: '/'
       })
 
-      setCookie(undefined, '@dashgo.refreshToken', refreshToken, {
+      setCookie(undefined, '@dashgo.refreshToken', refreshToken.id, {
         maxAge: 60 * 60 * 24 * 30, // 30 days
         path: '/'
       })
@@ -96,7 +101,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       setUser(user)
 
       api.defaults.headers['Authorization'] = `Bearer ${token}}`
-
+      
       Router.push('/dashboard')
     } catch (err) {
       const errorMessage = err.response?.data.message 

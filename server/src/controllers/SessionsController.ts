@@ -39,13 +39,13 @@ export class SessionsController {
   public async refresh(request: Request, response: Response): Promise<Response> {
     try {
       const { refresh_token } = request.body;
-      
+
       const refreshUserToken = new RefreshUserTokenService()
 
       const { token, newRefreshToken } = await refreshUserToken.execute({
         refresh_token
       })
-    
+
       return response.json({
         token,
         refreshToken: newRefreshToken,

@@ -13,7 +13,7 @@ export function setupAPIClient(ctx = undefined) {
   const api = axios.create({
     baseURL: 'http://localhost:3333',
     headers: {
-      Authorization: `Bearer ${cookies['@dashgo.token']}`
+      Authorization: `Bearer ${cookies['@dashgo.token'] ?? null}`
     }
   })
 
@@ -26,22 +26,22 @@ export function setupAPIClient(ctx = undefined) {
   
         const { '@dashgo.refreshToken': refreshToken } = cookies
         const originalConfig = error.config
-  
+
         if(!isRefreshing) {
           isRefreshing = true
   
           api.post('/sessions/refresh', {
-            refreshToken: JSON.parse(refreshToken).id
+            refresh_token: refreshToken
           }).then(response => {
             const { token } = response.data
-    
+
             setCookie(ctx, '@dashgo.token', token, {
               maxAge: 60 * 60 * 24 * 30, // 30 days
               path: '/'
             })
       
             setCookie(ctx, '@dashgo.refreshToken',
-             response.data.refreshToken, {
+            response.data.refreshToken.id, {
               maxAge: 60 * 60 * 24 * 30, // 30 days
               path: '/'
             })
