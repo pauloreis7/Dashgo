@@ -13,7 +13,7 @@ export function setupAPIClient(ctx = undefined) {
   const api = axios.create({
     baseURL: 'http://localhost:3333',
     headers: {
-      Authorization: `Bearer ${cookies['@dashgo.token'] ?? null}`
+      Authorization: `Bearer ${cookies['@dashgo.token']}`
     }
   })
 
@@ -25,6 +25,7 @@ export function setupAPIClient(ctx = undefined) {
         cookies = parseCookies()
   
         const { '@dashgo.refreshToken': refreshToken } = cookies
+
         const originalConfig = error.config
 
         if(!isRefreshing) {
@@ -45,15 +46,15 @@ export function setupAPIClient(ctx = undefined) {
               maxAge: 60 * 60 * 24 * 30, // 30 days
               path: '/'
             })
-    
-            api.defaults.headers['Authorization'] = `Bearer ${token}}`
+
+            api.defaults.headers['Authorization'] = `Bearer ${token}`
   
             failedRequestsQueue.forEach(request => request.onSuccess(token))
             failedRequestsQueue = []
           }).catch(err => {
             failedRequestsQueue.forEach(request => request.onFailure(err))
             failedRequestsQueue = []
-  
+
             if(process.browser) {
               signOut()
             }
@@ -65,7 +66,7 @@ export function setupAPIClient(ctx = undefined) {
         return new Promise((resolve, reject) => {
           failedRequestsQueue.push({
             onSuccess: (token: string) => {
-              api.defaults.headers['Authorization'] = `Bearer ${token}}`
+              originalConfig.headers['Authorization'] = `Bearer ${token}`
   
               resolve(api(originalConfig))
             },

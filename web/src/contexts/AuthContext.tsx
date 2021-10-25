@@ -67,8 +67,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
         const { id, name, email, created_at, updated_at } = response.data
 
-        api.defaults.headers['Authorization'] = `Bearer ${token}}`
-
         setUser({ id, name, email, created_at, updated_at })
       })
       .catch((err) => {
