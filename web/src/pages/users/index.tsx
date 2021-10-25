@@ -19,7 +19,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { RiAddLine, RiPencilLine } from 'react-icons/ri'
 
-import { useUsers } from '../../services/hooks/useUsers'
+import { useUsers } from '../../hooks/useUsers'
 
 import { Header } from '../../components/Header'
 import { Sidebar } from '../../components/Sidebar'
