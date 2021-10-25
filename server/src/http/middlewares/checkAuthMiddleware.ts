@@ -15,7 +15,7 @@ export function checkAuthMiddleware(
       .status(401)
       .json({ error: true, code: 'token.invalid', message: 'Token not present.' })
   }
-  
+
   const [, token] = authorization?.split(' ');
 
   if (!token) {
@@ -25,9 +25,9 @@ export function checkAuthMiddleware(
   }
 
   try {
-    const decoded = verify(token as string, auth.secret) as IDecodedToken;
+    const { sub } = verify(token as string, auth.secret) as IDecodedToken;
     
-    request.user = decoded.sub;
+    request.user = sub;
 
     return next();
   } catch (err) {
