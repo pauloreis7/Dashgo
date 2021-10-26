@@ -1,6 +1,8 @@
-import { Repository, EntityRepository, DeleteResult } from 'typeorm'
+import { Repository, EntityRepository, DeleteResult, Between } from 'typeorm'
+import dayjs from 'dayjs'
 
 import { ICreateLeadDTO } from './ICreateLeadDTO'
+import { IFilterLeadCount } from './IFilterLeadCount'
 
 import Lead from '../../models/Lead'
 
@@ -13,6 +15,37 @@ export class LeadsRepository extends Repository<Lead> {
     })
 
     return leads
+  }
+
+  public async CountAllForDaysAgo({ userId, daysAgo }: IFilterLeadCount): Promise<number[]> {
+    const defaultArray = Array.from(Array(Number(daysAgo)))
+
+    const DaysToCount = defaultArray.map((_, index) => {
+      const from = dayjs().subtract(index, 'day').format('YYYY-MM-DD [00:00:00.000]')
+      const to = dayjs().subtract(index, 'day').format('YYYY-MM-DD [23:59:00.000]')
+
+      return { from, to }
+    })
+
+    const leads = await Promise.all(
+      DaysToCount.map((DayToCount) => {
+        const count = this.count({
+          where: { 
+            user_id: userId, 
+            created_at: Between(
+              new Date(DayToCount.from),
+              new Date(DayToCount.to)
+            )
+          },
+        })
+
+        return count
+      })
+    )
+
+    const orderLeads = leads.reverse()
+
+    return orderLeads
   }
 
   public async findById(id: string): Promise<Lead | undefined> {
