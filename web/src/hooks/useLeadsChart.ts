@@ -3,8 +3,30 @@ import { useQuery } from 'react-query'
 import { ApexOptions } from 'apexcharts'
 import dayjs from 'dayjs'
 
-export function getApexOptions(dayChartCategoriesCount: number) {
-  const defaultArray = Array.from(Array(dayChartCategoriesCount))
+import { api } from '../services/apiClient'
+
+type GetLeadsChartResponse = {
+  options: ApexOptions, 
+  series: {
+    name: string;
+    data: number[]
+  }[]
+}
+
+export async function getLeadsChart(daysToChartCount: number): Promise<GetLeadsChartResponse> {
+  const { data } = await api.get('/leads/daysCount', {
+    params: {
+      daysAgo: daysToChartCount
+    }
+  })
+
+  const leadsCountByDaysAgo = data
+
+  const series = [
+    { name: 'leads', data: leadsCountByDaysAgo }
+  ] 
+
+  const defaultArray = Array.from(Array(daysToChartCount))
 
   const optionsCategories = defaultArray.map((_ , index) => {
     const date = dayjs().subtract(index, 'day')
@@ -53,13 +75,16 @@ export function getApexOptions(dayChartCategoriesCount: number) {
       }
     }
   }
-
-  return { options }
+  
+  return {
+    options,
+    series
+  }
 }
 
-export function useApexOptions(dayChartCategoriesCount: number) {
-  return useQuery(['apexOptions', dayChartCategoriesCount], 
-  () => getApexOptions(dayChartCategoriesCount), {
-    staleTime: 1000 * 60 * 60 * 3, // 3 hours
+export function useLeadsChart(daysToChartCount: number) {
+  return useQuery(['leadsChart', daysToChartCount], 
+  () => getLeadsChart(daysToChartCount), {
+    staleTime: 1000 * 60 * 5, // 5 minutes
   })
 }

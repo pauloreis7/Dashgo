@@ -68,7 +68,7 @@ export default function SignUp() {
         title: "Erro ao criar conta.",
         description: errorMessage,
         status: "error",
-        duration: 9000,
+        duration: 6000,
         isClosable: true,
         position: "top-right",
       })

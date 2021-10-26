@@ -1,8 +1,7 @@
 import { Flex, Heading, SimpleGrid, Box, Text, Skeleton, Spinner } from '@chakra-ui/react'
 import dynamic from 'next/dynamic'
 
-import { useAuth } from '../contexts/AuthContext'
-import { useApexOptions } from '../hooks/useApexOptions'
+import { useLeadsChart } from '../hooks/useLeadsChart'
 
 import { Header } from '../components/Header'
 import { Sidebar } from '../components/Sidebar'
@@ -11,13 +10,8 @@ const Chart = dynamic(() => import('react-apexcharts'), {
   ssr: false
 })
 
-const series = [
-  { name: 'subs', data: [120, 56, 123, 290, 84, 138, 109] }
-]
-
 export default function Dashboard() {
-  const { user } = useAuth()
-  const { data, isLoading, isFetching, error } = useApexOptions(7)
+  const { data, isLoading, isFetching, error } = useLeadsChart(7)
 
   return (
     <Flex direction="column" h="100vh">
@@ -39,15 +33,19 @@ export default function Dashboard() {
               { isLoading || isFetching && <Spinner size="sm" color="gray.500" ml="4" /> }
             </Heading>
 
-            <Skeleton isLoaded={!isLoading} height="10rem" 
-              startColor="gray.700" endColor="gray.900"
+            <Skeleton 
+              isLoaded={!isLoading} 
+              height="10rem"
+              borderRadius="2xl"
+              startColor="gray.700" 
+              endColor="gray.600"
             >
               { error ? (
                 <Flex justify="center">
-                  <Text>Falha ao obter dados da Dashboard</Text>
+                  <Text>Falha ao obter dados da Dashboard :(</Text>
                 </Flex>
                 ) : !isLoading && (
-                <Chart options={data.options} series={series} type="area" height={160} />
+                <Chart options={data.options} series={data.series} type="area" height={160} />
               )}
             </Skeleton>
           </Box>
@@ -64,15 +62,19 @@ export default function Dashboard() {
               { isLoading || isFetching && <Spinner size="sm" color="gray.500" ml="4" /> }
             </Heading>
 
-            <Skeleton isLoaded={!isLoading} height="10rem" 
-              startColor="gray.700" endColor="gray.900"
+            <Skeleton 
+              isLoaded={!isLoading} 
+              height="10rem"
+              borderRadius="2xl"
+              startColor="gray.700" 
+              endColor="gray.600"
             >
               { error ? (
                 <Flex justify="center">
-                  <Text>Falha ao obter dados da Dashboard</Text>
+                  <Text>Falha ao obter dados da Dashboard :(</Text>
                 </Flex>
                 ) : !isLoading && (
-                <Chart options={data.options} series={series} type="area" height={160} />
+                <Chart options={data.options} series={data.series} type="area" height={160} />
               )}
             </Skeleton>
           </Box>

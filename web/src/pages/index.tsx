@@ -59,7 +59,7 @@ export default function Home() {
         title: "Erro ao fazer login.",
         description: err.message,
         status: "error",
-        duration: 9000,
+        duration: 6000,
         isClosable: true,
         position: "top-right",
       })
