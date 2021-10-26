@@ -13,6 +13,15 @@ leadsRouter.use(checkAuthMiddleware)
 
 leadsRouter.get('/', leadsController.index)
 
+leadsRouter.get('/daysCount',
+  celebrate({
+    [Segments.QUERY]: {
+      daysAgo: Joi.string().required(),
+    }
+  }),
+  leadsController.daysCount
+)
+
 leadsRouter.post(
   '/create',
   celebrate({

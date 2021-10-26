@@ -1,13 +1,12 @@
 import { Request, Response } from "express";
-import { CreateLeadService } from "../services/CreateLeadService";
 
+import { LeadQueryDTO, FilterQueryDTO } from './types/ILeadsControllerDTOs'
+
+import { FilterDaysCountLeadService } from "../services/FilterDaysCountLeadService";
 import { ListLeadsService } from "../services/ListLeadsService";
+import { CreateLeadService } from "../services/CreateLeadService";
 import { UpdateLeadService } from "../services/UpdateLeadService";
 import { DeleteLeadService } from "../services/DeleteLeadService";
-
-type LeadQueryDTO = {
-  leadId: string;
-}
 
 export class LeadsController {
   public async index(request: Request, response: Response): Promise<Response> {
@@ -19,6 +18,26 @@ export class LeadsController {
       const leads = await listLeads.execute({ user_id })
 
       return response.json(leads)
+
+    } catch (err) {
+      const error = Object(err)
+
+      return response
+        .status(error.statusCode)
+        .json({ error: true, ...error });
+    }
+  }
+
+  public async daysCount(request: Request, response: Response): Promise<Response> {
+    try {
+      const { daysAgo } = request.query as FilterQueryDTO
+      const user_id = request.user
+
+      const filterDaysCountLead = new FilterDaysCountLeadService()
+
+      const leadsCountByDaysAgo = await filterDaysCountLead.execute({ user_id, daysAgo })
+
+      return response.json(leadsCountByDaysAgo)
 
     } catch (err) {
       const error = Object(err)

@@ -17,7 +17,7 @@ export class LeadsRepository extends Repository<Lead> {
     return leads
   }
 
-  public async CountAllForDaysAgo({ userId, daysAgo }: IFilterLeadCount): Promise<number[]> {
+  public async CountAllForDaysAgo({ user_id, daysAgo }: IFilterLeadCount): Promise<number[]> {
     const defaultArray = Array.from(Array(Number(daysAgo)))
 
     const DaysToCount = defaultArray.map((_, index) => {
@@ -31,7 +31,7 @@ export class LeadsRepository extends Repository<Lead> {
       DaysToCount.map((DayToCount) => {
         const count = this.count({
           where: { 
-            user_id: userId, 
+            user_id, 
             created_at: Between(
               new Date(DayToCount.from),
               new Date(DayToCount.to)
