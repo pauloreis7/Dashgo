@@ -2,7 +2,7 @@ import { getCustomRepository } from 'typeorm'
 
 import { 
   RefreshTokensRepository
-} from '../repositories/RefreshTokenRepository/TypeormRefreshJwtTokenRepository'
+} from '../../repositories/RefreshTokenRepository/TypeormRefreshJwtTokenRepository'
 
 interface IRequest {
   refresh_token: string;

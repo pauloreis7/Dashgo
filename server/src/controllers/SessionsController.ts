@@ -2,9 +2,9 @@ import { Request, Response } from 'express'
 
 import { CreateSessionDTO } from './types/ISessionsControllerDTOs'
 
-import { AuthenticateUserService } from '../services/AuthenticateUserService'
-import { RefreshUserTokenService } from '../services/RefreshUserTokenService'
-import { LogoutUserService } from '../services/LogoutUserService'
+import { AuthenticateUserService } from '../services/SessionsServices/AuthenticateUserService'
+import { RefreshUserTokenService } from '../services/SessionsServices/RefreshUserTokenService'
+import { LogoutUserService } from '../services/SessionsServices/LogoutUserService'
 
 export class SessionsController {
   public async create(request: Request, response: Response): Promise<Response> {

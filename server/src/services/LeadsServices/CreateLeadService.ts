@@ -1,9 +1,9 @@
 import { getCustomRepository } from 'typeorm'
 
-import { LeadsRepository } from '../repositories/LeadsRepository/TypeormLeadsRepository'
-import { AppError } from '../errors/AppError'
+import { LeadsRepository } from '../../repositories/LeadsRepository/TypeormLeadsRepository'
+import { AppError } from '../../errors/AppError'
 
-import Lead from '../models/Lead'
+import Lead from '../../models/Lead'
 
 interface IRequest {
   user_id: string;

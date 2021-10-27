@@ -1,15 +1,15 @@
 import { getCustomRepository } from 'typeorm'
 
-import { AppError } from '../errors/AppError'
-import { BCryptHashProvider } from '../providers/HashProvider/BCryptHashProvider'
-import { JwtTokenProvider } from '../providers/TokenProvider/JwtTokenProvider';
-import { UsersRepository } from '../repositories/UsersRepository/TypeormUsersRepository'
+import { AppError } from '../../errors/AppError'
+import { BCryptHashProvider } from '../../providers/HashProvider/BCryptHashProvider'
+import { JwtTokenProvider } from '../../providers/TokenProvider/JwtTokenProvider';
+import { UsersRepository } from '../../repositories/UsersRepository/TypeormUsersRepository'
 import { 
   RefreshTokensRepository
-} from '../repositories/RefreshTokenRepository/TypeormRefreshJwtTokenRepository'
+} from '../../repositories/RefreshTokenRepository/TypeormRefreshJwtTokenRepository'
 
-import User from '../models/User'
-import RefreshToken from '../models/RefreshToken'
+import User from '../../models/User'
+import RefreshToken from '../../models/RefreshToken'
 
 interface IRequest {
   email: string;

@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 
-import { CreateUserService } from '../services/CreateUserService'
-import { ShowProfileService } from '../services/ShowProfileService'
-import { UpdateUserService } from '../services/UpdateUserService'
+import { CreateUserService } from '../services/UsersServices/CreateUserService'
+import { ShowProfileService } from '../services/UsersServices/ShowProfileService'
+import { UpdateUserService } from '../services/UsersServices/UpdateUserService'
 
 export class UsersController {
   public async create(request: Request, response: Response): Promise<Response> {

@@ -2,11 +2,11 @@ import { Request, Response } from "express";
 
 import { LeadQueryDTO, FilterQueryDTO } from './types/ILeadsControllerDTOs'
 
-import { FilterDaysCountLeadService } from "../services/FilterDaysCountLeadService";
-import { ListLeadsService } from "../services/ListLeadsService";
-import { CreateLeadService } from "../services/CreateLeadService";
-import { UpdateLeadService } from "../services/UpdateLeadService";
-import { DeleteLeadService } from "../services/DeleteLeadService";
+import { ListLeadsService } from "../services/LeadsServices/ListLeadsService";
+import { FilterDaysCountLeadService } from "../services/LeadsServices/FilterDaysCountLeadService";
+import { CreateLeadService } from "../services/LeadsServices/CreateLeadService";
+import { UpdateLeadService } from "../services/LeadsServices/UpdateLeadService";
+import { DeleteLeadService } from "../services/LeadsServices/DeleteLeadService";
 
 export class LeadsController {
   public async index(request: Request, response: Response): Promise<Response> {

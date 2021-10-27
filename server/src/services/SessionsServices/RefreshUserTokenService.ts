@@ -1,13 +1,13 @@
 import { getCustomRepository } from 'typeorm'
 import dayjs from 'dayjs'
 
-import { JwtTokenProvider } from '../providers/TokenProvider/JwtTokenProvider';
+import { JwtTokenProvider } from '../../providers/TokenProvider/JwtTokenProvider';
 import { 
   RefreshTokensRepository
-} from '../repositories/RefreshTokenRepository/TypeormRefreshJwtTokenRepository'
-import { AppError } from '../errors/AppError'
+} from '../../repositories/RefreshTokenRepository/TypeormRefreshJwtTokenRepository'
+import { AppError } from '../../errors/AppError'
 
-import RefreshToken from '../models/RefreshToken'
+import RefreshToken from '../../models/RefreshToken'
 
 interface IRequest {
   refresh_token: string;

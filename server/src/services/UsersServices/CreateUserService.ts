@@ -1,10 +1,10 @@
 import { getCustomRepository } from 'typeorm'
 
-import { UsersRepository } from '../repositories/UsersRepository/TypeormUsersRepository'
-import { BCryptHashProvider } from '../providers/HashProvider/BCryptHashProvider'
-import { AppError } from '../errors/AppError'
+import { UsersRepository } from '../../repositories/UsersRepository/TypeormUsersRepository'
+import { BCryptHashProvider } from '../../providers/HashProvider/BCryptHashProvider'
+import { AppError } from '../../errors/AppError'
 
-import User from '../models/User'
+import User from '../../models/User'
 
 interface IRequest {
   name: string;
