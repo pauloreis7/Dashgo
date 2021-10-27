@@ -1,33 +1,48 @@
-import { Repository, EntityRepository } from 'typeorm'
+import { prisma } from '../../prisma'
 
-import { ICreateUserDTO } from './ICreateUserDTO'
+import { ICreateUserDTO } from './DTOs/ICreateUserDTO'
+import { IUpdateUserDTO } from './DTOs/IUpdateUserDTO'
 
-import User from '../../models/User'
-
-@EntityRepository(User)
-export class UsersRepository extends Repository<User>  {
+export class UsersRepository {
   
-  public async findById(id: string): Promise<User | undefined> {
-    const user = await this.findOne(id)
+  public async findById(id: string) {
+    const user = await prisma.user.findUnique({
+      where: { id }
+    })
 
     return user
   }
 
-  public async findByEmail(email: string): Promise<User | undefined> {
-    const user = await this.findOne({ where: { email } })
+  public async findByEmail(email: string) {
+    const user = await prisma.user.findUnique({
+      where: { email }
+    })
 
     return user
   }
 
-  public async createUser(userData: ICreateUserDTO): Promise<User> {
-    const user = this.create(userData)
-    
-    await this.save(user)
+  public async createUser({ name, email, password }: ICreateUserDTO) {
+    const user = await prisma.user.create({
+      data: {
+        name, 
+        email,
+        password
+      }
+    })
 
     return user
   }
 
-  public async saveUser(user: User): Promise<User> {
-    return await this.save(user)
+  public async updateUser({ id, name, email, password }: IUpdateUserDTO) {
+    const user = await prisma.user.update({
+      where: { id },
+      data: {
+        name,
+        email,
+        password,
+      }
+    })
+
+    return user
   }
 }
