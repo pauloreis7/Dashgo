@@ -21,6 +21,7 @@ export function NotificationsNav() {
       <IconButton
         aria-label="Sign Out"
         variant="outline"
+        borderWidth="0.125rem"
         colorScheme="gray.300"
         _hover={{
           color: 'pink.400',

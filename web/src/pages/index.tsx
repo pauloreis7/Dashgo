@@ -14,7 +14,6 @@ import * as yup from 'yup'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
-import { api } from '../services/apiClient'
 import { useAuth } from '../contexts/AuthContext'
 
 import { Input } from '../components/Form/Input'

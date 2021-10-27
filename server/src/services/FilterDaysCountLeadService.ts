@@ -15,7 +15,7 @@ export class FilterDaysCountLeadService {
       user_id,
       daysAgo
     })
-
+    
     return leadsCountByDaysAgo
   }
 }
