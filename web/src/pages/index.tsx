@@ -8,11 +8,12 @@ import {
   useToast,
   Link as ChakraLink
 } from '@chakra-ui/react'
-import { GetStaticProps } from 'next'
+import { GetServerSideProps } from 'next'
 import Link from 'next/link'
 import * as yup from 'yup'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { parseCookies } from 'nookies'
 
 import { useAuth } from '../contexts/AuthContext'
 
@@ -125,9 +126,19 @@ export default function Home() {
   )
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { ['@dashgo.token']: token } = parseCookies(ctx)
+  
+  if(token) {
+    return {
+      redirect: {
+        destination: '/dashboard',
+        permanent: false,
+      }
+    }
+  }
+
   return {
     props: {},
-    revalidate: 60 * 60 * 24, // 24 hours
   }
 }

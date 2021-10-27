@@ -42,7 +42,7 @@ export function signOut() {
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [user, setUser] = useState<User>()
+  const [user, setUser] = useState<User | null>(null)
   const isAuthenticated = !!user
 
   useEffect(() => {
@@ -98,7 +98,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       setUser(user)
 
-      api.defaults.headers['Authorization'] = `Bearer ${token}}`
+      api.defaults.headers['Authorization'] = `Bearer ${token}`
       
       Router.push('/dashboard')
     } catch (err) {
