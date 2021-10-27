@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 import { JwtTokenProvider } from '../../providers/TokenProvider/JwtTokenProvider';
 import { 
   RefreshTokensRepository
-} from '../../repositories/RefreshTokenRepository/TypeormRefreshJwtTokenRepository'
+} from '../../repositories/RefreshTokensRepository/PrismaRefreshJwtRepository'
 import { AppError } from '../../errors/AppError'
 
 import RefreshToken from '../../models/RefreshToken'

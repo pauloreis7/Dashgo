@@ -6,7 +6,7 @@ import { JwtTokenProvider } from '../../providers/TokenProvider/JwtTokenProvider
 import { UsersRepository } from '../../repositories/UsersRepository/TypeormUsersRepository'
 import { 
   RefreshTokensRepository
-} from '../../repositories/RefreshTokenRepository/TypeormRefreshJwtTokenRepository'
+} from '../../repositories/RefreshTokensRepository/PrismaRefreshJwtRepository'
 
 import User from '../../models/User'
 import RefreshToken from '../../models/RefreshToken'

@@ -1,11 +1,8 @@
-import 'reflect-metadata'
 import express from 'express'
 import cors from 'cors'
 import { errors } from 'celebrate'
 
 import routes from './http/routes'
-
-import './database'
 
 const app = express()
 
