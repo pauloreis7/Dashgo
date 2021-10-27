@@ -1,0 +1,42 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Lead {
+  id         String   @id(map: "PK_cd102ed7a9a4ca7d4d8bfeba406") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name       String   @db.VarChar
+  email      String   @unique(map: "UQ_b3eea7add0e16594dba102716c5") @db.VarChar
+  created_at DateTime @default(now()) @db.Timestamp(6)
+  updated_at DateTime @default(now()) @db.Timestamp(6)
+  user_id    String?  @db.Uuid
+  users      User?    @relation(fields: [user_id], references: [id], map: "LeadUser")
+}
+
+model migrations {
+  id        Int    @id(map: "PK_8c82d7f526340ab734260ea46be") @default(autoincrement())
+  timestamp BigInt
+  name      String @db.VarChar
+}
+
+model Refresh_token {
+  id         String  @id(map: "PK_7d8bee0204106019488c4c50ffa") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  expires_in Int
+  user_id    String? @db.Uuid
+  users      User?   @relation(fields: [user_id], references: [id], map: "RefreshTokenUser")
+}
+
+model User {
+  id             String          @id(map: "PK_a3ffb1c0c8416b9fc6f907b7433") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name           String          @db.VarChar
+  email          String          @unique(map: "UQ_97672ac88f789774dd47f7c8be3") @db.VarChar
+  password       String          @db.VarChar
+  created_at     DateTime        @default(now()) @db.Timestamp(6)
+  updated_at     DateTime        @default(now()) @db.Timestamp(6)
+  leads          Lead[]
+  refresh_tokens Refresh_token[]
+}
