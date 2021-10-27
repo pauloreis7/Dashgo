@@ -1,6 +1,6 @@
 import { getCustomRepository } from 'typeorm'
 
-import { LeadsRepository } from '../../repositories/LeadsRepository/TypeormLeadsRepository'
+import { LeadsRepository } from '../../repositories/LeadsRepository/PrismaLeadsRepository'
 
 interface IRequest {
   user_id: string;

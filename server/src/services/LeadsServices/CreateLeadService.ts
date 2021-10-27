@@ -1,6 +1,6 @@
 import { getCustomRepository } from 'typeorm'
 
-import { LeadsRepository } from '../../repositories/LeadsRepository/TypeormLeadsRepository'
+import { LeadsRepository } from '../../repositories/LeadsRepository/PrismaLeadsRepository'
 import { AppError } from '../../errors/AppError'
 
 import Lead from '../../models/Lead'
