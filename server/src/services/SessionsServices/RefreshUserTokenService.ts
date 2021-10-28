@@ -1,13 +1,13 @@
-import { getCustomRepository } from 'typeorm'
 import dayjs from 'dayjs'
 
-import { JwtTokenProvider } from '../../providers/TokenProvider/JwtTokenProvider';
 import { 
   RefreshTokensRepository
 } from '../../repositories/RefreshTokensRepository/PrismaRefreshJwtRepository'
-import { AppError } from '../../errors/AppError'
 
-import RefreshToken from '../../models/RefreshToken'
+import { JwtTokenProvider } from '../../providers/TokenProvider/JwtTokenProvider';
+
+import { AppError } from '../../errors/AppError'
+import { RefreshToken } from '../../prisma/models/RefreshToken'
 
 interface IRequest {
   refresh_token: string;
@@ -20,7 +20,7 @@ interface IResponse {
 
 export class RefreshUserTokenService {
   public async execute({ refresh_token }: IRequest): Promise<IResponse> {
-    const refreshTokensRepository = getCustomRepository(RefreshTokensRepository)
+    const refreshTokensRepository = new RefreshTokensRepository()
 
     const refreshToken = await refreshTokensRepository.findById(refresh_token)
     

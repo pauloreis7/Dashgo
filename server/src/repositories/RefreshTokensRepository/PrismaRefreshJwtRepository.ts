@@ -25,12 +25,8 @@ export class RefreshTokensRepository {
   }
 
   public async deleteRefreshTokenByUserId(userId: string) {
-    const refreshToken = await prisma.refresh_token.findFirst({
+    const refreshToken = await prisma.refresh_token.delete({
       where: { user_id: userId }
-    })
-
-    await prisma.refresh_token.delete({
-      where: { id: refreshToken?.id }
     })
 
     return refreshToken

@@ -1,8 +1,8 @@
-import { getCustomRepository } from 'typeorm'
-
 import { 
   RefreshTokensRepository
 } from '../../repositories/RefreshTokensRepository/PrismaRefreshJwtRepository'
+
+import { AppError } from '../../errors/AppError'
 
 interface IRequest {
   refresh_token: string;
@@ -10,7 +10,13 @@ interface IRequest {
 
 export class LogoutUserService {
   public async execute({ refresh_token }: IRequest): Promise<void> {
-    const refreshTokensRepository = getCustomRepository(RefreshTokensRepository)
+    const refreshTokensRepository = new RefreshTokensRepository()
+
+    const refreshToken = await refreshTokensRepository.findById(refresh_token)
+    
+    if (!refreshToken) {
+      throw new AppError('Refresh token está inválido', 401)
+    }
 
     await refreshTokensRepository.deleteRefreshTokenById(refresh_token)
 
