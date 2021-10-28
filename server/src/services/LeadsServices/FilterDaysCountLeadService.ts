@@ -1,5 +1,3 @@
-import { getCustomRepository } from 'typeorm'
-
 import { LeadsRepository } from '../../repositories/LeadsRepository/PrismaLeadsRepository'
 
 interface IRequest {
@@ -9,7 +7,7 @@ interface IRequest {
 
 export class FilterDaysCountLeadService { 
   public async execute({ user_id, daysAgo }: IRequest): Promise<number[]> {
-    const leadsRepository = getCustomRepository(LeadsRepository)
+    const leadsRepository = new LeadsRepository()
 
     const leadsCountByDaysAgo = await leadsRepository.CountAllForDaysAgo({
       user_id,

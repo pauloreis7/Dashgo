@@ -1,9 +1,7 @@
-import { getCustomRepository } from 'typeorm'
-
 import { LeadsRepository } from '../../repositories/LeadsRepository/PrismaLeadsRepository'
-import { AppError } from '../../errors/AppError'
 
-import Lead from '../../models/Lead'
+import { Lead } from '../../prisma/models/Lead'
+import { AppError } from '../../errors/AppError'
 
 interface IRequest {
   leadId: string;
@@ -13,7 +11,7 @@ interface IRequest {
 
 export class UpdateLeadService {
   public async execute({ leadId, email, name }: IRequest): Promise<Lead> {
-    const leadsRepository = getCustomRepository(LeadsRepository)
+    const leadsRepository = new LeadsRepository()
 
     const lead = await leadsRepository.findById(leadId)
 
@@ -30,6 +28,8 @@ export class UpdateLeadService {
     lead.name = name
     lead.email = email
 
-    return leadsRepository.saveLead(lead)
+    const updatedLead = leadsRepository.updateLead(lead)
+
+    return updatedLead
   }
 }

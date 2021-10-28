@@ -1,3 +1,3 @@
-import { Refresh_token } from '@prisma/client'
+import { Refresh_token as RefreshToken } from '@prisma/client'
 
-export { Refresh_token }
+export { RefreshToken }

@@ -1,9 +1,7 @@
-import { getCustomRepository } from 'typeorm'
-
 import { LeadsRepository } from '../../repositories/LeadsRepository/PrismaLeadsRepository'
-import { AppError } from '../../errors/AppError'
 
-import Lead from '../../models/Lead'
+import { Lead } from '../../prisma/models/Lead'
+import { AppError } from '../../errors/AppError'
 
 interface IRequest {
   user_id: string;
@@ -13,7 +11,7 @@ interface IRequest {
 
 export class CreateLeadService {
   public async execute({ user_id, name, email }: IRequest): Promise<Lead> {
-    const leadsRepository = getCustomRepository(LeadsRepository)
+    const leadsRepository = new LeadsRepository()
 
     const checkLeadExists = await leadsRepository.findByEmail(email)
     

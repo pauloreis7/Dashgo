@@ -32,10 +32,10 @@ usersRouter.put(
     [Segments.BODY]: {
       name: Joi.string().required(),
       email: Joi.string().email().required(),
-      old_password: Joi.string(),
+      old_password: Joi.string().required(),
       password: Joi.when('old_password', {
         is: Joi.exist(),
-        then: Joi.string().required()
+        then: Joi.string()
       }),
       password_confirmation: Joi.when('password', {
         is: Joi.exist(),

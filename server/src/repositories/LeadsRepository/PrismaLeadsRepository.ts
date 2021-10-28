@@ -1,5 +1,6 @@
-import { prisma } from '../../prisma'
 import dayjs from 'dayjs'
+
+import { prisma } from '../../prisma'
 
 import { IFilterLeadCount } from './DTOs/IFilterLeadCount'
 import { ICreateLeadDTO } from './DTOs/ICreateLeadDTO'
@@ -19,42 +20,29 @@ export class LeadsRepository {
     const defaultArray = Array.from(Array(Number(daysAgo)))
 
     const DaysToCount = defaultArray.map((_, index) => {
-      const from = dayjs().subtract(index, 'day').format('YYYY-MM-DD [00:00:00.000]')
-      const to = dayjs().subtract(index, 'day').format('YYYY-MM-DD [23:59:00.000]')
+      const from = dayjs().subtract(index, 'day').format('YYYY-MM-DD[T00:00]')
+      const to = dayjs().subtract(index, 'day').format('YYYY-MM-DD[T23:59]')
 
       return { from, to }
     })
 
     const leads = await Promise.all(
-      DaysToCount.map((DayToCount) => {
+      DaysToCount.map((dayToCount) => {
         const count = prisma.lead.count({
           where: {
             user_id,
             AND: {
-              created_at: DayToCount.from
-            }
+              created_at: { 
+                gte: new Date(dayToCount.from),
+                lte: new Date(dayToCount.to),
+              },
+            },
           }
         })
 
         return count
       })
     )
-
-    // const leadsold = await Promise.all(
-    //   DaysToCount.map((DayToCount) => {
-    //     const count = this.count({
-    //       where: { 
-    //         user_id, 
-    //         created_at: Between(
-    //           new Date(DayToCount.from),
-    //           new Date(DayToCount.to)
-    //         )
-    //       },
-    //     })
-
-    //     return count
-    //   })
-    // )
 
     const orderLeads = leads.reverse()
 

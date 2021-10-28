@@ -4,8 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "tsnd --ignore-watch node_modules --respawn --transpile-only src/server.ts",
-    "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js"
+    "dev": "tsnd --ignore-watch node_modules --respawn --transpile-only src/server.ts"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
@@ -27,8 +26,6 @@
     "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^3.1.2",
     "pg": "^8.7.1",
-    "reflect-metadata": "^0.1.13",
-    "typeorm": "^0.2.38",
     "uuid": "^8.3.2"
   }
 }
