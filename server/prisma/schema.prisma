@@ -16,7 +16,6 @@ model Lead {
   user_id    String
   users      User     @relation(fields: [user_id], references: [id])
 
-  @@unique([id, email])
   @@map("Leads")
 }
 
@@ -26,7 +25,6 @@ model Refresh_token {
   user       User   @relation(fields: [user_id], references: [id])
   user_id    String @unique
 
-  @@unique([id, user_id])
   @@map("refresh_tokens")
 }
 
@@ -40,6 +38,5 @@ model User {
   leads         Lead[]
   refresh_token Refresh_token?
 
-  @@unique([id, email])
   @@map("users")
 }
