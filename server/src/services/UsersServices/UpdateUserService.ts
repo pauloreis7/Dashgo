@@ -1,10 +1,9 @@
-import { getCustomRepository } from 'typeorm'
+import { UsersRepository } from '../../repositories/UsersRepository/PrismaUsersRepository'
 
-import { UsersRepository } from '../../repositories/UsersRepository/TypeormUsersRepository'
 import { BCryptHashProvider } from '../../providers/HashProvider/BCryptHashProvider'
-import { AppError } from '../../errors/AppError'
 
-import User from '../../models/User'
+import { User } from '../../prisma/models/User'
+import { AppError } from '../../errors/AppError'
 
 interface IRequest {
   userId: string;
@@ -22,7 +21,7 @@ export class UpdateUserService {
     password,
     old_password
   }: IRequest): Promise<User> {
-    const usersRepository = getCustomRepository(UsersRepository)
+    const usersRepository = new UsersRepository()
 
     const user = await usersRepository.findById(userId)
 
@@ -55,6 +54,6 @@ export class UpdateUserService {
       user.password = await hashProvider.generateHash(password)
     }
 
-    return usersRepository.saveUser(user)
+    return usersRepository.updateUser(user)
   }
 }

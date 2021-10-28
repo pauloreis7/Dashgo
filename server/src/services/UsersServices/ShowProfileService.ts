@@ -1,9 +1,7 @@
-import { getCustomRepository } from 'typeorm'
+import { UsersRepository } from '../../repositories/UsersRepository/PrismaUsersRepository'
 
+import { User } from '../../prisma/models/User'
 import { AppError } from '../../errors/AppError'
-import { UsersRepository } from '../../repositories/UsersRepository/TypeormUsersRepository'
-
-import User from '../../models/User'
 
 interface IRequest {
   userId: string
@@ -11,8 +9,7 @@ interface IRequest {
 
 export class ShowProfileService {
   public async execute({ userId }: IRequest): Promise<User> {
-    const usersRepository = getCustomRepository(UsersRepository)
-
+    const usersRepository = new UsersRepository()
     const user = await usersRepository.findById(userId)
 
     if(!user) {

@@ -1,10 +1,9 @@
-import { getCustomRepository } from 'typeorm'
+import { UsersRepository } from '../../repositories/UsersRepository/PrismaUsersRepository'
 
-import { UsersRepository } from '../../repositories/UsersRepository/TypeormUsersRepository'
 import { BCryptHashProvider } from '../../providers/HashProvider/BCryptHashProvider'
-import { AppError } from '../../errors/AppError'
 
-import User from '../../models/User'
+import { User } from '../../prisma/models/User'
+import { AppError } from '../../errors/AppError'
 
 interface IRequest {
   name: string;
@@ -14,7 +13,7 @@ interface IRequest {
 
 export class CreateUserService {
   public async execute({ name, email, password }: IRequest): Promise<User> {
-    const usersRepository = getCustomRepository(UsersRepository)
+    const usersRepository = new UsersRepository()
 
     const checkUserExists = await usersRepository.findByEmail(email)
 
