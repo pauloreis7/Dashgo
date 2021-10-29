@@ -1,8 +1,8 @@
 import { LeadsRepository } from '../../repositories/LeadsRepository/PrismaLeadsRepository'
 
 interface IRequest {
-  user_id: string;
-  daysAgo: string;
+  user_id: string
+  daysAgo: string
 }
 
 export class FilterDaysCountLeadService { 

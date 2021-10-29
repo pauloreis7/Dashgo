@@ -24,7 +24,7 @@ interface IResponse {
 export class AuthenticateUserService {
   public async execute({ email, password }: IRequest): Promise<IResponse> {
     const usersRepository = new UsersRepository()
-    
+  
     const user = await usersRepository.findByEmail(email)
 
     if (!user) {
@@ -44,7 +44,13 @@ export class AuthenticateUserService {
   
     const refreshTokensRepository = new RefreshTokensRepository()
 
-    const refreshToken = await refreshTokensRepository.generateRefreshToken(user.id)
+    const refreshToken = await refreshTokensRepository.findByUserId(user.id)
+
+    if(!refreshToken) {
+      const newRefreshToken = await refreshTokensRepository.generateRefreshToken(user.id)
+
+      return { token, refreshToken: newRefreshToken, user }
+    }
 
     return { token, refreshToken, user }
   }

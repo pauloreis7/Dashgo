@@ -8,71 +8,44 @@ import { LogoutUserService } from '../services/SessionsServices/LogoutUserServic
 
 export class SessionsController {
   public async create(request: Request, response: Response): Promise<Response> {
-    try {
-      const { email, password } = request.body as CreateSessionDTO;
+    const { email, password } = request.body as CreateSessionDTO
 
-      const authenticateUser = new AuthenticateUserService()
+    const authenticateUser = new AuthenticateUserService()
 
-      const { token, refreshToken, user } = await authenticateUser.execute({ 
-        email,
-        password 
-      })
+    const { token, refreshToken, user } = await authenticateUser.execute({ 
+      email,
+      password 
+    })
 
-      return response.json({
-        user,
-        token,
-        refreshToken
-      });
-      
-    } catch (err) {
-      const error = Object(err)
-
-      return response
-        .status(error.statusCode)
-        .json({ error: true, ...error });
-    }
+    return response.json({
+      user,
+      token,
+      refreshToken
+    })
   }
 
   public async refresh(request: Request, response: Response): Promise<Response> {
-    try {
-      const { refresh_token } = request.body;
+    const { refresh_token } = request.body
 
-      const refreshUserToken = new RefreshUserTokenService()
+    const refreshUserToken = new RefreshUserTokenService()
 
-      const { token, newRefreshToken } = await refreshUserToken.execute({
-        refresh_token
-      })
+    const { token, newRefreshToken } = await refreshUserToken.execute({
+      refresh_token
+    })
 
-      return response.json({
-        token,
-        refreshToken: newRefreshToken,
-      });
-      
-    } catch (err) {
-      const error = Object(err)
-
-      return response
-        .status(error.statusCode)
-        .json({ error: true, ...error });
-    }
+    return response.json({
+      token,
+      refreshToken: newRefreshToken,
+    })
   }
 
   public async logout(request: Request, response: Response): Promise<Response> {
-    try {
-      const { refresh_token } = request.body
+    const { refresh_token } = request.body
 
-      const logoutUserService = new LogoutUserService()
+    const logoutUserService = new LogoutUserService()
 
-      await logoutUserService.execute({ refresh_token })
+    await logoutUserService.execute({ refresh_token })
 
-      return response.json({ logout: true });
-      
-    } catch (err) {
-      const error = Object(err)
-
-      return response
-        .status(error.statusCode)
-        .json({ error: true, ...error });
-    }
+    return response.json({ logout: true })
   }
 }

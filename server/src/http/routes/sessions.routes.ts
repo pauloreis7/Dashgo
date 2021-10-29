@@ -16,7 +16,7 @@ sessionsRouter.post('/',
     },
   }),
   sessionsController.create
-);
+)
 
 sessionsRouter.post(
   '/refresh', 
@@ -27,7 +27,7 @@ sessionsRouter.post(
   }),
   addUserInformationToRequest,
   sessionsController.refresh
-);
+)
 
 sessionsRouter.delete(
   '/logout',

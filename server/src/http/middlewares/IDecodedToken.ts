@@ -1,3 +1,3 @@
 export interface IDecodedToken {
-  sub: string;
+  sub: string
 }

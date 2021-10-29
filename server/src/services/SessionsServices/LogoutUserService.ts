@@ -5,7 +5,7 @@ import {
 import { AppError } from '../../errors/AppError'
 
 interface IRequest {
-  refresh_token: string;
+  refresh_token: string
 }
 
 export class LogoutUserService {

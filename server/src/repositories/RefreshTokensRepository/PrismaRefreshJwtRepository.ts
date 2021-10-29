@@ -11,6 +11,14 @@ export class RefreshTokensRepository {
     return refreshToken
   }
 
+  public async findByUserId(userId: string) {
+    const refreshToken = await prisma.refresh_token.findUnique({
+      where: { user_id: userId }
+    })
+
+    return refreshToken
+  }
+
   public async generateRefreshToken(userId: string) {
     const expires_in = dayjs().add(15, 'day').unix()
 

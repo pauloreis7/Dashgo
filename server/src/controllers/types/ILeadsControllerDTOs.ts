@@ -1,7 +1,7 @@
 export type LeadQueryDTO = {
-  leadId: string;
+  leadId: string
 }
 
 export type FilterQueryDTO = {
-  daysAgo: string;
+  daysAgo: string
 }

@@ -6,10 +6,10 @@ import { User } from '../../prisma/models/User'
 import { AppError } from '../../errors/AppError'
 
 interface IRequest {
-  userId: string;
-  name: string;
-  email: string;
-  old_password?: string;
+  userId: string
+  name: string
+  email: string
+  old_password?: string
   password?: string
 }
 

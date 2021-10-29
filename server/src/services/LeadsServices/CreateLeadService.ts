@@ -4,9 +4,9 @@ import { Lead } from '../../prisma/models/Lead'
 import { AppError } from '../../errors/AppError'
 
 interface IRequest {
-  user_id: string;
-  name: string;
-  email: string;
+  user_id: string
+  name: string
+  email: string
 }
 
 export class CreateLeadService {

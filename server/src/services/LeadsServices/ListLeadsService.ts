@@ -3,7 +3,7 @@ import { LeadsRepository } from '../../repositories/LeadsRepository/PrismaLeadsR
 import { Lead } from '../../prisma/models/Lead'
 
 interface IRequest {
-  user_id: string;
+  user_id: string
 }
 
 export class ListLeadsService {

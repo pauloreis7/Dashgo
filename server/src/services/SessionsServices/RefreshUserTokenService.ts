@@ -4,17 +4,17 @@ import {
   RefreshTokensRepository
 } from '../../repositories/RefreshTokensRepository/PrismaRefreshJwtRepository'
 
-import { JwtTokenProvider } from '../../providers/TokenProvider/JwtTokenProvider';
+import { JwtTokenProvider } from '../../providers/TokenProvider/JwtTokenProvider'
 
 import { AppError } from '../../errors/AppError'
 import { RefreshToken } from '../../prisma/models/RefreshToken'
 
 interface IRequest {
-  refresh_token: string;
+  refresh_token: string
 }
 
 interface IResponse {
-  token: string;
+  token: string
   newRefreshToken: RefreshToken
 }
 
@@ -23,7 +23,7 @@ export class RefreshUserTokenService {
     const refreshTokensRepository = new RefreshTokensRepository()
 
     const refreshToken = await refreshTokensRepository.findById(refresh_token)
-    
+
     if (!refreshToken) {
       throw new AppError('Refresh token está inválido', 401)
     }

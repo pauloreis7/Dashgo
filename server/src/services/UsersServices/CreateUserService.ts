@@ -6,9 +6,9 @@ import { User } from '../../prisma/models/User'
 import { AppError } from '../../errors/AppError'
 
 interface IRequest {
-  name: string;
-  email: string;
-  password: string;
+  name: string
+  email: string
+  password: string
 }
 
 export class CreateUserService {

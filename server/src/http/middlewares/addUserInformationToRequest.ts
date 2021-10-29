@@ -1,14 +1,14 @@
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express'
 import decode from 'jwt-decode'
 
-import { IDecodedToken } from './IDecodedToken';
+import { IDecodedToken } from './IDecodedToken'
 
 export function addUserInformationToRequest(
     request: Request, 
     response: Response, 
     next: NextFunction
   ) {
-  const { authorization } = request.headers;
+  const { authorization } = request.headers
 
   if (!authorization) {
     return response
@@ -16,7 +16,7 @@ export function addUserInformationToRequest(
       .json({ error: true, code: 'token.invalid', message: 'Token not present.' })
   }
 
-  const [, token] = authorization?.split(' ');
+  const [, token] = authorization?.split(' ')
 
   if (!token) {
     return response 
@@ -25,11 +25,11 @@ export function addUserInformationToRequest(
   }
 
   try {
-    const decoded = decode(token as string) as IDecodedToken;
+    const decoded = decode(token as string) as IDecodedToken
 
-    request.user = decoded.sub;
+    request.user = decoded.sub
 
-    return next();
+    return next()
   } catch (err) {
     return response 
       .status(401)

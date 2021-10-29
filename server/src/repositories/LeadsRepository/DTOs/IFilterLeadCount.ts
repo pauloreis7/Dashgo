@@ -1,4 +1,4 @@
 export interface IFilterLeadCount {
-  user_id: string;
+  user_id: string
   daysAgo: string
 }

@@ -1,3 +1,3 @@
 export interface ITokenProvider {
-  generateToken(userId: string): string;
+  generateToken(userId: string): string
 }

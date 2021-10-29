@@ -8,7 +8,7 @@ import { checkAuthMiddleware } from '../middlewares/checkAuthMiddleware'
 const usersRouter = Router()
 const usersController = new UsersController()
 
-usersRouter.get('/me', checkAuthMiddleware, usersController.show);
+usersRouter.get('/me', checkAuthMiddleware, usersController.show)
 
 usersRouter.post(
   '/signup',
@@ -24,7 +24,7 @@ usersRouter.post(
     },
   }),
   usersController.create
-);
+)
 
 usersRouter.put(
   '/update',
@@ -32,10 +32,10 @@ usersRouter.put(
     [Segments.BODY]: {
       name: Joi.string().required(),
       email: Joi.string().email().required(),
-      old_password: Joi.string().required(),
+      old_password: Joi.string(),
       password: Joi.when('old_password', {
         is: Joi.exist(),
-        then: Joi.string()
+        then: Joi.string().required()
       }),
       password_confirmation: Joi.when('password', {
         is: Joi.exist(),
@@ -45,6 +45,6 @@ usersRouter.put(
   }),
   checkAuthMiddleware,
   usersController.update
-);
+)
 
 export default usersRouter

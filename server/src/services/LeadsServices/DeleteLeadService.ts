@@ -4,7 +4,7 @@ import { Lead } from '../../prisma/models/Lead'
 import { AppError } from '../../errors/AppError'
 
 interface IRequest {
-  leadId: string;
+  leadId: string
 }
 
 export class DeleteLeadService {
