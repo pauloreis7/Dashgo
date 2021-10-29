@@ -57,6 +57,8 @@ export function setupAPIClient(ctx = undefined) {
 
             if(process.browser) {
               signOut()
+            } else {
+              return Promise.reject(new AuthTokenError())
             }
           }).finally(() => {
             isRefreshing = false
@@ -78,8 +80,6 @@ export function setupAPIClient(ctx = undefined) {
       } else {
         if(process.browser) {
           signOut()
-        } else {
-          return Promise.reject(new AuthTokenError())
         }
       }
     }

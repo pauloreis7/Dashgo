@@ -32,13 +32,28 @@ const AuthContext = createContext({} as AuthContextData)
 
 let authChannel: BroadcastChannel
 
-export function signOut() {
-  destroyCookie(undefined, '@dashgo.token')
-  destroyCookie(undefined, '@dashgo.refreshToken')
+export async function signOut() {
+  try {
+    const { '@dashgo.refreshToken': refreshToken } = parseCookies()
 
-  authChannel.postMessage('signOut')
+    if(refreshToken) {
+      await api.delete('/sessions/logout', {
+        data: { refresh_token: refreshToken }
+      })
+    }
 
-  Router.push('/')
+    destroyCookie(undefined, '@dashgo.token')
+    destroyCookie(undefined, '@dashgo.refreshToken')
+
+    authChannel.postMessage('signOut')
+
+    Router.push('/')
+  } catch (err) {
+    const errorMessage = err.response?.data.message 
+    ?? `Erro interno de servidor, tente novamente mais tarde! (${err.message})`
+
+    throw new Error(errorMessage)
+  }
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {

@@ -1,4 +1,4 @@
-import { HStack, Icon, IconButton } from "@chakra-ui/react";
+import { HStack, Icon, IconButton, useToast } from "@chakra-ui/react";
 import { RiUserAddLine } from "react-icons/ri";
 import { FiPower } from "react-icons/fi";
 
@@ -6,6 +6,23 @@ import { useAuth } from '../../contexts/AuthContext'
 
 export function NotificationsNav() {
   const { signOut } = useAuth()
+  const toast = useToast()
+
+  async function handleSignOut() {
+    try {
+      await signOut()
+
+    } catch (err) {
+      toast({
+        title: "Erro ao fazer logout.",
+        description: err.message,
+        status: "error",
+        duration: 6000,
+        isClosable: true,
+        position: "top-right",
+      })
+    }
+  }
 
   return (
     <HStack
@@ -29,7 +46,7 @@ export function NotificationsNav() {
         fontSize="20"
         borderRadius="0.65rem"
         icon={<FiPower fontSize="20" />}
-        onClick={signOut}
+        onClick={handleSignOut}
       />
     </HStack>
   )

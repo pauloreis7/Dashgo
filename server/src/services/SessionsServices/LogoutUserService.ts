@@ -15,7 +15,7 @@ export class LogoutUserService {
     const refreshToken = await refreshTokensRepository.findById(refresh_token)
     
     if (!refreshToken) {
-      throw new AppError('Refresh token está inválido', 401)
+      throw new AppError('Refresh token está inválido')
     }
 
     await refreshTokensRepository.deleteRefreshTokenById(refresh_token)
