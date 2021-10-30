@@ -55,7 +55,7 @@ export default function CreateUser() {
   const handleCreateUser: SubmitHandler<CreateUserFormData> = async (values) => {
     await createUser.mutateAsync(values)
 
-    router.push('/users')
+    router.push('/leads')
   }
 
   return (
@@ -114,7 +114,7 @@ export default function CreateUser() {
 
           <Flex mt="8" justify="flex-end">
             <HStack spacing="4">
-              <Link href="/users" passHref>
+              <Link href="/leads" passHref>
                 <Button as="a" colorScheme="whiteAlpha">Cancelar</Button>
               </Link>
 

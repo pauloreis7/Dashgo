@@ -17,9 +17,9 @@ export class LeadsController {
 
     const { total, leads } = await listLeads.execute({ user_id, page, per_page })
 
-    return response
-      .header({ 'x-total-count': String(total) })
-      .json(leads)
+    response.setHeader('x-total-count', String(total))
+
+    return response.json(leads)
   }
 
   public async daysCount(request: Request, response: Response): Promise<Response> {

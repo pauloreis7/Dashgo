@@ -23,7 +23,7 @@ export class ListLeadsService {
       per_page
     })
 
-    const total = leads.length
+    const total = leads[0].users._count?.leads ?? 0
 
     return { total, leads }
   }

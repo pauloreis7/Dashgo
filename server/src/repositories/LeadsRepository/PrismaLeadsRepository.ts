@@ -16,7 +16,8 @@ export class LeadsRepository {
       skip: pageStart,
       take: Number(per_page),
       where: { user_id },
-      orderBy: { created_at: 'desc' }
+      orderBy: { created_at: 'desc' },
+      include: { users: { select: { _count: true } } }
     })
 
     return leads
