@@ -11,7 +11,16 @@ const leadsController = new LeadsController()
 
 leadsRouter.use(checkAuthMiddleware)
 
-leadsRouter.get('/', leadsController.index)
+leadsRouter.get(
+  '/',
+  celebrate({
+    [Segments.QUERY]: {
+      page: Joi.string(),
+      per_page: Joi.string(),
+    }
+  }),
+  leadsController.index
+)
 
 leadsRouter.get('/daysCount',
   celebrate({

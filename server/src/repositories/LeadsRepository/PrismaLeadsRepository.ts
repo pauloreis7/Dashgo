@@ -2,15 +2,21 @@ import dayjs from 'dayjs'
 
 import { prisma } from '../../prisma'
 
+import { IPaginateLeadDTO } from './DTOs/IPaginateLeadDTO'
 import { IFilterLeadCount } from './DTOs/IFilterLeadCount'
 import { ICreateLeadDTO } from './DTOs/ICreateLeadDTO'
 import { IUpdateLeadDTO } from './DTOs/IUpdateLeadDTO'
 
 export class LeadsRepository {
     
-  public async findAll(user_id: string) {
+  public async pagination({ user_id, page, per_page }: IPaginateLeadDTO) {
+    const pageStart = (Number(page) - 1) * Number(per_page)
+
     const leads = await prisma.lead.findMany({
-      where: { user_id }
+      skip: pageStart,
+      take: Number(per_page),
+      where: { user_id },
+      orderBy: { created_at: 'desc' }
     })
 
     return leads

@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
 
-import { LeadQueryDTO, FilterQueryDTO } from './types/ILeadsControllerDTOs'
+import { PaginationQueryDTO, LeadQueryDTO, FilterQueryDTO } from './types/ILeadsControllerDTOs'
 
 import { ListLeadsService } from "../services/LeadsServices/ListLeadsService"
 import { FilterDaysCountLeadService } from "../services/LeadsServices/FilterDaysCountLeadService"
@@ -10,13 +10,16 @@ import { DeleteLeadService } from "../services/LeadsServices/DeleteLeadService"
 
 export class LeadsController {
   public async index(request: Request, response: Response): Promise<Response> {
+    const { page = '1', per_page = '10' } = request.query as PaginationQueryDTO
     const user_id = request.user
 
     const listLeads = new ListLeadsService()
 
-    const leads = await listLeads.execute({ user_id })
+    const { total, leads } = await listLeads.execute({ user_id, page, per_page })
 
-    return response.json(leads)
+    return response
+      .header({ 'x-total-count': String(total) })
+      .json(leads)
   }
 
   public async daysCount(request: Request, response: Response): Promise<Response> {
