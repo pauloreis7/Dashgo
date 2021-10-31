@@ -17,7 +17,8 @@ export class LeadsController {
 
     const { total, leads } = await listLeads.execute({ user_id, page, per_page })
 
-    response.setHeader('x-total-count', String(total))
+    response.set('x-total-count', String(total))
+    response.set('Access-Control-Expose-Headers', 'x-total-count')
 
     return response.json(leads)
   }
