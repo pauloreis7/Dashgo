@@ -2,38 +2,23 @@ import {
   Flex,
   Heading,
   Box,
-  Text,
   Icon,
   Button,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  Checkbox,
-  Spinner,
-  useBreakpointValue
-} from '@chakra-ui/react'
+  Spinner} from '@chakra-ui/react'
 import { useState } from 'react'
 import Link from 'next/link'
-import { RiAddLine, RiPencilLine } from 'react-icons/ri'
+import { RiAddLine } from 'react-icons/ri'
 
 import { useLeads } from '../../hooks/useLeads'
 
 import { Header } from '../../components/Header'
 import { Sidebar } from '../../components/Sidebar'
-import { Pagination } from '../../components/Pagination'
+import { LeadsTableList } from '../../components/LeadsTableList'
 
 export default function UserList() {
   const [ page, setPage ] = useState(1)
 
   const { data, isLoading, isFetching, error } = useLeads(page)
-
-  const isMediumVersion = useBreakpointValue({
-    base: false,
-    md: true
-  })
 
   return (
     <Box>
@@ -64,67 +49,15 @@ export default function UserList() {
             </Link>
           </Flex>
 
-          { isLoading ? (
-            <Flex justify="center">
-              <Spinner />
-            </Flex>
-          ) : error ? (
-            <Flex justify="center">
-              <Text>Falha ao obter dados dos leads :/</Text>
-            </Flex>
-          ) : (
-            <>
-              <Table overflowX="scroll" colorScheme="whiteAlpha">
-                <Thead>
-                  <Tr>
-                    <Th px={["4", "4", "6"]} color="gray.300" width="8">
-                      <Checkbox colorScheme="pink" />
-                    </Th>
-                    <Th>Lead</Th>
-                    { isMediumVersion && <Th>Data de cadastro</Th> }
-                    <Th width="8"></Th>
-                  </Tr>
-                </Thead>
-
-                <Tbody>
-                  {data.leads.map(lead => {
-                    return (
-                      <Tr key={lead.id}>
-                        <Td px={["4", "4", "6"]}>
-                          <Checkbox colorScheme="pink" />
-                        </Td>
-                        <Td>
-                          <Box>
-                            <Text color="pink.500" fontWeight="bold">{lead.name}</Text>
-                            <Text fontSize="sm" color="gray.300">{lead.email}</Text>
-                          </Box>
-                        </Td>
-                        { isMediumVersion && <Td>{lead.created_at}</Td> }
-                        <Td>
-                          <Button
-                            as="a"
-                            size="sm"
-                            fontSize="sm"
-                            colorScheme="purple"
-                            leftIcon={<Icon as={RiPencilLine} fontSize="18" />}
-                            cursor="pointer"
-                          >
-                            Editar
-                          </Button>
-                        </Td>
-                      </Tr>
-                    )
-                  })}
-                </Tbody>
-              </Table>
-              
-              <Pagination
-                totalCountOfRegisters={data.totalCount}
-                currentPage={page}
-                onPageChange={setPage}
-              />
-            </>
-          )}
+          <LeadsTableList 
+            leads={data?.leads}
+            totalCount={data?.totalCount}
+            isLoading={isLoading}
+            isFetching={isFetching}
+            error={error}
+            page={page}
+            setPage={setPage}
+          />
         </Box>
       </Flex>
     </Box>
