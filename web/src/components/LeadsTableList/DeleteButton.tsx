@@ -25,7 +25,7 @@ export function DeleteButton({ title }: DeleteButtonProps) {
           aria-label="Editar"
           _hover={{
             color: "red.600",
-            transition: "0.2s"
+            transition: "color 0.2s"
           }}
           color="gray.300"
           colorScheme="none"

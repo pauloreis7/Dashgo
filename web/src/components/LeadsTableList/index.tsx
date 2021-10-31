@@ -3,8 +3,6 @@ import {
   SkeletonText,
   Box,
   Text,
-  Icon,
-  Button,
   Table,
   Thead,
   Tbody,
@@ -12,13 +10,14 @@ import {
   Th,
   Td,
   Checkbox,
-  Spinner,
+  IconButton,
   useBreakpointValue
 } from '@chakra-ui/react'
 import { RiPencilLine } from 'react-icons/ri'
 
 import { Pagination } from '../Pagination'
-
+import { DeleteButton } from './DeleteButton'
+import { UpdateButton } from './UpdateButton'
 
 type Lead = {
   id: string;
@@ -52,19 +51,20 @@ export function LeadsTableList({
 
   return (
     <>
-      { isLoading && (
-        <Flex justify="center">
-          <Spinner />
-        </Flex>
-      ) }
-
+    <UpdateButton
+          title="Editar lead"
+          // initialName={lead.name}
+          // initialEmail={lead.email}
+          initialName="Paulo Reis"
+          initialEmail="pauloreis@gmail.com"
+        />
       <SkeletonText
         isLoaded={!isLoading}
         borderRadius="xl"
         startColor="gray.700"
         endColor="gray.600"
-        spacing="4"
-        noOfLines={4}
+        spacing="6"
+        noOfLines={8}
       >
         { error ? (
           <Flex justify="center">
@@ -75,12 +75,11 @@ export function LeadsTableList({
             <Table overflowX="scroll" colorScheme="whiteAlpha">
               <Thead>
                 <Tr>
-                  <Th px={["4", "4", "6"]} color="gray.300" width="8">
-                    <Checkbox colorScheme="pink" />
-                  </Th>
+                  <Th width="8"></Th>
                   <Th>Lead</Th>
                   { isMediumVersion && <Th>Data de cadastro</Th> }
-                  <Th width="8"></Th>
+                  <Th px={["4", "4", "6"]} color="gray.300" width="8">
+                  </Th>
                 </Tr>
               </Thead>
 
@@ -88,8 +87,12 @@ export function LeadsTableList({
                 {leads.map(lead => {
                   return (
                     <Tr key={lead.id}>
-                      <Td px={["4", "4", "6"]}>
-                        <Checkbox colorScheme="pink" />
+                      <Td>
+                        <UpdateButton
+                          title="Editar lead"
+                          initialName={lead.name}
+                          initialEmail={lead.email}
+                        />
                       </Td>
                       <Td>
                         <Box>
@@ -98,17 +101,10 @@ export function LeadsTableList({
                         </Box>
                       </Td>
                       { isMediumVersion && <Td>{lead.created_at}</Td> }
-                      <Td>
-                        <Button
-                          as="a"
-                          size="sm"
-                          fontSize="sm"
-                          colorScheme="purple"
-                          leftIcon={<Icon as={RiPencilLine} fontSize="18" />}
-                          cursor="pointer"
-                        >
-                          Editar
-                        </Button>
+                      <Td px={["4", "4", "6"]}>
+                        <DeleteButton
+                          title="Deseja deletar o lead?"
+                        />
                       </Td>
                     </Tr>
                   )

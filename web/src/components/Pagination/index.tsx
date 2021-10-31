@@ -25,6 +25,11 @@ export function Pagination({
 }: PaginationProps) {
   const lastPage = Math.ceil(totalCountOfRegisters / registersPerPage)
 
+  const pageStart = (Number(currentPage) - 1) * Number(registersPerPage)
+  const pageEnd = pageStart + Number(registersPerPage) > totalCountOfRegisters 
+  ? totalCountOfRegisters
+  : pageStart + Number(registersPerPage) 
+
   const previousPages = currentPage > 1
     ? generatePagesArray(currentPage - 1 - siblingsCount, currentPage - 1)
     : []
@@ -42,7 +47,7 @@ export function Pagination({
       align="center"
     >
       <Box>
-        <strong>0</strong> - <strong>10</strong> de <strong>100</strong>
+        <strong>{pageStart}</strong> - <strong>{pageEnd}</strong> de <strong>{totalCountOfRegisters}</strong>
       </Box>
       <HStack spacing="2">
 
