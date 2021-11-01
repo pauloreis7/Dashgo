@@ -83,7 +83,7 @@ export default function CreateLead() {
           p={["6", "8"]}
           onSubmit={handleSubmit(handleCreateLead)}
         >
-          <Heading size="lg" fontWeight="normal">Criar usuário</Heading>
+          <Heading as="h1" size="xl" fontWeight="normal">Criar usuário</Heading>
 
           <Divider my="6" borderColor="gray.700" />
         
