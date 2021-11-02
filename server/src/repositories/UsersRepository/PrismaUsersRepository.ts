@@ -40,6 +40,7 @@ export class UsersRepository {
         name,
         email,
         password,
+        updated_at: new Date()
       }
     })
 

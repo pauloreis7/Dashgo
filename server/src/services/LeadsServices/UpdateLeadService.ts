@@ -21,7 +21,11 @@ export class UpdateLeadService {
 
     const leadWithUpdatedEmail = await leadsRepository.findByEmail(email)
 
-    if(leadWithUpdatedEmail && leadWithUpdatedEmail.id !== lead.id) {
+    const validateLeadEmail = leadWithUpdatedEmail 
+    && leadWithUpdatedEmail.user_id === lead.user_id 
+    && leadWithUpdatedEmail.id !== lead.id
+
+    if(validateLeadEmail) {
       throw new AppError('Esse e-mail já está em uso.')
     }
 

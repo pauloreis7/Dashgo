@@ -10,7 +10,7 @@ datasource db {
 model Lead {
   id         String   @id @default(uuid())
   name       String
-  email      String   @unique
+  email      String
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
   user_id    String

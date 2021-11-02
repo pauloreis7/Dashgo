@@ -13,9 +13,9 @@ export class CreateLeadService {
   public async execute({ user_id, name, email }: IRequest): Promise<Lead> {
     const leadsRepository = new LeadsRepository()
 
-    const checkLeadExists = await leadsRepository.findByEmail(email)
+    const checkLeadExists = await leadsRepository.findByEmail(email, user_id)
     
-    if(checkLeadExists) {
+    if(checkLeadExists && checkLeadExists.user_id === user_id) {
       throw new AppError('Esse e-mail já está em uso.')
     }
 

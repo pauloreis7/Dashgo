@@ -64,9 +64,9 @@ export class LeadsRepository {
     return lead
   }
 
-  public async findByEmail(email: string) {
-    const lead = await prisma.lead.findUnique({
-      where: { email }
+  public async findByEmail(email: string, user_id?: string) {
+    const lead = await prisma.lead.findFirst({
+      where: { email, AND: { user_id } }
     })
 
     return lead
@@ -89,7 +89,8 @@ export class LeadsRepository {
       where: { id },
       data: {
         name,
-        email
+        email,
+        updated_at: new Date()
       }
     }) 
 
