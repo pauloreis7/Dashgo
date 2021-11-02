@@ -16,6 +16,7 @@ import * as yup from 'yup'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { RiInformationLine } from 'react-icons/ri'
+import { RiPencilLine } from 'react-icons/ri'
 
 import { api } from '../services/apiClient'
 import { useAuth } from '../contexts/AuthContext'
@@ -190,15 +191,18 @@ export default function UpdateUser() {
           </Stack>
 
           <Flex mt="8" px="2" justify="center">
-              <Button
-                fontSize="xl"
-                type="submit" 
-                colorScheme="pink"
-                w="80%"
-                isLoading={isSubmitting} 
-              >
-                Atualizar
-              </Button>
+            <Button
+              type="submit"
+              w="80%"
+              my="6"
+              colorScheme="pink"
+              fontSize="xl"
+              cursor="pointer"
+              rightIcon={<Icon as={RiPencilLine} fontSize="20" />}
+              isLoading={isSubmitting}
+            >
+              Atualizar
+            </Button>
           </Flex>
         </Box>
       </Flex>

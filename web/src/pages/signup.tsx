@@ -5,6 +5,7 @@ import {
   Stack,
   Heading,
   Divider,
+  Icon,
   SimpleGrid,
   useToast,
   Link as ChakraLink
@@ -16,6 +17,7 @@ import * as yup from 'yup'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { parseCookies } from 'nookies'
+import { RiUserFollowLine } from 'react-icons/ri'
 
 import { api } from '../services/apiClient'
 
@@ -131,13 +133,15 @@ export default function SignUp() {
               {...register('password_confirmation')}
             />
           </SimpleGrid>
-        </Stack>
+        </Stack>      
 
         <Button
           type="submit"
           my="6"
           colorScheme="pink"
           size="lg"
+          cursor="pointer"
+          rightIcon={<Icon as={RiUserFollowLine} fontSize="20" />}
           isLoading={isSubmitting}
         >
           Criar

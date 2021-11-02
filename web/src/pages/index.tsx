@@ -5,6 +5,7 @@ import {
   Stack,
   Heading,
   Divider,
+  Icon,
   useToast,
   Link as ChakraLink
 } from '@chakra-ui/react'
@@ -14,7 +15,8 @@ import * as yup from 'yup'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { parseCookies } from 'nookies'
-
+import { RiLoginBoxLine } from 'react-icons/ri'
+ 
 import { useAuth } from '../contexts/AuthContext'
 
 import { Input } from '../components/Form/Input'
@@ -111,8 +113,12 @@ export default function Home() {
           my="6"
           colorScheme="pink"
           size="lg"
+          cursor="pointer"
+          rightIcon={<Icon as={RiLoginBoxLine} fontSize="20" />}
           isLoading={isSubmitting}
-        >Entrar</Button>
+        >
+          Entrar
+        </Button>
 
         <Text align="center" fontSize="lg">Ainda não tem uma conta? 
           <Link href="/signup" passHref>

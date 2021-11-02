@@ -33,7 +33,7 @@ export default function CreateLead() {
     return response.data.lead
   }, {
     onSuccess: (_, lead) => {
-      queryClient.invalidateQueries('leads')
+      queryClient.invalidateQueries(['leads', 'leadsChart'])
 
       toast({
         title: "Lead criado.",
@@ -83,7 +83,7 @@ export default function CreateLead() {
           p={["6", "8"]}
           onSubmit={handleSubmit(handleCreateLead)}
         >
-          <Heading as="h1" size="xl" fontWeight="normal">Criar usuário</Heading>
+          <Heading as="h1" size="xl" fontWeight="normal">Criar lead</Heading>
 
           <Divider my="6" borderColor="gray.700" />
         
