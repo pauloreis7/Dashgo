@@ -15,7 +15,6 @@ import Link from 'next/link'
 import * as yup from 'yup'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useRouter } from 'next/router'
 import { RiInformationLine } from 'react-icons/ri'
 
 import { api } from '../services/apiClient'
@@ -190,20 +189,16 @@ export default function UpdateUser() {
             </Stack>
           </Stack>
 
-          <Flex mt="8" justify="flex-end">
-            <HStack spacing="4">
-              <Link href="/Users" passHref>
-                <Button as="a" colorScheme="whiteAlpha">Cancelar</Button>
-              </Link>
-
-              <Button 
+          <Flex mt="8" px="2" justify="center">
+              <Button
+                fontSize="xl"
                 type="submit" 
                 colorScheme="pink"
+                w="80%"
                 isLoading={isSubmitting} 
               >
                 Atualizar
               </Button>
-            </HStack>
           </Flex>
         </Box>
       </Flex>
