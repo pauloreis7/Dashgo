@@ -11,7 +11,6 @@ import {
 } from '../components/animations/GlobalAnimations'
 import { fadeInUpHome } from '../components/animations/HomepageAnimations'
 
-
 export default function HomePage() {
   useEffect(() => {
     const { ['@dashgo.token']: token } = parseCookies()
@@ -39,7 +38,7 @@ export const getStaticProps: GetStaticProps = async () => {
   }
 }
 
-// sideBar 
-// page transitions
-// scroll
-// image 3d
+// sideBar - X
+// page transitions - X
+// scroll - 
+// image 3d - 

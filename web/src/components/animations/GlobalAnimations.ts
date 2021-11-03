@@ -1,4 +1,13 @@
-import { Flex, Box, Stack, FlexProps, BoxProps, StackProps } from '@chakra-ui/react'
+import { 
+  Flex, 
+  Box, 
+  Stack,
+  Text, 
+  FlexProps, 
+  BoxProps, 
+  StackProps,
+  TextProps 
+} from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 
 export const easing = [0.6, -0.05, 0.01, 0.99]
@@ -44,3 +53,4 @@ export const stagger = {
 export const MotionFlex = motion<FlexProps>(Flex)
 export const MotionBox = motion<BoxProps>(Box)
 export const MotionStack = motion<StackProps>(Stack)
+export const MotionText = motion<TextProps>(Text)

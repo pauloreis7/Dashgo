@@ -12,6 +12,8 @@ import { Input } from '../../components/Form/Input'
 import { Header } from '../../components/Header'
 import { Sidebar } from '../../components/Sidebar'
 
+import { MotionBox, containerAnimation } from '../../components/animations/GlobalAnimations'
+
 type CreateLeadFormData = {
   name: string;
   email: string;
@@ -75,12 +77,16 @@ export default function CreateLead() {
       <Flex w="100%" my="6" maxWidth={1480} mx="auto" px="6">
         <Sidebar />
 
-        <Box 
+        <MotionBox 
           as="form" 
           flex="1"
           borderRadius={8}
           bg="gray.800"
           p={["6", "8"]}
+          variants={containerAnimation}
+          initial="initial"
+          animate="animate"
+          exit={{ opacity: 0 }}
           onSubmit={handleSubmit(handleCreateLead)}
         >
           <Heading as="h1" size="xl" fontWeight="normal">Criar lead</Heading>
@@ -118,7 +124,7 @@ export default function CreateLead() {
               </Button>
             </HStack>
           </Flex>
-        </Box>
+        </MotionBox>
       </Flex>
     </Box>
   )
