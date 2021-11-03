@@ -5,13 +5,11 @@ import {
   Icon,
   Divider, 
   Stack, 
-  HStack, 
   Button, 
   SimpleGrid,
   Tooltip,
   useToast 
 } from '@chakra-ui/react'
-import Link from 'next/link'
 import * as yup from 'yup'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -24,6 +22,8 @@ import { useAuth } from '../contexts/AuthContext'
 import { Input } from '../components/Form/Input'
 import { Header } from '../components/Header'
 import { Sidebar } from '../components/Sidebar'
+
+import { MotionBox, boxAnimation } from '../components/animations/ProfileAnimations'
 
 type UpdateUserFormData = {
   name: string;
@@ -65,7 +65,7 @@ export default function UpdateUser() {
   const handleUpdateUser: SubmitHandler<UpdateUserFormData> = async (data) => {
     try {
       await api.put('/users/update', data)
-      
+
       toast({
         title: "Atualização realizada.",
         description: "Atualização feita com sucesso.",
@@ -88,17 +88,20 @@ export default function UpdateUser() {
 
   return (
     <Box>
-      <Header />
+      {/* <Header /> */}
 
       <Flex w="100%" my="6" maxWidth={1480} mx="auto" px="6">
         <Sidebar />
 
-        <Box 
+        <MotionBox 
           as="form" 
           flex="1"
           borderRadius={8}
           bg="gray.800"
           p={["6", "8"]}
+          variants={boxAnimation}
+          initial="hidden"
+          animate="visible"
           onSubmit={handleSubmit(handleUpdateUser)}
         >
           <Heading as="h1" size="xl" fontWeight="normal">Seu Perfil</Heading>
@@ -106,7 +109,7 @@ export default function UpdateUser() {
           <Divider my="6" borderColor="gray.700" />
         
           <Stack spacing="8">
-            <SimpleGrid minChildWidth="240px" spacing={["6", "8"]} w="100%">
+            {/* <SimpleGrid minChildWidth="240px" spacing={["6", "8"]} w="100%">
               <Input
                 name="name"
                 label="Nome completo"
@@ -186,8 +189,8 @@ export default function UpdateUser() {
                   error={errors.password_confirmation}
                   {...register('password_confirmation')}
                 />
-              </SimpleGrid>
-            </Stack>
+              </SimpleGrid> */}
+            {/* </Stack> */}
           </Stack>
 
           <Flex mt="8" px="2" justify="center">
@@ -204,7 +207,7 @@ export default function UpdateUser() {
               Atualizar
             </Button>
           </Flex>
-        </Box>
+        </MotionBox>
       </Flex>
     </Box>
   )
