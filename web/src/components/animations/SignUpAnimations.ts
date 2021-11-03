@@ -1,25 +1,23 @@
-import { Flex, Stack, FlexProps, StackProps } from '@chakra-ui/react'
-import { motion } from 'framer-motion'
+import { easing } from './GlobalAnimations'
 
 export const flexAnimation = {
-  hidden: { opacity: 0, y: 40 },
-  visible: {
+  initial: { opacity: 0, y: 40 },
+  animate: {
     opacity: 1,
     y: 0,
     transition: {
       delayChildren: 0.4,
-      staggerChildren: 0.3
+      staggerChildren: 0.3,
+      duration: 0.6,
+      ease: easing
     }
   }
 }
 
 export const childrenItemAnimation = {
-  hidden: { y: -60, opacity: 0 },
-  visible: {
+  initial: { y: -60, opacity: 0 },
+  animate: {
     y: 0,
     opacity: 1,
   }
 }
-
-export const MotionFlex = motion<FlexProps>(Flex)
-export const MotionStack = motion<StackProps>(Stack)

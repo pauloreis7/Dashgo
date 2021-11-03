@@ -23,7 +23,7 @@ import { Input } from '../components/Form/Input'
 import { Header } from '../components/Header'
 import { Sidebar } from '../components/Sidebar'
 
-import { MotionBox, boxAnimation } from '../components/animations/ProfileAnimations'
+import { MotionBox, containerAnimation } from '../components/animations/GlobalAnimations'
 
 type UpdateUserFormData = {
   name: string;
@@ -88,7 +88,7 @@ export default function UpdateUser() {
 
   return (
     <Box>
-      {/* <Header /> */}
+      <Header />
 
       <Flex w="100%" my="6" maxWidth={1480} mx="auto" px="6">
         <Sidebar />
@@ -99,9 +99,10 @@ export default function UpdateUser() {
           borderRadius={8}
           bg="gray.800"
           p={["6", "8"]}
-          variants={boxAnimation}
-          initial="hidden"
-          animate="visible"
+          variants={containerAnimation}
+          initial="initial"
+          animate="animate"
+          exit={{ opacity: 0 }}
           onSubmit={handleSubmit(handleUpdateUser)}
         >
           <Heading as="h1" size="xl" fontWeight="normal">Seu Perfil</Heading>
@@ -109,7 +110,7 @@ export default function UpdateUser() {
           <Divider my="6" borderColor="gray.700" />
         
           <Stack spacing="8">
-            {/* <SimpleGrid minChildWidth="240px" spacing={["6", "8"]} w="100%">
+            <SimpleGrid minChildWidth="240px" spacing={["6", "8"]} w="100%">
               <Input
                 name="name"
                 label="Nome completo"
@@ -189,8 +190,8 @@ export default function UpdateUser() {
                   error={errors.password_confirmation}
                   {...register('password_confirmation')}
                 />
-              </SimpleGrid> */}
-            {/* </Stack> */}
+              </SimpleGrid>
+            </Stack>
           </Stack>
 
           <Flex mt="8" px="2" justify="center">

@@ -19,16 +19,17 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { parseCookies } from 'nookies'
 import { RiUserFollowLine } from 'react-icons/ri'
 
-import { api } from '../services/apiClient'
+import { api } from '../../services/apiClient'
 
-import { Input } from '../components/Form/Input'
+import { Input } from '../../components/Form/Input'
 
-import { 
-  MotionFlex,
-  MotionStack,
-  flexAnimation, 
-  childrenItemAnimation 
-} from '../components/animations/SignUpAnimations'
+import {
+  MotionFlex, 
+  MotionStack, 
+  fadeInUpForms 
+} from '../../components/animations/GlobalAnimations'
+import { flexAnimation } from '../../components/animations/SignUpAnimations'
+
 
 type SignUpFormData = {
   name: string;
@@ -62,14 +63,14 @@ export default function SignUp() {
 
       toast({
         title: "Conta criada.",
-        description: "Sua conta foi criada com sucesso.",
+        description: "Sua conta foi criada com sucesso, faça seu login.",
         status: "success",
         duration: 6000,
         isClosable: true,
         position: "top-right",
       })
       
-      router.push('/')
+      router.push('/account/signin')
     } catch (err) {
       const errorMessage = err.response?.data.message 
       ?? `Erro interno de servidor, tente novamente mais tarde! (${err.message})`
@@ -86,13 +87,16 @@ export default function SignUp() {
   }
 
   return (
-    <Flex
+    <MotionFlex
       w="100%"
       h="100%"
       align="center"
       justify="center"
       px={["2", "2", "10"]}
       py="4"
+      initial='initial' 
+      animate='animate'
+      exit={{ opacity: 0 }}
     >
       <MotionFlex
         as="form"
@@ -103,11 +107,11 @@ export default function SignUp() {
         borderRadius={8}
         flexDir="column"
         variants={flexAnimation}
-        initial="hidden"
-        animate="visible"
+        initial="initial"
+        animate="animate"
         onSubmit={handleSubmit(handleSignUp)}
       >
-        <MotionStack spacing="8" variants={childrenItemAnimation}>
+        <MotionStack spacing="8" variants={fadeInUpForms}>
           <Heading as="h1" size="lg" textAlign="center">Crie sua conta</Heading>
 
           <Divider my={["4", "6"]} borderColor="gray.700" />
@@ -146,7 +150,7 @@ export default function SignUp() {
 
         <MotionFlex
           flexDirection="column"
-          variants={childrenItemAnimation}
+          variants={fadeInUpForms}
         >
           <Button
             type="submit"
@@ -161,7 +165,7 @@ export default function SignUp() {
           </Button>
 
           <Text align="center" fontSize="lg">Já tem uma conta? 
-            <Link href="/" passHref>
+            <Link href="/account/signin" passHref>
               <ChakraLink ml="2" color="pink.500" fontWeight="bold">
                 Faça Login
               </ChakraLink>
@@ -169,7 +173,7 @@ export default function SignUp() {
           </Text>
         </MotionFlex>
       </MotionFlex>
-    </Flex>
+    </MotionFlex>
   )
 }
 

@@ -40,7 +40,7 @@ export function setupAPIClient(ctx = undefined) {
               maxAge: 60 * 60 * 24 * 30, // 30 days
               path: '/'
             })
-      
+
             setCookie(ctx, '@dashgo.refreshToken',
             response.data.refreshToken.id, {
               maxAge: 60 * 60 * 24 * 30, // 30 days
