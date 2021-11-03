@@ -23,6 +23,13 @@ import { api } from '../services/apiClient'
 
 import { Input } from '../components/Form/Input'
 
+import { 
+  MotionFlex,
+  MotionStack,
+  flexAnimation, 
+  childrenItemAnimation 
+} from '../components/animations/SignUpAnimations'
+
 type SignUpFormData = {
   name: string;
   email: string;
@@ -87,7 +94,7 @@ export default function SignUp() {
       px={["2", "2", "10"]}
       py="4"
     >
-      <Flex
+      <MotionFlex
         as="form"
         width="80%"
         maxWidth={920}
@@ -95,10 +102,12 @@ export default function SignUp() {
         p={["6", "6", "8"]}
         borderRadius={8}
         flexDir="column"
+        variants={flexAnimation}
+        initial="hidden"
+        animate="visible"
         onSubmit={handleSubmit(handleSignUp)}
       >
-
-        <Stack spacing="8">
+        <MotionStack spacing="8" variants={childrenItemAnimation}>
           <Heading as="h1" size="lg" textAlign="center">Crie sua conta</Heading>
 
           <Divider my={["4", "6"]} borderColor="gray.700" />
@@ -133,28 +142,33 @@ export default function SignUp() {
               {...register('password_confirmation')}
             />
           </SimpleGrid>
-        </Stack>      
+        </MotionStack>
 
-        <Button
-          type="submit"
-          my="6"
-          colorScheme="pink"
-          size="lg"
-          cursor="pointer"
-          rightIcon={<Icon as={RiUserFollowLine} fontSize="20" />}
-          isLoading={isSubmitting}
+        <MotionFlex
+          flexDirection="column"
+          variants={childrenItemAnimation}
         >
-          Criar
-        </Button>
+          <Button
+            type="submit"
+            my="6"
+            colorScheme="pink"
+            size="lg"
+            cursor="pointer"
+            rightIcon={<Icon as={RiUserFollowLine} fontSize="20" />}
+            isLoading={isSubmitting}
+          >
+            Criar
+          </Button>
 
-        <Text align="center" fontSize="lg">Já tem uma conta? 
-          <Link href="/" passHref>
-            <ChakraLink ml="2" color="pink.500" fontWeight="bold">
-              Faça Login
-            </ChakraLink>
-          </Link>
-        </Text>
-      </Flex>
+          <Text align="center" fontSize="lg">Já tem uma conta? 
+            <Link href="/" passHref>
+              <ChakraLink ml="2" color="pink.500" fontWeight="bold">
+                Faça Login
+              </ChakraLink>
+            </Link>
+          </Text>
+        </MotionFlex>
+      </MotionFlex>
     </Flex>
   )
 }
