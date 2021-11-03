@@ -21,6 +21,13 @@ import { useAuth } from '../contexts/AuthContext'
 
 import { Input } from '../components/Form/Input'
 
+import { 
+  MotionFlex,
+  MotionStack,
+  flexAnimation, 
+  childrenItemAnimation 
+} from '../components/animations/SignInAnimations'
+
 type SignInFormData = {
   email: string;
   password: string;
@@ -76,7 +83,7 @@ export default function Home() {
       justify="center"
       p="10"
     >
-      <Flex
+      <MotionFlex
         as="form"
         width="100%"
         maxWidth={480}
@@ -84,9 +91,12 @@ export default function Home() {
         p="8"
         borderRadius={8}
         flexDir="column"
+        variants={flexAnimation}
+        initial="hidden"
+        animate="visible"
         onSubmit={handleSubmit(handleSignIn)}
       >
-        <Stack spacing="4">
+        <MotionStack spacing="4" variants={childrenItemAnimation}>
           <Heading as="h1" size="lg" textAlign="center">Faça Login</Heading>
 
           <Divider my={["4", "6"]} borderColor="gray.700" />
@@ -106,28 +116,33 @@ export default function Home() {
             error={errors.password}
             {...register('password')}
           />
-        </Stack>
-
-        <Button
-          type="submit"
-          my="6"
-          colorScheme="pink"
-          size="lg"
-          cursor="pointer"
-          rightIcon={<Icon as={RiLoginBoxLine} fontSize="20" />}
-          isLoading={isSubmitting}
+        </MotionStack>
+        
+        <MotionFlex
+          flexDirection="column"
+          variants={childrenItemAnimation}
         >
-          Entrar
-        </Button>
+          <Button
+            type="submit"
+            my="6"
+            colorScheme="pink"
+            size="lg"
+            cursor="pointer"
+            rightIcon={<Icon as={RiLoginBoxLine} fontSize="20" />}
+            isLoading={isSubmitting}
+          >
+            Entrar
+          </Button>
 
-        <Text align="center" fontSize="lg">Ainda não tem uma conta? 
-          <Link href="/signup" passHref>
-            <ChakraLink ml="2" color="pink.500" fontWeight="bold">
-              Crie agora
-            </ChakraLink>
-          </Link>
-        </Text>
-      </Flex>
+          <Text align="center" fontSize="lg">Ainda não tem uma conta? 
+            <Link href="/signup" passHref>
+              <ChakraLink ml="2" color="pink.500" fontWeight="bold">
+                Crie agora
+              </ChakraLink>
+            </Link>
+          </Text>
+        </MotionFlex>
+      </MotionFlex>
     </Flex>
   )
 }
