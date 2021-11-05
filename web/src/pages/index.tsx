@@ -1,8 +1,10 @@
 import { useEffect } from "react"
 import { GetStaticProps } from "next"
-import Link from "next/link"
+import { Box } from "@chakra-ui/react"
 import Router from 'next/router'
 import { parseCookies } from 'nookies'
+
+import { HomeHeader } from '../components/Header/HomeHeader'
 
 import { 
   MotionBox, 
@@ -23,8 +25,13 @@ export default function HomePage() {
   return (
     <MotionBox initial='initial' animate='animate' exit={{ opacity: 0 }}>
       <MotionBox variants={stagger} >
+        <HomeHeader />
+
         <MotionFlex variants={fadeInUpHome} >
-          <h1>HomePage</h1>
+
+          <Box h="150vh">
+
+          </Box>
         </MotionFlex>
       </MotionBox>
     </MotionBox>
