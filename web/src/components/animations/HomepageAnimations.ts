@@ -2,7 +2,7 @@ import { easing } from './GlobalAnimations'
 
 export const fadeInDownHeaderHome = {
   initial: {
-    y: -60,
+    y: -40,
     opacity: 0,
     transition: { duration: 0.6, ease: easing }
   },
@@ -17,25 +17,16 @@ export const fadeInDownHeaderHome = {
 }
 
 export const fadeInUpHome = {
-  initial: {
-    y: 60,
-    opacity: 0,
-    transition: { duration: 0.6, ease: easing }
-  },
+  initial: { opacity: 0, y: 30 },
   animate: {
-    y: 0,
     opacity: 1,
+    y: 0,
     transition: {
-      duration: 0.6,
-      ease: easing
-    }
-  }
-}
-
-export const stagger = {
-  animate: {
-    transition: {
-      staggerChildren: 0.1
-    }
+      delayChildren: 0.2,
+      delay: 0.3,
+      staggerChildren: 0.5,
+      ease: easing,
+      duration: 0.8,
+    },
   }
 }
