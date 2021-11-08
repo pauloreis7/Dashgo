@@ -1,17 +1,13 @@
 import { useEffect } from "react"
 import { GetStaticProps } from "next"
-import { Box } from "@chakra-ui/react"
+import { Flex } from "@chakra-ui/react"
 import Router from 'next/router'
 import { parseCookies } from 'nookies'
 
-import { HomeHeader } from '../components/Header/HomeHeader'
+import { HomeHeader } from '../components/HomePage/HomeHeader'
+import { IntroBanner } from '../components/HomePage/IntroBanner'
 
-import { 
-  MotionBox, 
-  MotionFlex, 
-  stagger
-} from '../components/animations/GlobalAnimations'
-import { fadeInUpHome } from '../components/animations/HomepageAnimations'
+import { MotionBox } from '../components/animations/GlobalAnimations'
 
 export default function HomePage() {
   useEffect(() => {
@@ -24,16 +20,12 @@ export default function HomePage() {
 
   return (
     <MotionBox initial='initial' animate='animate' exit={{ opacity: 0 }}>
-      <MotionBox variants={stagger} >
-        <HomeHeader />
+      <HomeHeader />
 
-        <MotionFlex variants={fadeInUpHome} >
+      <IntroBanner />
 
-          <Box h="150vh">
+      <Flex h="120vh"></Flex>
 
-          </Box>
-        </MotionFlex>
-      </MotionBox>
     </MotionBox>
   )
 }
@@ -44,8 +36,3 @@ export const getStaticProps: GetStaticProps = async () => {
     revalidate: 60 * 60 * 24, // 24 hours
   }
 }
-
-// sideBar - X
-// page transitions - X
-// scroll - 
-// image 3d - 
