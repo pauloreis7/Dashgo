@@ -12,7 +12,7 @@ export function HomeHeader() {
       as="header"
       position="fixed"
       w="100%"
-      h="20"
+      h="5rem"
       px="6"
       align="center"
       backgroundColor="gray.800"
