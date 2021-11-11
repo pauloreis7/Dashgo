@@ -15,7 +15,7 @@ export function IntroBanner() {
   const intro3dX = useMotionValue(0)
   const intro3dY = useMotionValue(0)
 
-  const introScrollY = useTransform(scrollYProgress, [0, 0.40], [0, 200])
+  const introScrollY = useTransform(scrollYProgress, [0, 0.47], [0, 180])
   const introTextScrollY = useTransform(scrollYProgress, [0, 0.40], [160, 30])
 
   const intro3dRotateX = useTransform(intro3dY, [-100, 100], [30, -30])
@@ -25,10 +25,12 @@ export function IntroBanner() {
     <MotionFlex 
       variants={stagger} 
       style={{ perspective: 2000 }}
+      bgImage="url(/images/background.png)"
+      bgRepeat="no-repeat"
+      bgSize="cover"
       w="100%"
       h="100vh"
       p="6rem 3rem"
-      bgColor="pink.500"
       position="relative"
       zIndex={0}
     >
@@ -76,7 +78,7 @@ export function IntroBanner() {
       >
         <MotionBox 
           variants={fadeInUpHome} 
-          w="66rem" 
+          w="100%" 
           h="100%" 
           position="relative"
           style={{
@@ -92,9 +94,9 @@ export function IntroBanner() {
           dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }}
           whileTap={{ cursor: "grabbing" }}
         >
-          <video playsInline autoPlay muted loop>
+          <video playsInline autoPlay muted loop >
             <source src="/videos/introweb.webm" type="video/webm" />
-            <source src="/videos/yt.mp4" type="video/mp4" />
+            <source src="/videos/intro.mp4" type="video/mp4" />
           </video>
         </MotionBox>
       </motion.div>
