@@ -1,7 +1,7 @@
-import { Flex, Button, Text, Icon } from "@chakra-ui/react"
+import { Stack, Button, Text, Icon } from "@chakra-ui/react"
 import Link from 'next/link'
 import { motion, useViewportScroll, useTransform, useMotionValue } from 'framer-motion'
-import { RiUserFollowLine } from 'react-icons/ri'
+import { RiUserFollowLine, RiArrowDownSLine } from 'react-icons/ri'
 
 import { 
   MotionBox,
@@ -22,7 +22,8 @@ export function IntroBanner() {
   const intro3dRotateY = useTransform(intro3dX, [-100, 100], [-30, 30])
 
   return (
-    <MotionFlex 
+    <MotionFlex
+      layout
       variants={stagger} 
       style={{ perspective: 2000 }}
       bgImage="url(/images/background.png)"
@@ -32,7 +33,6 @@ export function IntroBanner() {
       h="100vh"
       p="6rem 3rem"
       position="relative"
-      zIndex={0}
     >
       <MotionBox 
         variants={fadeInUpHome} 
@@ -74,6 +74,7 @@ export function IntroBanner() {
           position: "absolute",
           right: "0",
           top: introScrollY,
+          zIndex: 0
         }}
       >
         <MotionBox 
@@ -100,6 +101,18 @@ export function IntroBanner() {
           </video>
         </MotionBox>
       </motion.div>
+
+      <MotionFlex
+        position="absolute"
+        bottom="8"
+        right="8"
+      >
+        <Stack spacing="0.1rem">
+          <Icon as={RiArrowDownSLine} fontSize="26" />
+          <Icon as={RiArrowDownSLine} fontSize="26" />
+          <Icon as={RiArrowDownSLine} fontSize="26" />
+        </Stack>
+      </MotionFlex>
     </MotionFlex>
   )
 }
