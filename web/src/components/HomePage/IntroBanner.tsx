@@ -90,7 +90,7 @@ export function IntroBanner() {
             z: -1000
           }}
           drag
-          dragElastic={0.16}
+          dragElastic={{ top: 0.16, right: 0.0001, bottom: 0.16, left: 0.16 }}
           dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }}
           whileTap={{ cursor: "grabbing" }}
         >

@@ -1,12 +1,20 @@
 import { Flex, Box, Text, SimpleGrid } from "@chakra-ui/react"
+import { motion, useViewportScroll, useTransform, useMotionValue } from 'framer-motion'
 
-import { MotionBox, MotionStack } from '../animations/GlobalAnimations'
+import { MotionBox, MotionStack, MotionText } from '../animations/GlobalAnimations'
 import { coinsHome } from '../animations/HomepageAnimations'
 
 export function InfoCoins() {
+  const { scrollYProgress } = useViewportScroll()
+
+  const coinsScrollY = useTransform(scrollYProgress, [0.45, 0.55], [0, 1])
+  const coinsMainTextScrollYScale = useTransform(scrollYProgress, [0.20, 0.35], [0, 1])
+
   return (
-    <Flex 
-      padding="11vw 0 7vw"
+    <Flex
+      w="100%" 
+      minH="120vh"
+      p="8rem 0 2rem"
       flexDirection="column"
       justify="center"
       align="center" 
@@ -14,23 +22,26 @@ export function InfoCoins() {
       position="relative"
       style={{ perspective: 2000 }}
     >
-      <SimpleGrid 
-        w="100%" 
-        h="100vh"
-        px="20"
-        templateColumns="repeat(2, 1fr)"
-        columnGap={620}
-        position="absolute"
-        zIndex={0}
+      <motion.div
+        style={{
+          width: "100%",
+          height: "100%",
+          padding: "0 5rem",
+          display: "grid",
+          gridTemplateColumns: "repeat(2, 1fr)",
+          gridColumnGap: "620px",
+          position: "absolute",
+          zIndex: 0,
+          scale: coinsScrollY
+        }}
       >
         <Flex position="relative">
           <MotionBox
-            maxW={140}
-            position="absolute" 
+            maxW={140} 
             zIndex={2}
             drag
             dragElastic={0.05}
-            dragConstraints={{ left: 0, top: -60, right: 120, bottom: 140 }}
+            dragConstraints={{ left: 0, top: 60, right: 120, bottom: 140 }}
             cursor="grab"
             style={{
               z: 1000
@@ -48,12 +59,10 @@ export function InfoCoins() {
         <Flex position="relative">
           <MotionBox
             maxW={160}
-            position="absolute"
-            top="-20"
             zIndex={2}
             drag
             dragElastic={0.05}
-            dragConstraints={{ left: 0, top: -60, right: 120, bottom: 140 }}
+            dragConstraints={{ left: 0, top: 10, right: 120, bottom: 140 }}
             cursor="grab"
             style={{
               z: 1000
@@ -70,12 +79,13 @@ export function InfoCoins() {
 
         <Flex position="relative">
           <MotionBox
+            maxW={80}
             position="absolute"
             left="40"
             zIndex={2}
             drag
             dragElastic={0.05}
-            dragConstraints={{ left: 0, top: -80, right: 320, bottom: 90 }}
+            dragConstraints={{ left: 0, top: -80, right: 320, bottom: 0 }}
             cursor="grab"
             style={{
               z: 1000
@@ -89,22 +99,26 @@ export function InfoCoins() {
             </video>
           </MotionBox>
         </Flex>
-      </SimpleGrid>
+      </motion.div>
       
-      <MotionBox
-        maxW={600}
-        textAlign="center"
-        zIndex={2}
+      <motion.div
+        style={{
+          maxWidth: "600px",
+          textAlign: "center",
+          zIndex: 2,
+          scale: coinsMainTextScrollYScale
+        }}
       >
-        <Text 
+        <MotionText 
           as="h1"
           fontSize="8.6vw"
           lineHeight="8rem"
           fontWeight="semibold"
           color="gray.50"
+          variants={coinsHome}
         >
           Gerencie suas métricas
-        </Text>
+        </MotionText>
         <Text
           fontWeight="medium"
           maxW={400}
@@ -114,7 +128,7 @@ export function InfoCoins() {
           Controle seus dados em poucos minutos. <br />
           Use as funções especiais da plataforma para análise
         </Text>
-      </MotionBox>
+      </motion.div>
 
       <MotionStack
         spacing="8"
