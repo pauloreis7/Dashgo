@@ -1,7 +1,7 @@
-import { Flex, Box, Text } from "@chakra-ui/react"
-import Image from 'next/image'
+import { Flex, Box, Text, SimpleGrid } from "@chakra-ui/react"
 
 import { MotionBox, MotionStack } from '../animations/GlobalAnimations'
+import { coinsHome } from '../animations/HomepageAnimations'
 
 export function InfoCoins() {
   return (
@@ -12,21 +12,89 @@ export function InfoCoins() {
       align="center" 
       backgroundColor="gray.950"
       position="relative"
-      zIndex={2}
+      style={{ perspective: 2000 }}
     >
-      <MotionBox
+      <SimpleGrid 
+        w="100%" 
+        h="100vh"
+        px="20"
+        templateColumns="repeat(2, 1fr)"
+        columnGap={620}
         position="absolute"
-        left="0"
-        top="0"
+        zIndex={0}
       >
-        <Image src="/images/coin.gif" width={60} height="60" />
-        <Image src="/images/coin.gif" width={60} height="60" />
-        <Image src="/images/coin.gif" width={60} height="60" />
-      </MotionBox>
+        <Flex position="relative">
+          <MotionBox
+            maxW={140}
+            position="absolute" 
+            zIndex={2}
+            drag
+            dragElastic={0.05}
+            dragConstraints={{ left: 0, top: -60, right: 120, bottom: 140 }}
+            cursor="grab"
+            style={{
+              z: 1000
+            }}
+            whileTap={{ cursor: "grabbing"}}
+            variants={coinsHome}
+          >
+            <video playsInline autoPlay muted loop >
+              <source src="/videos/coinweb.webm" type="video/webm" />
+              <source src="/videos/coin.mp4" type="video/mp4" />
+            </video>
+          </MotionBox>
+        </Flex>
 
+        <Flex position="relative">
+          <MotionBox
+            maxW={160}
+            position="absolute"
+            top="-20"
+            zIndex={2}
+            drag
+            dragElastic={0.05}
+            dragConstraints={{ left: 0, top: -60, right: 120, bottom: 140 }}
+            cursor="grab"
+            style={{
+              z: 1000
+            }}
+            whileTap={{ cursor: "grabbing", scale: 0.95 }}
+            variants={coinsHome}
+          >
+            <video playsInline autoPlay muted loop >
+              <source src="/videos/coinweb.webm" type="video/webm" />
+              <source src="/videos/coin.mp4" type="video/mp4" />
+            </video>
+          </MotionBox>
+        </Flex>
+
+        <Flex position="relative">
+          <MotionBox
+            position="absolute"
+            left="40"
+            zIndex={2}
+            drag
+            dragElastic={0.05}
+            dragConstraints={{ left: 0, top: -80, right: 320, bottom: 90 }}
+            cursor="grab"
+            style={{
+              z: 1000
+            }}
+            whileTap={{ cursor: "grabbing", scale: 0.95 }}
+            variants={coinsHome}
+          >
+            <video playsInline autoPlay muted loop >
+              <source src="/videos/coinweb.webm" type="video/webm" />
+              <source src="/videos/coin.mp4" type="video/mp4" />
+            </video>
+          </MotionBox>
+        </Flex>
+      </SimpleGrid>
+      
       <MotionBox
         maxW={600}
         textAlign="center"
+        zIndex={2}
       >
         <Text 
           as="h1"
@@ -41,6 +109,7 @@ export function InfoCoins() {
           fontWeight="medium"
           maxW={400}
           m="1rem auto 0"
+          color="pink.500"
         >
           Controle seus dados em poucos minutos. <br />
           Use as funções especiais da plataforma para análise

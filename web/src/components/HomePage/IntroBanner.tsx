@@ -81,7 +81,6 @@ export function IntroBanner() {
           variants={fadeInUpHome} 
           w="100%" 
           h="100%" 
-          position="relative"
           style={{
             cursor: "grab",
             x: intro3dX,
