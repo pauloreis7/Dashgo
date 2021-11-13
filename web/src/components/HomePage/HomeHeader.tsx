@@ -15,9 +15,7 @@ export function HomeHeader() {
       h="5rem"
       px="6"
       align="center"
-      backgroundColor="gray.800"
-      borderBottomWidth="1px"
-      borderBottomColor="pink.900"
+      backgroundColor="transparent"
       zIndex="9999"
       initial="initial"
       animate="animate"
@@ -42,15 +40,13 @@ export function HomeHeader() {
               as="a"
               fontSize={{ sm: "0.9rem", md: "1rem" }} 
               p={{ sm: "2", md: "4" }} 
-              backgroundColor="gray.800"
+              backgroundColor="transparent"
               borderWidth="2px"
               borderColor="pink.500"
-              color="pink.500"
+              color="gray.50"
               transition="background-color color 0.2s"
               _hover={{
-                backgroundColor: "pink.500",
-                color: "white",
-                
+                backgroundColor: "pink.500"
               }}
             >
               Criar conta
