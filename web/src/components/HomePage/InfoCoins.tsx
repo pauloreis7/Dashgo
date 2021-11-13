@@ -14,7 +14,7 @@ export function InfoCoins() {
     <Flex
       w="100%" 
       minH="120vh"
-      p="8rem 0 2rem"
+      p="8rem 0 4rem"
       flexDirection="column"
       justify="center"
       align="center" 

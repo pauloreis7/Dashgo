@@ -1,15 +1,14 @@
 import { useEffect } from "react"
 import { GetStaticProps } from "next"
-import { Flex, Box, Text } from "@chakra-ui/react"
 import Router from 'next/router'
-import Image from 'next/image'
 import { parseCookies } from 'nookies'
 
 import { HomeHeader } from '../components/HomePage/HomeHeader'
 import { IntroBanner } from '../components/HomePage/IntroBanner'
 import { InfoCoins } from '../components/HomePage/InfoCoins'
+import { DashDetails } from '../components/HomePage/DashDetails'
 
-import { MotionBox, MotionStack } from '../components/animations/GlobalAnimations'
+import { MotionBox } from '../components/animations/GlobalAnimations'
 
 export default function HomePage() {
   useEffect(() => {
@@ -27,6 +26,8 @@ export default function HomePage() {
       <IntroBanner />
 
       <InfoCoins />
+
+      <DashDetails />
     </MotionBox>
   )
 }
