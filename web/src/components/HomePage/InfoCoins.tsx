@@ -1,5 +1,5 @@
-import { Flex, Box, Text, SimpleGrid } from "@chakra-ui/react"
-import { motion, useViewportScroll, useTransform, useMotionValue } from 'framer-motion'
+import { Flex, Box, Text } from "@chakra-ui/react"
+import { motion, useViewportScroll, useTransform } from 'framer-motion'
 
 import { MotionBox, MotionStack, MotionText } from '../animations/GlobalAnimations'
 import { coinsHome } from '../animations/HomepageAnimations'
@@ -7,8 +7,8 @@ import { coinsHome } from '../animations/HomepageAnimations'
 export function InfoCoins() {
   const { scrollYProgress } = useViewportScroll()
 
-  const coinsScrollY = useTransform(scrollYProgress, [0.45, 0.55], [0, 1])
-  const coinsMainTextScrollYScale = useTransform(scrollYProgress, [0.20, 0.35], [0, 1])
+  const coinsScrollY = useTransform(scrollYProgress, [0.20, 0.30], [0, 1])
+  const coinsMainTextScrollYScale = useTransform(scrollYProgress, [0.15, 0.20], [0, 1])
 
   return (
     <Flex
@@ -29,7 +29,7 @@ export function InfoCoins() {
           padding: "0 5rem",
           display: "grid",
           gridTemplateColumns: "repeat(2, 1fr)",
-          gridColumnGap: "620px",
+          gridColumnGap: "50%",
           position: "absolute",
           zIndex: 0,
           scale: coinsScrollY
@@ -37,7 +37,8 @@ export function InfoCoins() {
       >
         <Flex position="relative">
           <MotionBox
-            maxW={140} 
+            maxW="9.40rem"
+            w="50%"
             zIndex={2}
             drag
             dragElastic={0.05}
@@ -58,7 +59,8 @@ export function InfoCoins() {
 
         <Flex position="relative">
           <MotionBox
-            maxW={160}
+            maxW="11.5rem"
+            w="58%"
             zIndex={2}
             drag
             dragElastic={0.05}
@@ -79,7 +81,8 @@ export function InfoCoins() {
 
         <Flex position="relative">
           <MotionBox
-            maxW={80}
+            maxW="8rem"
+            w="35%"
             position="absolute"
             left="40"
             zIndex={2}
@@ -103,7 +106,7 @@ export function InfoCoins() {
       
       <motion.div
         style={{
-          maxWidth: "600px",
+          maxWidth: "37.5rem",
           textAlign: "center",
           zIndex: 2,
           scale: coinsMainTextScrollYScale
@@ -111,7 +114,7 @@ export function InfoCoins() {
       >
         <MotionText 
           as="h1"
-          fontSize="8.6vw"
+          fontSize="8rem"
           lineHeight="8rem"
           fontWeight="semibold"
           color="gray.50"
@@ -133,14 +136,12 @@ export function InfoCoins() {
       <MotionStack
         spacing="8"
         direction="row"
-        m="7rem 0 2rem"
+        m="7rem 0 0"
         textAlign="left"
         fontSize="sm"
         fontWeight="medium"
       >
-        <Box
-          maxW={260}
-        >
+        <Box maxW="16.25rem">
           <Text 
             as="h3"
             color="pink.500"
@@ -153,9 +154,7 @@ export function InfoCoins() {
           <Text>Manipule todos os seus dados de forma simples e com agilidade</Text>
         </Box>
 
-        <Box
-          maxW={260}
-        >
+        <Box maxW="16.25rem">
           <Text 
             as="h3"
             color="pink.500"
@@ -168,9 +167,7 @@ export function InfoCoins() {
           <Text>Experiência de uso única da plataforma com interface simples e agradável</Text>
         </Box>
 
-        <Box
-          maxW={260}
-        >
+        <Box maxW="16.25rem">
           <Text 
             as="h3"
             color="pink.500"
@@ -183,9 +180,7 @@ export function InfoCoins() {
           <Text>Garantia total na segurança em todas as operações realizadas na Dashgo</Text>
         </Box>
 
-        <Box
-          maxW={260}
-        >
+        <Box maxW="16.25rem">
           <Text 
             as="h3"
             color="pink.500"
