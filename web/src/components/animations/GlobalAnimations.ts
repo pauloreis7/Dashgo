@@ -2,11 +2,13 @@ import {
   Flex, 
   Box, 
   Stack,
-  Text, 
+  Text,
+  SimpleGrid,
   FlexProps, 
   BoxProps, 
   StackProps,
-  TextProps 
+  TextProps,
+  SimpleGridProps
 } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 
@@ -54,3 +56,4 @@ export const MotionFlex = motion<FlexProps>(Flex)
 export const MotionBox = motion<BoxProps>(Box)
 export const MotionStack = motion<StackProps>(Stack)
 export const MotionText = motion<TextProps>(Text)
+export const MotionSimpleGrid = motion<SimpleGridProps>(SimpleGrid)

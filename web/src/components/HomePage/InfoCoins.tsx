@@ -1,14 +1,23 @@
 import { Flex, Box, Text } from "@chakra-ui/react"
 import { motion, useViewportScroll, useTransform } from 'framer-motion'
+import { useInView } from 'react-intersection-observer'
 
-import { MotionBox, MotionStack, MotionText } from '../animations/GlobalAnimations'
+import { 
+  MotionBox, 
+  MotionStack, 
+  MotionText,
+  MotionSimpleGrid
+} from '../animations/GlobalAnimations'
 import { coinsHome } from '../animations/HomepageAnimations'
 
 export function InfoCoins() {
   const { scrollYProgress } = useViewportScroll()
 
-  const coinsScrollY = useTransform(scrollYProgress, [0.20, 0.30], [0, 1])
-  const coinsMainTextScrollYScale = useTransform(scrollYProgress, [0.15, 0.20], [0, 1])
+  const coinsMainTextScrollYScale = useTransform(scrollYProgress, [0.20, 0.25], [0, 1])
+
+  const { ref: coinsRef, inView: coinsInView } = useInView({
+    threshold: 0.45
+  })
 
   return (
     <Flex
@@ -21,89 +30,86 @@ export function InfoCoins() {
       backgroundColor="gray.950"
       position="relative"
       style={{ perspective: 2000 }}
+      ref={coinsRef}
     >
-      <motion.div
-        style={{
-          width: "100%",
-          height: "100%",
-          padding: "0 5rem",
-          display: "grid",
-          gridTemplateColumns: "repeat(2, 1fr)",
-          gridColumnGap: "50%",
-          position: "absolute",
-          zIndex: 0,
-          scale: coinsScrollY
-        }}
-      >
-        <Flex position="relative">
-          <MotionBox
-            maxW="9.40rem"
-            w="50%"
-            zIndex={2}
-            drag
-            dragElastic={0.05}
-            dragConstraints={{ left: 0, top: 60, right: 120, bottom: 140 }}
-            cursor="grab"
-            style={{
-              z: 1000
-            }}
-            whileTap={{ cursor: "grabbing"}}
-            variants={coinsHome}
-          >
-            <video playsInline autoPlay muted loop >
-              <source src="/videos/coinweb.webm" type="video/webm" />
-              <source src="/videos/coin.mp4" type="video/mp4" />
-            </video>
-          </MotionBox>
-        </Flex>
+      { coinsInView && (
+        <MotionSimpleGrid
+          w="100%"
+          h="100%"
+          p="0 5rem"
+          templateColumns="repeat(2, 1fr)"
+          columnGap="50%"
+          position="absolute"
+          zIndex={0}
+          variants={coinsHome}
+        >
+          <Flex position="relative">
+            <MotionBox
+              maxW="9.40rem"
+              w="50%"
+              zIndex={2}
+              drag
+              dragElastic={0.05}
+              dragConstraints={{ left: 0, top: 60, right: 120, bottom: 140 }}
+              cursor="grab"
+              style={{
+                z: 1000
+              }}
+              whileTap={{ cursor: "grabbing", scale: 0.9 }}
+            >
+              <video playsInline autoPlay muted loop >
+                <source src="/videos/coinweb.webm" type="video/webm" />
+                <source src="/videos/coin.mp4" type="video/mp4" />
+              </video>
+            </MotionBox>
+          </Flex>
 
-        <Flex position="relative">
-          <MotionBox
-            maxW="11.5rem"
-            w="58%"
-            zIndex={2}
-            drag
-            dragElastic={0.05}
-            dragConstraints={{ left: 0, top: 10, right: 120, bottom: 140 }}
-            cursor="grab"
-            style={{
-              z: 1000
-            }}
-            whileTap={{ cursor: "grabbing", scale: 0.95 }}
-            variants={coinsHome}
-          >
-            <video playsInline autoPlay muted loop >
-              <source src="/videos/coinweb.webm" type="video/webm" />
-              <source src="/videos/coin.mp4" type="video/mp4" />
-            </video>
-          </MotionBox>
-        </Flex>
+          <Flex position="relative">
+            <MotionBox
+              maxW="11.5rem"
+              w="58%"
+              zIndex={2}
+              drag
+              dragElastic={0.05}
+              dragConstraints={{ left: 0, top: 10, right: 120, bottom: 140 }}
+              cursor="grab"
+              style={{
+                z: 1000
+              }}
+              whileTap={{ cursor: "grabbing", scale: 0.9 }}
+            >
+              <video playsInline autoPlay muted loop >
+                <source src="/videos/coinweb.webm" type="video/webm" />
+                <source src="/videos/coin.mp4" type="video/mp4" />
+              </video>
+            </MotionBox>
+          </Flex>
 
-        <Flex position="relative">
-          <MotionBox
-            maxW="8rem"
-            w="35%"
-            position="absolute"
-            left="40"
-            zIndex={2}
-            drag
-            dragElastic={0.05}
-            dragConstraints={{ left: 0, top: -80, right: 320, bottom: 0 }}
-            cursor="grab"
-            style={{
-              z: 1000
-            }}
-            whileTap={{ cursor: "grabbing", scale: 0.95 }}
-            variants={coinsHome}
-          >
-            <video playsInline autoPlay muted loop >
-              <source src="/videos/coinweb.webm" type="video/webm" />
-              <source src="/videos/coin.mp4" type="video/mp4" />
-            </video>
-          </MotionBox>
-        </Flex>
-      </motion.div>
-      
+          <Flex position="relative">
+            <MotionBox
+              maxW="8rem"
+              w="35%"
+              position="absolute"
+              left="40"
+              zIndex={2}
+              drag
+              dragElastic={0.05}
+              dragConstraints={{ left: 0, top: -80, right: 320, bottom: 0 }}
+              cursor="grab"
+              style={{
+                z: 1000
+              }}
+              whileTap={{ cursor: "grabbing", scale: 0.9 }}
+            >
+              <video playsInline autoPlay muted loop >
+                <source src="/videos/coinweb.webm" type="video/webm" />
+                <source src="/videos/coin.mp4" type="video/mp4" />
+              </video>
+            </MotionBox>
+          </Flex>
+        </MotionSimpleGrid>
+      ) }
+
       <motion.div
         style={{
           maxWidth: "37.5rem",
