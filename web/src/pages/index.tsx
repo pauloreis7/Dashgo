@@ -7,6 +7,7 @@ import { HomeHeader } from '../components/HomePage/HomeHeader'
 import { IntroBanner } from '../components/HomePage/IntroBanner'
 import { InfoCoins } from '../components/HomePage/InfoCoins'
 import { DashDetails } from '../components/HomePage/DashDetails'
+import { HomeFooter } from '../components/HomePage/HomeFooter'
 
 import { MotionBox } from '../components/animations/GlobalAnimations'
 
@@ -23,11 +24,13 @@ export default function HomePage() {
     <MotionBox initial='initial' animate='animate' exit={{ opacity: 0 }} layout>
       <HomeHeader />
 
-      <IntroBanner />
+      {/* <IntroBanner />
 
       <InfoCoins />
 
-      <DashDetails />
+      <DashDetails /> */}
+
+      <HomeFooter />
     </MotionBox>
   )
 }

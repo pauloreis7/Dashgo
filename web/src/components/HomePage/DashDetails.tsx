@@ -1,6 +1,5 @@
-import { Box, Text } from "@chakra-ui/react"
+import { Box } from "@chakra-ui/react"
 import Image from 'next/image'
-import { motion, useViewportScroll, useTransform, useMotionValue } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 
 import { 
@@ -25,14 +24,13 @@ export function DashDetails() {
     >
       { inView && (
         <MotionFlex
-          w="100%"
+          flex={1}
           h="100%"
           flexDirection="column"
           justify="flex-start"
           align="flex-start"
           p="8"
-          initial="initial"
-          animate="animate"
+          variants={detailsHome}
           exit={{ opacity: 0, transition: { duration: 0.8 } }}
         >
           <MotionText
@@ -44,7 +42,6 @@ export function DashDetails() {
             fontStyle="italic"
             textShadow="4px 0 0 #181B23"
             color="pink.500"
-            variants={detailsHome}
           >
             Dashgo é a plataforma ideal para você
           </MotionText>
@@ -53,8 +50,6 @@ export function DashDetails() {
             fontSize="xl"
             color="gray.100"
             textAlign="justify"
-            variants={detailsHome}
-            transitionDelay="0.016s"
           >
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae veniam ratione corporis neque, sunt ea voluptates repellat tenetur voluptatibus dignissimos provident maiores aperiam porro sit possimus ad libero. Dicta, neque!
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe molestiae ab unde velit voluptate quas tempore, reprehenderit delectus qui eos itaque eum quasi illum voluptatem magni maiores ut deleniti aliquid.
@@ -62,7 +57,7 @@ export function DashDetails() {
         </MotionFlex>
       ) }
 
-      <Box w="100%" h="100%" position="relative">
+      <Box w="50%" h="100%" ml="auto" position="relative">
         <Image 
           src="/images/dashDetails.gif" 
           layout="fill" 
