@@ -55,3 +55,28 @@ export const detailsHome = {
     },
   }
 }
+
+export const footerLinksContainerHome = {
+  initial: { opacity: 0, x: 70 },
+  animate: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      ease: easing,
+    },
+  }
+}
+
+export const footerLinkHome = {
+  initial: (i: number) => ({
+    opacity: 0,
+    y: -50 * i,
+  }),
+  animate: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: i * 0.05
+    },
+  })
+}
