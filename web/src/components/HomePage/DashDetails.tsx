@@ -15,7 +15,6 @@ export function DashDetails() {
 
   return (
     <MotionFlex
-      as="section"
       w="100%"
       h="80vh"
       justify="space-between"
