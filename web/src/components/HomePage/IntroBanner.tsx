@@ -15,15 +15,14 @@ export function IntroBanner() {
   const intro3dX = useMotionValue(0)
   const intro3dY = useMotionValue(0)
 
-  const introScrollY = useTransform(scrollYProgress, [0, 0.25], [-80, 110])
-  const introTextScrollY = useTransform(scrollYProgress, [0, 0.13], [160, 30])
+  const introScrollY = useTransform(scrollYProgress, [0, 0.47], [0, 180])
+  const introTextScrollY = useTransform(scrollYProgress, [0, 0.40], [160, 30])
 
   const intro3dRotateX = useTransform(intro3dY, [-100, 100], [30, -30])
   const intro3dRotateY = useTransform(intro3dX, [-100, 100], [-30, 30])
 
   return (
     <MotionFlex
-      as="section"
       layout
       variants={stagger} 
       style={{ perspective: 2000 }}
@@ -48,11 +47,11 @@ export function IntroBanner() {
             top: introTextScrollY,
           }}
         >
-          <Text as="h1" mb="5" fontSize="5xl" fontWeight="bold" lineHeight="3.8rem">
+          <Text as="h1" mb="5" color="gray.100" fontSize="5xl" fontWeight="bold" lineHeight="3.8rem">
             Descubra a plataforma para gestão das top empresas
           </Text>
 
-          <Text maxW="xl" opacity="0.95" fontSize="lg" mb="6">
+          <Text maxW="xl" fontSize="lg" mb="6">
             Dashgo é a agilidade e precisão nos seus dados cumprindo totalmente o papel estratégico e utilizada pelos melhores profissionais
           </Text>
 
