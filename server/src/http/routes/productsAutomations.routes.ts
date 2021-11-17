@@ -35,14 +35,6 @@ productsAutomationsRouter.post(
   productsAutomationsController.create
 )
 
-productsAutomationsRouter.delete(
-  '/delete',
-  celebrate({
-    [Segments.QUERY]: {
-      productAutomationId: Joi.string().uuid().required(),
-    }
-  }),
-  productsAutomationsController.delete
-)
+
 
 export default productsAutomationsRouter

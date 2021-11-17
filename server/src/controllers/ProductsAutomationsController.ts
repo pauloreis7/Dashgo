@@ -50,15 +50,5 @@ export class ProductsAutomationsController {
     return response.json(productAutomation)
   }
 
-  public async delete(request: Request, response: Response): Promise<Response> {
-    const { 
-      productAutomationId
-    } = request.query as ProductsAutomationsQueryDTO
-
-    const deleteProductAutomation = new DeleteProductAutomationService()
-
-    await deleteProductAutomation.execute({ productAutomationId })
-
-    return response.json({ delete: true })
-  }
+ 
 }
