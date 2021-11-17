@@ -24,11 +24,11 @@ export default function HomePage() {
     <MotionBox initial='initial' animate='animate' exit={{ opacity: 0 }} layout>
       <HomeHeader />
 
-      {/* <IntroBanner />
+      <IntroBanner />
 
       <InfoCoins />
 
-      <DashDetails /> */}
+      <DashDetails />
 
       <HomeFooter />
     </MotionBox>

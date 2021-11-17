@@ -13,14 +13,15 @@ import { coinsHome } from '../animations/HomepageAnimations'
 export function InfoCoins() {
   const { scrollYProgress } = useViewportScroll()
 
-  const coinsMainTextScrollYScale = useTransform(scrollYProgress, [0.20, 0.25], [0, 1])
+  const coinsMainTextScrollY = useTransform(scrollYProgress, [0.10, 0.23], [0, 1])
 
   const { ref: coinsRef, inView: coinsInView } = useInView({
-    threshold: 0.45
+    threshold: 0.6
   })
 
   return (
     <Flex
+      as="section"
       w="100%" 
       minH="120vh"
       p="8rem 0 4rem"
@@ -115,7 +116,8 @@ export function InfoCoins() {
           maxWidth: "37.5rem",
           textAlign: "center",
           zIndex: 2,
-          scale: coinsMainTextScrollYScale
+          scale: coinsMainTextScrollY,
+          opacity: coinsMainTextScrollY
         }}
       >
         <MotionText 
