@@ -1,7 +1,6 @@
 import {
   Flex,
   SkeletonText,
-  Box,
   Text,
   Table,
   Thead,
@@ -65,8 +64,8 @@ export function ProductsAutomationsTable({
               <Thead>
                 <Tr>
                   <Th width="8">Automação de produto</Th>
-                  <Th>descrição</Th>
-                  { isMediumVersion && <Th textAlign="center">Data de criação</Th> }
+                  <Th textAlign="center">descrição</Th>
+                  { isMediumVersion && <Th>Data de criação</Th> }
                   <Th px={["4", "4", "6"]} color="gray.300" width="8" />
                 </Tr>
               </Thead>
@@ -89,7 +88,7 @@ export function ProductsAutomationsTable({
                       <Td px={["4", "4", "6"]}>
                         <DeleteButton
                           productAutomationId={productAutomation.id}
-                          title={`Deseja deletar a automação ${productAutomation.name}`}
+                          title="Deseja deletar a automação"
                         />
                       </Td>
                     </Tr>

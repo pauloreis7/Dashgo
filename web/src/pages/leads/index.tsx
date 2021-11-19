@@ -35,7 +35,7 @@ export default function UserList() {
               { !isLoading && isFetching && <Spinner size="sm" color="gray.500" ml="4" /> }
             </Heading>
 
-            <Link href="/lead/create" passHref>
+            <Link href="/leads/create" passHref>
               <Button
                 as="a"
                 size="sm"

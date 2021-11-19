@@ -2,6 +2,7 @@ import { AppProps } from 'next/app'
 import { ChakraProvider } from '@chakra-ui/react'
 import { QueryClientProvider } from 'react-query'
 import { AnimatePresence } from 'framer-motion'
+import { ReactQueryDevtools } from 'react-query/devtools'
 
 import { theme } from '../styles/theme'
 import { AppProvider } from '../contexts'
@@ -17,6 +18,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           </AnimatePresence>
         </AppProvider>
       </ChakraProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   )
 }

@@ -36,8 +36,8 @@ export default function CreateProductAutomation() {
 
     return response.data.productAutomation
   }, {
-    onSuccess: (_, productAutomation) => {
-      queryClient.invalidateQueries(['productsAutomations'])
+    onSuccess: async (_, productAutomation) => {
+      await queryClient.invalidateQueries(['productsAutomations'])
 
       toast({
         title: "Automação criada.",

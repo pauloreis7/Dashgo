@@ -47,7 +47,7 @@ export async function signOut() {
 
     authChannel.postMessage('signOut')
 
-    Router.push('/')
+    Router.push('/account/signin')
   } catch (err) {
     const errorMessage = err.response?.data.message 
     ?? `Erro interno de servidor, tente novamente mais tarde! (${err.message})`

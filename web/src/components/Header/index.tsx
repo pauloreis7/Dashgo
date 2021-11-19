@@ -49,11 +49,11 @@ export function Header() {
       <Flex align="center" ml="auto">
         <NotificationsNav />
 
-        <Profile
+        {/* <Profile
           showProfileData={isWideVersion}
           name={user.name}
           email={user.email}
-        />
+        /> */}
       </Flex>
     </Flex>
   )

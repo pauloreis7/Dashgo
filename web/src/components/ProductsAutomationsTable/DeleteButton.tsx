@@ -19,27 +19,27 @@ import { queryClient } from "../../services/queryClient"
 
 interface DeleteButtonProps {
   title: string
-  leadId: string
+  productAutomationId: string
 }
 
-export function DeleteButton({ leadId, title }: DeleteButtonProps) {
+export function DeleteButton({ productAutomationId, title }: DeleteButtonProps) {
   const toast = useToast()
   
-  const deleteLead = useMutation(async () => {
-    await api.delete('/leads/delete', {
+  const deleteProductAutomation = useMutation(async () => {
+    await api.delete('/productsAutomations/delete', {
       params: {
-        leadId
+        productAutomationId
       }
     })
 
     return
   }, {
     onSuccess: async () => {
-      await queryClient.invalidateQueries(['leads', 'leadsChart'])
+      await queryClient.invalidateQueries('productsAutomations')
 
       toast({
-        title: "Lead deletado.",
-        description: "Lead foi deletado com sucesso.",
+        title: "Automação deletada.",
+        description: "Automação foi deletada com sucesso.",
         status: "success",
         duration: 6000,
         isClosable: true,
@@ -48,7 +48,7 @@ export function DeleteButton({ leadId, title }: DeleteButtonProps) {
     },
     onError: (err) => {
       toast({
-        title: "Erro ao deletar o lead.",
+        title: "Erro ao deletar a automação do produto.",
         description: err,
         status: "error",
         duration: 6000,
@@ -58,8 +58,8 @@ export function DeleteButton({ leadId, title }: DeleteButtonProps) {
     }
   })
 
-  async function handleDeleteLead() {
-    await deleteLead.mutateAsync()
+  async function handleDeleteProductAutomation() {
+    await deleteProductAutomation.mutateAsync()
   }
 
   return (
@@ -85,8 +85,8 @@ export function DeleteButton({ leadId, title }: DeleteButtonProps) {
           <PopoverBody>
             <Button 
               colorScheme="red" 
-              onClick={handleDeleteLead}
-              isLoading={useMutation({ mutationKey: 'leads' }).isLoading}
+              onClick={handleDeleteProductAutomation}
+              isLoading={useMutation({ mutationKey: 'productsAutomations' }).isLoading}
             >
               Deletar
             </Button>

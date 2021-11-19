@@ -62,8 +62,8 @@ export function UpdateButton({
 
     return response.data.lead
   }, {
-    onSuccess: (_, lead) => {
-      queryClient.invalidateQueries('leads')
+    onSuccess: async (_, lead) => {
+      await queryClient.invalidateQueries('leads')
 
       toast({
         title: "Lead atualizado.",
