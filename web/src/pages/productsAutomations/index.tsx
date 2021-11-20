@@ -6,8 +6,10 @@ import {
   Button,
   Spinner} from '@chakra-ui/react'
 import { useState } from 'react'
+import { GetServerSideProps } from 'next'
 import Link from 'next/link'
 import { RiAddLine } from 'react-icons/ri'
+import { parseCookies } from 'nookies'
 import Head from 'next/head'
 
 import { useProductsAutomations } from '../../hooks/useProductsAutomations'
@@ -82,4 +84,21 @@ export default function productsAutomations() {
       </Flex>
     </Box>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { ['@dashgo.token']: token } = parseCookies(ctx)
+  
+  if(!token) {
+    return {
+      redirect: {
+        destination: '/account/signin',
+        permanent: false,
+      }
+    }
+  }
+
+  return {
+    props: {},
+  }
 }

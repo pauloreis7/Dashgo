@@ -10,11 +10,13 @@ import {
   Tooltip,
   useToast 
 } from '@chakra-ui/react'
+import { GetServerSideProps } from 'next'
 import * as yup from 'yup'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { RiInformationLine } from 'react-icons/ri'
 import { RiPencilLine } from 'react-icons/ri'
+import { parseCookies } from 'nookies'
 import Head from 'next/head'
 
 import { api } from '../services/apiClient'
@@ -217,4 +219,21 @@ export default function UpdateUser() {
       </Flex>
     </Box>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { ['@dashgo.token']: token } = parseCookies(ctx)
+  
+  if(!token) {
+    return {
+      redirect: {
+        destination: '/account/signin',
+        permanent: false,
+      }
+    }
+  }
+
+  return {
+    props: {},
+  }
 }

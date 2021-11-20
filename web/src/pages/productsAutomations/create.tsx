@@ -1,4 +1,5 @@
 import { Flex, Box, Heading, Divider, Stack, HStack, Button, useToast } from '@chakra-ui/react'
+import { GetServerSideProps } from 'next'
 import Link from 'next/link'
 import * as yup from 'yup'
 import { useForm, SubmitHandler } from 'react-hook-form'
@@ -7,6 +8,7 @@ import { useMutation } from 'react-query'
 import { api } from '../../services/apiClient'
 import { queryClient } from '../../services/queryClient'
 import { useRouter } from 'next/router'
+import { parseCookies } from 'nookies'
 import Head from 'next/head'
 
 import { Input } from '../../components/Form/Input'
@@ -136,4 +138,21 @@ export default function CreateProductAutomation() {
       </Flex>
     </Box>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { ['@dashgo.token']: token } = parseCookies(ctx)
+  
+  if(!token) {
+    return {
+      redirect: {
+        destination: '/account/signin',
+        permanent: false,
+      }
+    }
+  }
+
+  return {
+    props: {},
+  }
 }
