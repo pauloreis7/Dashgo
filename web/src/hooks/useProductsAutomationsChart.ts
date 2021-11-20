@@ -5,7 +5,7 @@ import dayjs from 'dayjs'
 
 import { api } from '../services/apiClient'
 
-type GetLeadsChartResponse = {
+type GetProductsAutomationsChartResponse = {
   options: ApexOptions, 
   series: {
     name: string;
@@ -13,18 +13,18 @@ type GetLeadsChartResponse = {
   }[]
 }
 
-export async function getLeadsChart(daysToChartCount: number)
-  : Promise<GetLeadsChartResponse> {
-  const { data } = await api.get('/leads/daysCount', {
+export async function getProductsAutomationsChart(daysToChartCount: number)
+  : Promise<GetProductsAutomationsChartResponse> {
+  const { data } = await api.get('/productsAutomations/daysCount', {
     params: {
       daysAgo: daysToChartCount
     }
   })
 
-  const leadsCountByDaysAgo = data
+  const productsAutomationsCountByDaysAgo = data
 
   const series = [
-    { name: 'leads', data: leadsCountByDaysAgo }
+    { name: 'productsAutomations', data: productsAutomationsCountByDaysAgo }
   ] 
 
   const defaultArray = Array.from(Array(daysToChartCount))
@@ -83,9 +83,9 @@ export async function getLeadsChart(daysToChartCount: number)
   }
 }
 
-export function useLeadsChart(daysToChartCount: number) {
-  return useQuery(['leadsChart', daysToChartCount], 
-  () => getLeadsChart(daysToChartCount), {
+export function useProductsAutomationsChart(daysToChartCount: number) {
+  return useQuery(['productsAutomationsChart', daysToChartCount], 
+  () => getProductsAutomationsChart(daysToChartCount), {
     staleTime: 1000 * 60 * 5, // 5 minutes
   })
 }

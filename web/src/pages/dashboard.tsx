@@ -3,13 +3,26 @@ import { GetServerSideProps } from 'next'
 import { parseCookies } from 'nookies'
 
 import { useLeadsChart } from '../hooks/useLeadsChart'
+import { useProductsAutomationsChart } from '../hooks/useProductsAutomationsChart'
 
 import { Header } from '../components/Header'
 import { Sidebar } from '../components/Sidebar'
 import { Chart } from '../components/Chart'
 
 export default function Dashboard() {
-  const { data, isLoading, isFetching, error } = useLeadsChart(7)
+  const { 
+    data: leadsData, 
+    isLoading: leadsIsLoading, 
+    isFetching: leadsIsFetching, 
+    error: leadsError
+  } = useLeadsChart(7)
+
+  const { 
+    data: productsAutomationsData, 
+    isLoading: productsAutomationsIsLoading, 
+    isFetching: productsAutomationsIsFetching, 
+    error: productsAutomationsError
+  } = useProductsAutomationsChart(7)
 
   return (
     <Flex direction="column" h="100vh">
@@ -22,22 +35,40 @@ export default function Dashboard() {
 
           <Chart
             title="Leads da semana"
-            options={data?.options}
-            series={data?.series}
-            isLoading={isLoading}
-            isFetching={isFetching}
-            error={error}
+            options={leadsData?.options}
+            series={leadsData?.series}
+            isLoading={leadsIsLoading}
+            isFetching={leadsIsFetching}
+            error={leadsError}
           />
 
           <Chart
             title="Taxa de abertura"
-            options={data?.options}
-            series={data?.series}
-            isLoading={isLoading}
-            isFetching={isFetching}
-            error={error}
+            options={leadsData?.options}
+            series={leadsData?.series}
+            isLoading={leadsIsLoading}
+            isFetching={leadsIsFetching}
+            error={leadsError}
           />
-        
+
+          <Chart
+            title="Automações de produtos criadas"
+            options={productsAutomationsData?.options}
+            series={productsAutomationsData?.series}
+            isLoading={productsAutomationsIsLoading}
+            isFetching={productsAutomationsIsFetching}
+            error={productsAutomationsError}
+          />
+
+          <Chart
+            title="Taxa de conversões"
+            options={productsAutomationsData?.options}
+            series={productsAutomationsData?.series}
+            isLoading={productsAutomationsIsLoading}
+            isFetching={productsAutomationsIsFetching}
+            error={productsAutomationsError}
+          />
+
         </SimpleGrid>
       </Flex>
     </Flex>

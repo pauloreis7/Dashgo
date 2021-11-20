@@ -35,7 +35,8 @@ export function DeleteButton({ productAutomationId, title }: DeleteButtonProps) 
     return
   }, {
     onSuccess: async () => {
-      await queryClient.invalidateQueries(['productsAutomations'])
+      await queryClient.invalidateQueries('productsAutomations')
+      await queryClient.invalidateQueries('productsAutomationsChart')
 
       toast({
         title: "Automação deletada.",
