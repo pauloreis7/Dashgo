@@ -15,6 +15,11 @@ import { Header } from '../../components/Header'
 import { Sidebar } from '../../components/Sidebar'
 import { LeadsTableList } from '../../components/LeadsTableList'
 
+import { 
+  MotionBox, 
+  containerListAnimation 
+} from '../../components/animations/GlobalAnimations'
+
 export default function UserList() {
   const [ page, setPage ] = useState(1)
 
@@ -27,7 +32,17 @@ export default function UserList() {
       <Flex w="100%" my="6" maxWidth={1480} mx="auto" px="6">
         <Sidebar />
 
-        <Box flex="1" borderRadius={8} bg="gray.800" p="8" overflowX="auto">
+        <MotionBox 
+          flex="1" 
+          borderRadius={8} 
+          bg="gray.800" 
+          p="8" 
+          overflowX="auto"
+          variants={containerListAnimation}
+          initial="initial"
+          animate="animate"
+          exit={{ opacity: 0 }}
+        >
           <Flex mb="8" justify="space-between" align="center">
             <Heading size="lg" fontWeight="normal">
               Leads
@@ -58,7 +73,7 @@ export default function UserList() {
             page={page}
             setPage={setPage}
           />
-        </Box>
+        </MotionBox>
       </Flex>
     </Box>
   )

@@ -35,7 +35,7 @@ export default function CreateLead() {
     return response.data.lead
   }, {
     onSuccess: async (_, lead) => {
-      await queryClient.invalidateQueries(['leads', 'leadsChart'])
+      await queryClient.invalidateQueries(['leads'])
 
       toast({
         title: "Lead criado.",

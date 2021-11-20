@@ -7,11 +7,12 @@ import { RiUserFollowLine } from 'react-icons/ri'
 import { 
   MotionChakraLink,
   MotionFlex,
+  dropList
 } from '../animations/GlobalAnimations'
+
 import { 
   fadeInUpHome, 
   footerLinksContainerHome,
-  footerLinkHome
 } from '../animations/HomepageAnimations'
 
 const socials = ["Instagram", "Facebook", "Youtube", "Twitter", "Linkedin", "Email"]
@@ -101,7 +102,7 @@ export function HomeFooter() {
                       transition: "0.2s",
                     }}
                     whileHover={{ x: 10, scale: 1.08 }}
-                    variants={footerLinkHome}
+                    variants={dropList}
                     custom={i}
                     key={i}
                   >
