@@ -8,6 +8,7 @@ import {
 import { useState } from 'react'
 import Link from 'next/link'
 import { RiAddLine } from 'react-icons/ri'
+import Head from 'next/head'
 
 import { useLeads } from '../../hooks/useLeads'
 
@@ -27,6 +28,10 @@ export default function UserList() {
 
   return (
     <Box>
+      <Head>
+        <title>Leads | dashgo</title>
+      </Head>
+
       <Header />
 
       <Flex w="100%" my="6" maxWidth={1480} mx="auto" px="6">

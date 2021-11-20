@@ -18,6 +18,7 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { parseCookies } from 'nookies'
 import { RiUserFollowLine } from 'react-icons/ri'
+import Head from 'next/head'
 
 import { api } from '../../services/apiClient'
 
@@ -98,6 +99,10 @@ export default function SignUp() {
       animate='animate'
       exit={{ opacity: 0 }}
     >
+      <Head>
+        <title>Criar conta | dashgo</title>
+      </Head>
+
       <MotionFlex
         as="form"
         width="80%"

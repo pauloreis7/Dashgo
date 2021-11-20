@@ -1,6 +1,7 @@
 import { Flex, SimpleGrid } from '@chakra-ui/react'
 import { GetServerSideProps } from 'next'
 import { parseCookies } from 'nookies'
+import Head from 'next/head'
 
 import { useLeadsChart } from '../hooks/useLeadsChart'
 import { useProductsAutomationsChart } from '../hooks/useProductsAutomationsChart'
@@ -26,6 +27,10 @@ export default function Dashboard() {
 
   return (
     <Flex direction="column" h="100vh">
+      <Head>
+        <title>Dashboard | dashgo</title>
+      </Head>
+
       <Header />
 
       <Flex w="100%" my="6" maxWidth={1480} mx="auto" px={["4", "6"]}>

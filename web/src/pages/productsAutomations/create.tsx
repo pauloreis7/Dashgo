@@ -7,6 +7,7 @@ import { useMutation } from 'react-query'
 import { api } from '../../services/apiClient'
 import { queryClient } from '../../services/queryClient'
 import { useRouter } from 'next/router'
+import Head from 'next/head'
 
 import { Input } from '../../components/Form/Input'
 import { Header } from '../../components/Header'
@@ -76,6 +77,10 @@ export default function CreateProductAutomation() {
 
   return (
     <Box>
+      <Head>
+        <title>Criar automação | dashgo</title>
+      </Head>
+
       <Header />
 
       <Flex w="100%" my="6" maxWidth={1480} mx="auto" px="6">

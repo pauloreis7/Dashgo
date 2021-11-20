@@ -2,6 +2,7 @@ import { useEffect } from "react"
 import { GetStaticProps } from "next"
 import Router from 'next/router'
 import { parseCookies } from 'nookies'
+import Head from 'next/head'
 
 import { HomeHeader } from '../components/HomePage/HomeHeader'
 import { IntroBanner } from '../components/HomePage/IntroBanner'
@@ -22,6 +23,10 @@ export default function HomePage() {
 
   return (
     <MotionBox initial='initial' animate='animate' exit={{ opacity: 0 }} layout>
+      <Head>
+        <title>Home | dashgo</title>
+      </Head>
+
       <HomeHeader />
 
       <IntroBanner />

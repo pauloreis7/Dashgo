@@ -15,7 +15,8 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { parseCookies } from 'nookies'
 import { RiLoginBoxLine } from 'react-icons/ri'
- 
+import Head from 'next/head'
+
 import { useAuth } from '../../contexts/AuthContext'
 
 import { Input } from '../../components/Form/Input'
@@ -85,6 +86,10 @@ export default function SignIn() {
       animate='animate'
       exit={{ opacity: 0 }}
     >
+      <Head>
+        <title>Entrar conta | dashgo</title>
+      </Head>
+
       <MotionFlex
         as="form"
         width="100%"

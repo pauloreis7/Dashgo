@@ -15,6 +15,7 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { RiInformationLine } from 'react-icons/ri'
 import { RiPencilLine } from 'react-icons/ri'
+import Head from 'next/head'
 
 import { api } from '../services/apiClient'
 import { useAuth } from '../contexts/AuthContext'
@@ -88,6 +89,10 @@ export default function UpdateUser() {
 
   return (
     <Box>
+      <Head>
+        <title>Seu perfil | dashgo</title>
+      </Head>
+
       <Header />
 
       <Flex w="100%" my="6" maxWidth={1480} mx="auto" px="6">
