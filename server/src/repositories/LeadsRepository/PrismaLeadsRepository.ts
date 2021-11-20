@@ -23,10 +23,10 @@ export class LeadsRepository {
     return leads
   }
 
-  public async CountAllForDaysAgo({ user_id, daysAgo }: IFilterLeadCount) {
+  public async countAllForDaysAgo({ user_id, daysAgo }: IFilterLeadCount) {
     const defaultArray = Array.from(Array(Number(daysAgo)))
 
-    const DaysToCount = defaultArray.map((_, index) => {
+    const daysToCount = defaultArray.map((_, index) => {
       const from = dayjs().subtract(index, 'day').format('YYYY-MM-DD[T00:00]')
       const to = dayjs().subtract(index, 'day').format('YYYY-MM-DD[T23:59]')
 
@@ -34,7 +34,7 @@ export class LeadsRepository {
     })
 
     const leads = await Promise.all(
-      DaysToCount.map((dayToCount) => {
+      daysToCount.map((dayToCount) => {
         const count = prisma.lead.count({
           where: {
             user_id,

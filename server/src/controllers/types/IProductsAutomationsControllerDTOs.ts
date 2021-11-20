@@ -6,3 +6,7 @@ export type PaginationQueryDTO = {
 export type ProductsAutomationsQueryDTO = {
   productAutomationId: string
 }
+
+export type FilterQueryDTO = {
+  daysAgo: string
+}

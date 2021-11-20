@@ -24,6 +24,16 @@ productsAutomationsRouter.get(
   productsAutomationsController.index
 )
 
+productsAutomationsRouter.get(
+  '/daysCount',
+  celebrate({
+    [Segments.QUERY]: {
+      daysAgo: Joi.string().required(),
+    }
+  }),
+  productsAutomationsController.daysCount
+)
+
 productsAutomationsRouter.post(
   '/create',
   celebrate({

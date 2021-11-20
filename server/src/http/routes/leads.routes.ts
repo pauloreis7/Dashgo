@@ -22,7 +22,8 @@ leadsRouter.get(
   leadsController.index
 )
 
-leadsRouter.get('/daysCount',
+leadsRouter.get(
+  '/daysCount',
   celebrate({
     [Segments.QUERY]: {
       daysAgo: Joi.string().required(),

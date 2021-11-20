@@ -1,6 +1,9 @@
+import dayjs from 'dayjs'
+
 import { prisma } from '../../prisma'
 
 import { ICreateProductAutomationDTO } from './DTOs/ICreateProductAutomationDTO'
+import { IFilterProductsAutomationsCount } from './DTOs/IFilterProductsAutomationsCount'
 import { IPaginateProductAutomationDTO } from './DTOs/IPaginateProductAutomationDTO'
 
 export class ProductsAutomationsRepository {
@@ -16,6 +19,39 @@ export class ProductsAutomationsRepository {
     })
 
     return productsAutomations
+  }
+
+  public async countAllForDaysAgo({ user_id, daysAgo }: IFilterProductsAutomationsCount) {
+    const defaultArray = Array.from(Array(Number(daysAgo)))
+
+    const daysToCount = defaultArray.map((_, index) => {
+      const from = dayjs().subtract(index, 'day').format('YYYY-MM-DD[T00:00]')
+      const to = dayjs().subtract(index, 'day').format('YYYY-MM-DD[T23:59]')
+
+      return { from, to }
+    })
+
+    const productsAutomations = await Promise.all(
+      daysToCount.map((dayToCount) => {
+        const count = prisma.productAutomation.count({
+          where: {
+            user_id,
+            AND: {
+              created_at: { 
+                gte: new Date(dayToCount.from),
+                lte: new Date(dayToCount.to),
+              },
+            },
+          }
+        })
+
+        return count
+      })
+    )
+
+    const orderProductsAutomations = productsAutomations.reverse()
+
+    return orderProductsAutomations
   }
   
   public async findById(id: string) {

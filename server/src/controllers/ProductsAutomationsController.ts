@@ -2,12 +2,17 @@ import { Request, Response } from "express"
 
 import { 
   PaginationQueryDTO, 
-  ProductsAutomationsQueryDTO
+  ProductsAutomationsQueryDTO,
+  FilterQueryDTO
 } from './types/IProductsAutomationsControllerDTOs'
 
 import { 
   ListProductsAutomationsService
 } from "../services/ProductsAutomationsServices/ListProductsAutomationsService"
+
+import { 
+  FilterDaysCountProductsAutomationsService
+} from "../services/ProductsAutomationsServices/FilterDaysCountProductsAutomationsService"
 
 import { 
   CreateProductAutomationService 
@@ -33,6 +38,19 @@ export class ProductsAutomationsController {
     response.set('Access-Control-Expose-Headers', 'x-total-count')
 
     return response.json(productsAutomations)
+  }
+
+  public async daysCount(request: Request, response: Response): Promise<Response> {
+    const { daysAgo } = request.query as FilterQueryDTO
+    const user_id = request.user
+
+    const  filterDaysCountProductsAutomations = 
+    new FilterDaysCountProductsAutomationsService()
+
+    const productsAutomationsCountByDaysAgo = 
+    await filterDaysCountProductsAutomations.execute({ user_id, daysAgo })
+
+    return response.json(productsAutomationsCountByDaysAgo)
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
