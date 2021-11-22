@@ -12,10 +12,11 @@ const ApexChart = dynamic(() => import('react-apexcharts'), {
 interface ChartProps {
   title: string;
   options?: ApexOptions;
-  series?: {
+  series?: number[] | {
     name: string;
     data: number[]
   }[];
+  type: "area" | "donut";
   isLoading: boolean;
   isFetching: boolean;
   error: any;
@@ -25,6 +26,7 @@ export function Chart({
   title,
   options,
   series,
+  type,
   isLoading,
   isFetching,
   error
@@ -58,7 +60,7 @@ export function Chart({
             <Text>Falha ao obter dados da Dashboard  :/</Text>
           </Flex>
           ) : !isLoading && (
-          <ApexChart options={options} series={series} type="area" height={160} />
+          <ApexChart options={options} series={series} type={type} height={160} />
         )}
       </Skeleton>
     </MotionBox>
