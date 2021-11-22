@@ -16,7 +16,7 @@ interface ChartProps {
     name: string;
     data: number[]
   }[];
-  type: "area" | "donut";
+  type: "area" | "donut" | "radar";
   isLoading: boolean;
   isFetching: boolean;
   error: any;

@@ -6,6 +6,7 @@ import Head from 'next/head'
 import { useLeadsChart } from '../hooks/useLeadsChart'
 import { useProductsAutomationsChart } from '../hooks/useProductsAutomationsChart'
 import { useCompareChart } from '../hooks/useCompareChart'
+import { useCompareRateChart } from '../hooks/useCompareRateChart'
 
 import { Header } from '../components/Header'
 import { Sidebar } from '../components/Sidebar'
@@ -33,6 +34,13 @@ export default function Dashboard() {
     error: compareChartError
   } = useCompareChart()
 
+  const { 
+    data: compareRateChartData, 
+    isLoading: compareRateChartIsLoading, 
+    isFetching: compareRateChartIsFetching, 
+    error: compareRateChartError
+  } = useCompareRateChart(7)
+
   return (
     <Flex direction="column" h="100vh">
       <Head>
@@ -58,12 +66,12 @@ export default function Dashboard() {
 
           <Chart
             title="Taxa de abertura"
-            options={leadsData?.options}
-            series={leadsData?.series}
-            type="area"
-            isLoading={leadsIsLoading}
-            isFetching={leadsIsFetching}
-            error={leadsError}
+            options={compareRateChartData?.options}
+            series={compareRateChartData?.series}
+            type="radar"
+            isLoading={compareRateChartIsLoading}
+            isFetching={compareRateChartIsFetching}
+            error={compareRateChartError}
           />
 
           <Chart
