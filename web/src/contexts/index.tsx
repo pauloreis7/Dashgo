@@ -10,9 +10,9 @@ type AppProviderProps = {
 export function AppProvider({ children }: AppProviderProps) {
   return (
     <AuthProvider>
-      <SidebarDrawerProvider>
-        {children}
-      </SidebarDrawerProvider>
+        <SidebarDrawerProvider>
+          {children}
+        </SidebarDrawerProvider>
     </AuthProvider>
   )
 }

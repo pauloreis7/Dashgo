@@ -1,18 +1,43 @@
 import { theme } from '@chakra-ui/react'
-import { useQuery } from 'react-query'
 import { ApexOptions } from 'apexcharts'
 
-import { api } from '../services/apiClient'
+import { useLeads } from './useLeads'
+import { useProductsAutomations } from './useProductsAutomations'
 
 type GetCompareChartResponse = {
-  options: ApexOptions, 
-  series: number[]
+  data: {
+    options: ApexOptions, 
+    series: number[],
+  }
+  isLoading: boolean,
+  isFetching: boolean,
 }
 
-export async function getCompareChart(): Promise<GetCompareChartResponse> {
-  const { headers: leadsHeaders } = await api.get('/leads')
+export function useCompareChart(): GetCompareChartResponse {
 
-  const { headers: productsAutomationsheaders } = await api.get('/productsAutomations')
+  const { 
+    data: leadsData,
+    isLoading: leadsIsLoading,
+    isFetching: leadsIsFetching,
+   } = useLeads(1)
+
+  const { 
+    data: productsAutomationsData, 
+    isLoading: productsAutomationsIsLoading,
+    isFetching: productsAutomationsIsFetching,
+  } = useProductsAutomations(1)
+
+  
+  const isLoading = [
+    leadsIsLoading,
+    productsAutomationsIsLoading
+  ].some(itemLoading => itemLoading)
+
+  const isFetching = [
+    leadsIsFetching,
+    productsAutomationsIsFetching
+  ].some(itemFetching => itemFetching)
+
 
   const options: ApexOptions = {
     labels: ['Leads', 'Automações de produtos'],
@@ -64,15 +89,16 @@ export async function getCompareChart(): Promise<GetCompareChartResponse> {
   }
 
   const series = [
-    Number(leadsHeaders['x-total-count']) ,
-    Number(productsAutomationsheaders['x-total-count'])
+    leadsData?.totalCount,
+    productsAutomationsData?.totalCount,
   ]
   
-  return { options, series }
-}
-
-export function useCompareChart() {
-  return useQuery(['compareChart'], () => getCompareChart(), {
-    staleTime: 1000 * 60 * 5, // 5 minutes
-  })
+  return { 
+    data: {
+      options, 
+      series,
+    },
+    isLoading,
+    isFetching
+  }
 }

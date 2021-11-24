@@ -30,15 +30,13 @@ export default function Dashboard() {
   const { 
     data: compareChartData, 
     isLoading: compareChartIsLoading, 
-    isFetching: compareChartIsFetching, 
-    error: compareChartError
+    isFetching: compareChartIsFetching,
   } = useCompareChart()
 
   const { 
-    data: compareRateChartData, 
-    isLoading: compareRateChartIsLoading, 
-    isFetching: compareRateChartIsFetching, 
-    error: compareRateChartError
+    data: compareRateChartData,
+    isLoading: compareRateChartIsLoading,
+    isFetching: compareRateChartIsFetching
   } = useCompareRateChart(7)
 
   return (
@@ -53,7 +51,6 @@ export default function Dashboard() {
         <Sidebar />
 
         <SimpleGrid flex="1" gap="4" minChildWidth="400px" align="flex-start">
-
           <Chart
             title="Leads da semana"
             options={leadsData?.options}
@@ -69,9 +66,10 @@ export default function Dashboard() {
             options={compareRateChartData?.options}
             series={compareRateChartData?.series}
             type="radar"
+            height="220"
             isLoading={compareRateChartIsLoading}
             isFetching={compareRateChartIsFetching}
-            error={compareRateChartError}
+            error={leadsError}
           />
 
           <Chart
@@ -81,7 +79,7 @@ export default function Dashboard() {
             type="donut"
             isLoading={compareChartIsLoading}
             isFetching={compareChartIsFetching}
-            error={compareChartError}
+            error={leadsError}
           />
 
           <Chart

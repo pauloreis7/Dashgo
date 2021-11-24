@@ -1,43 +1,72 @@
 import { theme } from '@chakra-ui/react'
-import { useQuery } from 'react-query'
 import { ApexOptions } from 'apexcharts'
 
-import { api } from '../services/apiClient'
+import { useLeads } from './useLeads'
+import { useProductsAutomations } from './useProductsAutomations'
+import { useLeadsChart } from './useLeadsChart'
+import { useProductsAutomationsChart } from './useProductsAutomationsChart'
 
 type GetCompareRateChartResponse = {
-  options: ApexOptions, 
-  series: {
-    name: string;
-    data: number[]
-  }[]
+  data: {
+    options: ApexOptions, 
+    series: {
+      name: string;
+      data: number[]
+    }[],
+  }
+  isLoading: boolean,
+  isFetching: boolean,
 }
 
-export async function getCompareRateChart(daysToChartCount: number)
-  : Promise<GetCompareRateChartResponse> {
-  const { headers: leadsHeaders } = await api.get('/leads')
+export function useCompareRateChart(daysToChartCount: number)
+  : GetCompareRateChartResponse {
 
-  const { headers: productsAutomationsheaders } = await api.get('/productsAutomations')
+  const { 
+    data: leadsData,
+    isLoading: leadsIsLoading,
+    isFetching: leadsIsFetching,
+   } = useLeads(1)
 
-  const { data: leadsData } = await api.get('/leads/daysCount', {
-    params: {
-      daysAgo: daysToChartCount
-    }
-  })
+  const { 
+    data: productsAutomationsData, 
+    isLoading: productsAutomationsIsLoading,
+    isFetching: productsAutomationsIsFetching,
+  } = useProductsAutomations(1)
 
-  const { data: productsAutomationsData } = 
-  await api.get('/productsAutomations/daysCount', {
-    params: {
-      daysAgo: daysToChartCount
-    }
-  })
+  const { 
+    data: leadsChartData,
+    isLoading: leadsChartIsLoading,
+    isFetching: leadsChartIsFetching,
+  } = useLeadsChart(daysToChartCount)
 
-  const leadsFormatted = leadsData.reduce(
+  const { 
+    data: productsAutomationsChartData,
+    isLoading: productsAutomationsChartIsLoading,
+    isFetching: productsAutomationsChartIsFetching,
+  } = useProductsAutomationsChart(daysToChartCount)
+
+  const leadsFormatted = leadsChartData?.series[0].data.reduce(
     (accumulator: number, item: number) => accumulator + item , 0
   )
 
-  const productsAutomationsFormatted = productsAutomationsData.reduce(
+  const productsAutomationsFormatted = productsAutomationsChartData
+  ?.series[0].data.reduce(
     (accumulator: number, item: number) => accumulator + item , 0
   )
+
+  const isLoading = [
+    leadsIsLoading,
+    productsAutomationsIsLoading,
+    leadsChartIsLoading,
+    productsAutomationsChartIsLoading
+  ].some(itemLoading => itemLoading)
+
+  const isFetching = [
+    leadsIsFetching,
+    productsAutomationsIsFetching,
+    leadsChartIsFetching,
+    productsAutomationsChartIsFetching
+  ].some(itemFetching => itemFetching)
 
   const options: ApexOptions = {
     xaxis: {
@@ -97,7 +126,8 @@ export async function getCompareRateChart(daysToChartCount: number)
       radar: {
         polygons: {
           strokeColors: theme.colors.gray[600]
-        }
+        },
+        size: 70,
       }
     },
     colors: [theme.colors.pink[500]],
@@ -110,22 +140,19 @@ export async function getCompareRateChart(daysToChartCount: number)
   const series = [{
     name: 'Quantidade',
     data: [
-      Number(leadsHeaders['x-total-count']),
-      Number(productsAutomationsheaders['x-total-count']),
+      leadsData?.totalCount,
+      productsAutomationsData?.totalCount,
       leadsFormatted,
       productsAutomationsFormatted
     ],
   }]
   
   return { 
-    options,
-    series
+    data: {
+      options,
+      series,
+    },
+    isLoading,
+    isFetching
   }
-}
-
-export function useCompareRateChart(daysToChartCount: number) {
-  return useQuery(['compareRateChart', daysToChartCount], 
-  () => getCompareRateChart(daysToChartCount), {
-    staleTime: 1000 * 60 * 5, // 5 minutes
-  })
 }

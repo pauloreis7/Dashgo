@@ -17,6 +17,7 @@ interface ChartProps {
     data: number[]
   }[];
   type: "area" | "donut" | "radar";
+  height?: string;
   isLoading: boolean;
   isFetching: boolean;
   error: any;
@@ -27,6 +28,7 @@ export function Chart({
   options,
   series,
   type,
+  height = '180',
   isLoading,
   isFetching,
   error
@@ -50,7 +52,7 @@ export function Chart({
 
       <Skeleton 
         isLoaded={!isLoading}
-        height="10rem"
+        height="11rem"
         borderRadius="xl"
         startColor="gray.700"
         endColor="gray.600"
@@ -60,7 +62,7 @@ export function Chart({
             <Text>Falha ao obter dados da Dashboard  :/</Text>
           </Flex>
           ) : !isLoading && (
-          <ApexChart options={options} series={series} type={type} height={160} />
+          <ApexChart options={options} series={series} type={type} height={height} />
         )}
       </Skeleton>
     </MotionBox>

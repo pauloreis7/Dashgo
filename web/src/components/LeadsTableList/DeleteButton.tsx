@@ -37,7 +37,6 @@ export function DeleteButton({ leadId, title }: DeleteButtonProps) {
     onSuccess: async () => {
       await queryClient.invalidateQueries('leads')
       await queryClient.invalidateQueries('leadsChart')
-      await queryClient.invalidateQueries('compareChart')
 
       toast({
         title: "Lead deletado.",
