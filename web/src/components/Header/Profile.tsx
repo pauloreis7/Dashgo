@@ -13,7 +13,7 @@ export function Profile({
   email = 'email' 
 }: ProfileProps) {
   return (
-    <Flex align="center">
+    <Flex align="center" cursor="pointer">
       { showProfileData && (
         <Box mr="4" textAlign="right">
           <Text>{name}</Text>
