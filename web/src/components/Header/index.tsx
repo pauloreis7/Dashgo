@@ -4,8 +4,7 @@ import { RiMenuLine } from "react-icons/ri";
 import { useSidebarDrawer } from "../../contexts/SidebarDrawerContext";
 import { useAuth } from "../../contexts/AuthContext";
 import { Logo } from './Logo'
-import { SearchBox } from './SearchBox'
-import { NotificationsNav } from "./NotificationsNav";
+import { SignOutNav } from "./SignOutNav";
 import { Profile } from "./Profile";
 
 export function Header() {
@@ -44,16 +43,14 @@ export function Header() {
 
       <Logo />
 
-      { isWideVersion && <SearchBox /> }
-
       <Flex align="center" ml="auto">
-        <NotificationsNav />
+        <SignOutNav />
 
-        {/* <Profile
+        <Profile
           showProfileData={isWideVersion}
-          name={user.name}
-          email={user.email}
-        /> */}
+          name={user?.name}
+          email={user?.email}
+        />
       </Flex>
     </Flex>
   )

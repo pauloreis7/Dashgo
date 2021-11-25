@@ -1,16 +1,15 @@
-import { HStack, Icon, IconButton, useToast } from "@chakra-ui/react";
-import { RiUserAddLine } from "react-icons/ri";
+import { HStack, IconButton, useToast } from "@chakra-ui/react";
 import { FiPower } from "react-icons/fi";
 
 import { useAuth } from '../../contexts/AuthContext'
 
-export function NotificationsNav() {
+export function SignOutNav() {
   const { signOut } = useAuth()
   const toast = useToast()
 
-  async function handleSignOut() {
+  function handleSignOut() {
     try {
-      await signOut()
+      signOut()
 
     } catch (err) {
       toast({
@@ -34,7 +33,6 @@ export function NotificationsNav() {
       borderRightWidth={1}
       borderColor="gray.700"
     >
-      <Icon as={RiUserAddLine} fontSize="20" />
       <IconButton
         aria-label="Sign Out"
         variant="outline"

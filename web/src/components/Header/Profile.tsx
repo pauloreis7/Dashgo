@@ -3,11 +3,15 @@ import Link from 'next/link'
 
 interface ProfileProps {
   showProfileData: boolean;
-  name: string;
-  email: string;
+  name?: string;
+  email?: string;
 }
 
-export function Profile({ showProfileData = true, name, email }: ProfileProps) {
+export function Profile({ 
+  showProfileData = true, 
+  name = 'nome', 
+  email = 'email' 
+}: ProfileProps) {
   return (
     <Flex align="center">
       { showProfileData && (
@@ -19,7 +23,7 @@ export function Profile({ showProfileData = true, name, email }: ProfileProps) {
         </Box>
       )}
       <Link href="/profile" passHref>
-        <Avatar size="md" name={name} src="http://github.com/pauloreis7.png" />
+        <Avatar size="md" name={name} />
       </Link>
     </Flex>
   )
