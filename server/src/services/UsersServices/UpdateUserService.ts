@@ -39,7 +39,9 @@ export class UpdateUserService {
     user.email = email
 
     if(password && !old_password) {
-      throw new AppError('Você precisa informar sua senha antiga para definir uma nova senha.')
+      throw new AppError(
+        'Você precisa informar sua senha antiga para definir uma nova senha.'
+      )
     }
 
     if(password && old_password) {

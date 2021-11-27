@@ -9,8 +9,8 @@ interface ProfileProps {
 
 export function Profile({ 
   showProfileData = true, 
-  name = 'nome', 
-  email = 'email' 
+  name = '*****', 
+  email = '*********' 
 }: ProfileProps) {
   return (
     <Flex align="center" cursor="pointer">

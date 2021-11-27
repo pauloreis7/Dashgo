@@ -32,16 +32,16 @@ usersRouter.put(
     [Segments.BODY]: {
       name: Joi.string().required(),
       email: Joi.string().email().required(),
-      old_password: Joi.string(),
+      old_password: Joi.string().allow(''),
       password: Joi.when('old_password', {
-        is: Joi.exist(),
-        then: Joi.string().required()
+        is: Joi.string().min(1),
+        then: Joi.string().min(6)
       }),
       password_confirmation: Joi.when('password', {
         is: Joi.exist(),
         then: Joi.string().required().valid(Joi.ref('password'))
       }),
-    }
+    },
   }),
   checkAuthMiddleware,
   usersController.update

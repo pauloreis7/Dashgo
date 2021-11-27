@@ -52,8 +52,7 @@ export function DashDetails() {
             color="gray.100"
             textAlign="justify"
           >
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae veniam ratione corporis neque, sunt ea voluptates repellat tenetur voluptatibus dignissimos provident maiores aperiam porro sit possimus ad libero. Dicta, neque!
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe molestiae ab unde velit voluptate quas tempore, reprehenderit delectus qui eos itaque eum quasi illum voluptatem magni maiores ut deleniti aliquid.
+            Dashgo, uma representação visual e traz uma interface gráfica das informações mais importantes para atingir um ou mais objetivos, exibir os principais indicadores para tomada de decisão que tem sido consolidado em uma única tela de computador para  ser monitorado de forma ágil. Cada vez mais utilizado entre as empresas que necessitam de agilidade e precisão nos seus processos, a dashgo pode cumprir um papel estratégico. Dashgo é a representação visual das informações em um painel excelente para melhorar as tomadas de decisão
           </MotionText>
         </MotionFlex>
       ) }
