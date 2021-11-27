@@ -1,5 +1,5 @@
 <h1 align="center">
-    <img src=".github/logo.png" width="100px" />
+    <img src=".github/logo.svg" width="300px" />
 </h1>
 
 <h2 align="center">
@@ -13,7 +13,7 @@
 </h2>
 
 <h1 align="center">
-    <!-- <img src=".github/homepage.gif" width="400px" /> -->
+    <img src=".github/cover.svg" />
 </h1>
 
 <h4 align="center">🏁 Application already finished 🏁</h4>
@@ -41,6 +41,13 @@
 ## 🎨 Application Layout
 ---
 <p align="center">
+
+### 💻 Homepage 
+<img src=".github/desktop/homepage/introBanner.jpeg"/>
+<img src=".github/desktop/homepage/infoCoins.jpeg"/>
+<img src=".github/desktop/homepage/dashDetails.jpeg"/>
+<img src=".github/desktop/homepage/homeFooter.jpeg"/>
+
 <img src=".github/desktop/login.png"/>
 <img src=".github/desktop/signup.png"/>
 <img src=".github/desktop/dash.png"/>
@@ -52,6 +59,7 @@
 <img src=".github/desktop/create_products_automations.png"/>
 
 ### 📱 Mobile
+
 <img src=".github/mobile/mobile_dash.png"/>
 <img src=".github/mobile/mobile_leads.png"/>
 </p>
@@ -70,7 +78,6 @@
 - [x] Interface Animations
 - [x] Dashboard with real-time data
 - [x] Data caching
-- [x] Interface Animations
 
 <a id="techs"></a>
 ## 🧪 Technologies
