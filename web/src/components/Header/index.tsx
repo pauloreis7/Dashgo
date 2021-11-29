@@ -46,11 +46,11 @@ export function Header() {
       <Flex align="center" ml="auto">
         <SignOutNav />
 
-        <Profile
-          showProfileData={isWideVersion}
-          name={user?.name}
-          email={user?.email}
-        />
+          <Profile
+            showProfileData={isWideVersion}
+            name={user?.name}
+            email={user?.email}
+          />
       </Flex>
     </Flex>
   )

@@ -26,13 +26,20 @@ export function DeleteButton({ productAutomationId, title }: DeleteButtonProps) 
   const toast = useToast()
   
   const deleteProductAutomation = useMutation(async () => {
-    await api.delete('/productsAutomations/delete', {
-      params: {
-        productAutomationId
-      }
-    })
+    try {
+      await api.delete('/productsAutomations/delete', {
+        params: {
+          productAutomationId
+        }
+      })
+  
+      return
+    } catch (err) {
+      const errorMessage = err.response?.data.message 
+      ?? `Erro interno de servidor, tente novamente mais tarde! (${err.message})`
 
-    return
+      throw new Error(errorMessage)
+    }
   }, {
     onSuccess: async () => {
       await queryClient.invalidateQueries('productsAutomations')
@@ -46,21 +53,22 @@ export function DeleteButton({ productAutomationId, title }: DeleteButtonProps) 
         isClosable: true,
         position: "top-right",
       })
-    },
-    onError: (err) => {
+    }
+  })
+
+  async function handleDeleteProductAutomation() {
+    try {
+      await deleteProductAutomation.mutateAsync()
+    } catch (err) {
       toast({
         title: "Erro ao deletar a automação do produto.",
-        description: err,
+        description: err.message,
         status: "error",
         duration: 6000,
         isClosable: true,
         position: "top-right",
       })
     }
-  })
-
-  async function handleDeleteProductAutomation() {
-    await deleteProductAutomation.mutateAsync()
   }
 
   return (

@@ -35,9 +35,16 @@ export default function CreateProductAutomation() {
 
   const createProductAutomation = useMutation(
     async (productAutomation: CreateProductAutomationFormData) => {
-    const response = await api.post('/productsAutomations/create', productAutomation)
+    try {
+      const response = await api.post('/productsAutomations/create', productAutomation)
 
-    return response.data.productAutomation
+      return response.data.productAutomation
+    } catch (err) {
+      const errorMessage = err.response?.data.message 
+      ?? `Erro interno de servidor, tente novamente mais tarde! (${err.message})`
+
+      throw new Error(errorMessage)
+    }
   }, {
     onSuccess: async (_, productAutomation) => {
       await queryClient.invalidateQueries('productsAutomations')
@@ -47,16 +54,6 @@ export default function CreateProductAutomation() {
         title: "Automação criada.",
         description: `Automação de ${productAutomation.name} foi criada com sucesso.`,
         status: "success",
-        duration: 6000,
-        isClosable: true,
-        position: "top-right",
-      })
-    },
-    onError: (err) => {
-      toast({
-        title: "Erro ao criar automação.",
-        description: err,
-        status: "error",
         duration: 6000,
         isClosable: true,
         position: "top-right",
@@ -72,9 +69,20 @@ export default function CreateProductAutomation() {
 
   const handleCreateProductAutomation
     : SubmitHandler<CreateProductAutomationFormData> = async (values) => {
-    await createProductAutomation.mutateAsync(values)
+    try {
+      await createProductAutomation.mutateAsync(values)
 
-    router.push('/productsAutomations')
+      router.push('/productsAutomations')
+    } catch (err) {
+      toast({
+        title: "Erro ao criar automação.",
+        description: err.message,
+        status: "error",
+        duration: 6000,
+        isClosable: true,
+        position: "top-right",
+      })
+    }
   }
 
   return (

@@ -13,18 +13,19 @@ export function Profile({
   email = '*********' 
 }: ProfileProps) {
   return (
-    <Flex align="center" cursor="pointer">
-      { showProfileData && (
-        <Box mr="4" textAlign="right">
-          <Text>{name}</Text>
-          <Text color="gray.300" fontSize="small">
-            {email}
-          </Text>
-        </Box>
-      )}
-      <Link href="/profile" passHref>
+    <Link href="/profile" passHref>
+      <Flex align="center" cursor="pointer">
+        { showProfileData && (
+          <Box mr="4" textAlign="right">
+            <Text>{name}</Text>
+            <Text color="gray.300" fontSize="small">
+              {email}
+            </Text>
+          </Box>
+        )}
+
         <Avatar size="md" name={name} />
-      </Link>
-    </Flex>
+      </Flex>
+    </Link>
   )
 }

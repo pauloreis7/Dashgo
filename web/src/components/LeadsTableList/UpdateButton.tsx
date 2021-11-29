@@ -54,13 +54,20 @@ export function UpdateButton({
   const toast = useToast()
 
   const updateLead = useMutation(async (lead: UpdateLeadFormData) => {
-    const response = await api.put('/leads/update', lead, {
-      params: {
-        leadId
-      }
-    })
+    try {
+      const response = await api.put('/leads/update', lead, {
+        params: {
+          leadId
+        }
+      })
+  
+      return response.data.lead
+    } catch (err) {
+      const errorMessage = err.response?.data.message 
+      ?? `Erro interno de servidor, tente novamente mais tarde! (${err.message})`
 
-    return response.data.lead
+      throw new Error(errorMessage)
+    }
   }, {
     onSuccess: async (_, lead) => {
       await queryClient.invalidateQueries('leads')
@@ -69,16 +76,6 @@ export function UpdateButton({
         title: "Lead atualizado.",
         description: `Lead ${lead.name} foi atualizado com sucesso.`,
         status: "success",
-        duration: 6000,
-        isClosable: true,
-        position: "top-right",
-      })
-    },
-    onError: (err) => {
-      toast({
-        title: "Erro ao atualizar lead.",
-        description: err,
-        status: "error",
         duration: 6000,
         isClosable: true,
         position: "top-right",
@@ -93,9 +90,20 @@ export function UpdateButton({
   const { errors, isSubmitting } = formState
 
   const handleEditLead: SubmitHandler<UpdateLeadFormData> = async (values) => {
-    await updateLead.mutateAsync(values)
+    try {
+      await updateLead.mutateAsync(values)
 
-    onClose()
+      onClose()
+    } catch (err) {
+      toast({
+        title: "Erro ao atualizar lead.",
+        description: err.message,
+        status: "error",
+        duration: 6000,
+        isClosable: true,
+        position: "top-right",
+      })
+    }
   }
 
   return (

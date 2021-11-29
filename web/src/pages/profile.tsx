@@ -57,7 +57,7 @@ const UpdateUserFormSchema = yup.object().shape({
 export default function UpdateUser() {
   const toast = useToast()
 
-  const { user } = useAuth()
+  const { user, setUser } = useAuth()
 
   const { register, handleSubmit, formState } = useForm({
     resolver: yupResolver(UpdateUserFormSchema)
@@ -67,7 +67,9 @@ export default function UpdateUser() {
 
   const handleUpdateUser: SubmitHandler<UpdateUserFormData> = async (data) => {
     try {
-      await api.put('/users/update', data)
+      const response = await api.put('/users/update', data)
+
+      setUser(response.data)
 
       toast({
         title: "Atualização realizada.",
@@ -78,9 +80,12 @@ export default function UpdateUser() {
         position: "top-right",
       })
     } catch (err) {
+      const errorMessage = err.response?.data.message 
+      ?? `Erro interno de servidor, tente novamente mais tarde! (${err.message})`
+
       toast({
         title: "Erro ao fazer atualização.",
-        description: err.message,
+        description: errorMessage,
         status: "error",
         duration: 6000,
         isClosable: true,
@@ -122,7 +127,7 @@ export default function UpdateUser() {
                 name="name"
                 label="Nome completo"
                 error={errors.name}
-                defaultValue={user.name}
+                defaultValue={user?.name}
                 {...register('name')}
               />
               <Input
@@ -130,7 +135,7 @@ export default function UpdateUser() {
                 type="email"
                 label="E-mail"
                 error={errors.email}
-                defaultValue={user.email}
+                defaultValue={user?.email}
                 {...register('email')}
               />
             </SimpleGrid>

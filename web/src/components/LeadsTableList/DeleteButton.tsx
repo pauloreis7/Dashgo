@@ -26,13 +26,20 @@ export function DeleteButton({ leadId, title }: DeleteButtonProps) {
   const toast = useToast()
   
   const deleteLead = useMutation(async () => {
-    await api.delete('/leads/delete', {
-      params: {
-        leadId
-      }
-    })
+    try {
+      await api.delete('/leads/delete', {
+        params: {
+          leadId
+        }
+      })
+  
+      return
+    } catch (err) {
+      const errorMessage = err.response?.data.message 
+      ?? `Erro interno de servidor, tente novamente mais tarde! (${err.message})`
 
-    return
+      throw new Error(errorMessage)
+    }
   }, {
     onSuccess: async () => {
       await queryClient.invalidateQueries('leads')
@@ -46,21 +53,22 @@ export function DeleteButton({ leadId, title }: DeleteButtonProps) {
         isClosable: true,
         position: "top-right",
       })
-    },
-    onError: (err) => {
+    }
+  })
+
+  async function handleDeleteLead() {
+    try {
+      await deleteLead.mutateAsync()
+    } catch (err) {
       toast({
         title: "Erro ao deletar o lead.",
-        description: err,
+        description: err.message,
         status: "error",
         duration: 6000,
         isClosable: true,
         position: "top-right",
       })
     }
-  })
-
-  async function handleDeleteLead() {
-    await deleteLead.mutateAsync()
   }
 
   return (

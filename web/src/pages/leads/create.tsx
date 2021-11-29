@@ -33,9 +33,16 @@ export default function CreateLead() {
   const toast = useToast()
 
   const createLead = useMutation(async (lead: CreateLeadFormData) => {
-    const response = await api.post('/leads/create', lead)
+    try {
+      const response = await api.post('/leads/create', lead)
 
-    return response.data.lead
+      return response.data.lead
+    } catch (err) {
+      const errorMessage = err.response?.data.message 
+      ?? `Erro interno de servidor, tente novamente mais tarde! (${err.message})`
+
+      throw new Error(errorMessage)
+    }
   }, {
     onSuccess: async (_, lead) => {
       await queryClient.invalidateQueries('leads')
@@ -45,16 +52,6 @@ export default function CreateLead() {
         title: "Lead criado.",
         description: `Lead ${lead.name} foi criado com sucesso.`,
         status: "success",
-        duration: 6000,
-        isClosable: true,
-        position: "top-right",
-      })
-    },
-    onError: (err) => {
-      toast({
-        title: "Erro ao criar lead.",
-        description: err,
-        status: "error",
         duration: 6000,
         isClosable: true,
         position: "top-right",
@@ -69,9 +66,20 @@ export default function CreateLead() {
   const { errors, isSubmitting } = formState
 
   const handleCreateLead: SubmitHandler<CreateLeadFormData> = async (values) => {
-    await createLead.mutateAsync(values)
+    try {
+      await createLead.mutateAsync(values)
 
-    router.push('/leads')
+      router.push('/leads')
+    } catch (err) {
+      toast({
+        title: "Erro ao criar lead.",
+        description: err.message,
+        status: "error",
+        duration: 6000,
+        isClosable: true,
+        position: "top-right",
+      })
+    }
   }
 
   return (
