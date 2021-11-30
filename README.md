@@ -138,11 +138,8 @@ $ yarn dev
 # Run Web Application
 $ yarn dev
 
-# Run mobile application / based on the platform you are using (android/ios)
-$ yarn android / ios
-
-# The server will start on port:4000
-acesse  <http://localhost:4000>
+# The server will start on port:3000
+acesse  <http://localhost:3000>
 
 ````
 
